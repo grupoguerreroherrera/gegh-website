@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEGH — Inteligencia Artificial Empresarial Colombia</title>
+<meta name="description" content="Boutique de IA en Colombia. Agentes autónomos, consultoría estratégica y presencia digital con IA. Implementación en 7 días.">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #050508; --white: #F2F0EB; --gold: #C9A84C; --gold-light: #E8C96A;
+  --gold-dim: rgba(201,168,76,0.12); --gray: #8A8A8A; --border: rgba(201,168,76,0.18);
+  --card-bg: #08080D;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+
+/* CURSOR */
+.cursor { position:fixed; width:10px; height:10px; background:var(--gold); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .3s,height .3s; mix-blend-mode:difference; }
+.cursor-ring { position:fixed; width:36px; height:36px; border:1px solid rgba(201,168,76,0.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s; }
+
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:26px 60px; transition:padding .4s,background .4s; }
+nav.scrolled { padding:16px 60px; background:rgba(5,5,8,0.97); border-bottom:1px solid var(--border); }
+.nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; letter-spacing:.12em; color:var(--white); text-decoration:none; }
+.nav-logo span { color:var(--gold); }
+.nav-links { display:flex; gap:36px; list-style:none; }
+.nav-links a { color:var(--gray); font-size:12px; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; transition:color .3s; font-weight:400; }
+.nav-links a:hover { color:var(--gold); }
+.nav-right { display:flex; align-items:center; gap:16px; }
+.lang-toggle { background:none; border:1px solid var(--border); color:var(--gray); padding:6px 14px; font-size:11px; letter-spacing:.1em; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .3s; }
+.lang-toggle:hover { border-color:var(--gold); color:var(--gold); }
+.nav-cta { background:var(--gold); border:none; color:var(--black); padding:10px 22px; font-size:12px; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:600; transition:background .3s; }
+.nav-cta:hover { background:var(--gold-light); }
+
+/* WHATSAPP FLOAT */
+.wa-float { position:fixed; bottom:32px; right:32px; z-index:200; background:#25D366; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:0 4px 24px rgba(37,211,102,.4); text-decoration:none; transition:transform .3s,box-shadow .3s; animation:waIn .6s 1s both; }
+.wa-float:hover { transform:scale(1.1); box-shadow:0 8px 32px rgba(37,211,102,.5); }
+@keyframes waIn { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+.wa-pulse { position:absolute; inset:-4px; border-radius:50%; border:2px solid rgba(37,211,102,.4); animation:waPulse 2s infinite; }
+@keyframes waPulse { 0%{transform:scale(1);opacity:1} 100%{transform:scale(1.5);opacity:0} }
+
+/* HERO */
+.hero { min-height:100vh; display:flex; align-items:center; padding:120px 60px 80px; position:relative; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; z-index:0; background: radial-gradient(ellipse 70% 60% at 75% 50%, rgba(201,168,76,.07) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 15% 85%, rgba(201,168,76,.04) 0%, transparent 60%); }
+.hero-grid { position:absolute; inset:0; z-index:0; background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%); }
+.hero-content { position:relative; z-index:1; max-width:780px; }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); padding:8px 16px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:44px; animation:fadeUp .8s ease both; }
+.hero-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.hero-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(50px,7vw,94px); line-height:.95; letter-spacing:-.03em; margin-bottom:28px; animation:fadeUp .8s .15s ease both; }
+.hero-title em { font-style:italic; color:var(--gold); }
+.hero-title .outline { -webkit-text-stroke:1px rgba(242,240,235,.25); color:transparent; }
+.hero-sub { font-size:17px; line-height:1.75; color:rgba(242,240,235,.5); max-width:540px; margin-bottom:48px; animation:fadeUp .8s .3s ease both; }
+.hero-actions { display:flex; gap:14px; align-items:center; animation:fadeUp .8s .45s ease both; flex-wrap:wrap; }
+.btn-primary { background:var(--gold); color:var(--black); padding:16px 34px; font-size:13px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background .3s,transform .2s; text-decoration:none; display:inline-block; }
+.btn-primary:hover { background:var(--gold-light); transform:translateY(-2px); }
+.btn-ghost { color:var(--gold); border:1px solid var(--border); padding:15px 28px; font-size:13px; letter-spacing:.08em; text-decoration:none; display:inline-block; transition:border-color .3s,background .3s; font-weight:400; }
+.btn-ghost:hover { border-color:var(--gold); background:var(--gold-dim); }
+.hero-stats { position:absolute; right:60px; bottom:80px; z-index:1; display:flex; flex-direction:column; gap:28px; animation:fadeUp .8s .6s ease both; }
+.stat { text-align:right; }
+.stat-num { font-family:'Syne',sans-serif; font-weight:800; font-size:40px; color:var(--gold); line-height:1; letter-spacing:-.02em; }
+.stat-label { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--gray); margin-top:4px; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+/* MARQUEE */
+.marquee-wrap { border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:16px 0; overflow:hidden; background:rgba(201,168,76,.02); }
+.marquee-track { display:flex; gap:56px; white-space:nowrap; animation:marquee 22s linear infinite; }
+.marquee-item { font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--gray); display:flex; align-items:center; gap:16px; }
+.marquee-item span { color:var(--gold); }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* SECTION */
+section { padding:120px 60px; }
+.section-tag { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; display:flex; align-items:center; gap:12px; }
+.section-tag::before { content:''; flex:1; max-width:36px; height:1px; background:var(--gold); }
+.section-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(34px,4.5vw,56px); line-height:1.05; letter-spacing:-.02em; margin-bottom:16px; }
+.section-title em { font-style:italic; color:var(--gold); }
+
+/* WHY US */
+.why { background:#07070A; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.why-intro p { color:rgba(242,240,235,.5); font-size:16px; line-height:1.85; margin-top:16px; margin-bottom:48px; }
+.why-list { display:flex; flex-direction:column; gap:0; }
+.why-item { display:flex; gap:20px; align-items:flex-start; padding:24px 0; border-bottom:1px solid var(--border); transition:background .3s; }
+.why-item:first-child { border-top:1px solid var(--border); }
+.why-icon { font-size:22px; min-width:40px; padding-top:2px; }
+.why-text strong { font-family:'Syne',sans-serif; font-weight:700; font-size:16px; display:block; margin-bottom:6px; }
+.why-text p { font-size:13px; color:rgba(242,240,235,.45); line-height:1.7; }
+.why-visual { display:flex; flex-direction:column; gap:20px; padding-top:80px; }
+.why-card { border:1px solid var(--border); padding:32px; background:var(--card-bg); position:relative; overflow:hidden; transition:border-color .3s; }
+.why-card:hover { border-color:var(--gold); }
+.why-card-num { font-family:'Syne',sans-serif; font-size:48px; font-weight:800; color:var(--gold); opacity:.15; position:absolute; top:16px; right:24px; line-height:1; }
+.why-card h4 { font-family:'Syne',sans-serif; font-weight:700; font-size:18px; margin-bottom:10px; }
+.why-card p { font-size:13px; color:rgba(242,240,235,.45); line-height:1.7; }
+
+/* SERVICES */
+.services { background:var(--black); }
+.services-intro { max-width:600px; margin-bottom:72px; }
+.services-intro p { color:rgba(242,240,235,.5); font-size:16px; line-height:1.8; margin-top:14px; }
+.services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); }
+.service-card { background:var(--black); padding:44px 38px; position:relative; overflow:hidden; transition:background .4s; }
+.service-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold-dim),transparent); opacity:0; transition:opacity .4s; }
+.service-card:hover { background:#0A0A10; }
+.service-card:hover::before { opacity:1; }
+.service-num { font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:.2em; color:var(--gold); margin-bottom:28px; opacity:.5; }
+.service-icon { font-size:26px; margin-bottom:18px; }
+.service-name { font-family:'Syne',sans-serif; font-weight:700; font-size:19px; margin-bottom:12px; letter-spacing:-.01em; }
+.service-desc { font-size:13.5px; line-height:1.75; color:rgba(242,240,235,.4); }
+.service-arrow { position:absolute; bottom:36px; right:36px; font-size:18px; color:var(--gold); opacity:0; transform:translateX(-8px); transition:opacity .3s,transform .3s; }
+.service-card:hover .service-arrow { opacity:1; transform:translateX(0); }
+
+/* PRICING */
+.pricing { background:#07070A; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.pricing-intro { text-align:center; max-width:600px; margin:0 auto 72px; }
+.pricing-intro p { color:rgba(242,240,235,.5); font-size:16px; line-height:1.8; margin-top:14px; }
+.pricing-intro .section-tag { justify-content:center; }
+.pricing-intro .section-tag::before { display:none; }
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.price-card { border:1px solid var(--border); padding:48px 40px; background:var(--card-bg); position:relative; overflow:hidden; transition:transform .3s,border-color .3s; }
+.price-card:hover { transform:translateY(-6px); border-color:rgba(201,168,76,.4); }
+.price-card.featured { border-color:var(--gold); background:linear-gradient(160deg,rgba(201,168,76,.08),var(--card-bg) 60%); }
+.price-badge { position:absolute; top:0; right:0; background:var(--gold); color:var(--black); font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:6px 16px; }
+.price-stars { font-size:16px; margin-bottom:20px; }
+.price-name { font-family:'Syne',sans-serif; font-weight:800; font-size:24px; margin-bottom:8px; }
+.price-who { font-size:12px; color:var(--gray); letter-spacing:.06em; margin-bottom:28px; padding-bottom:28px; border-bottom:1px solid var(--border); }
+.price-amount { font-family:'Syne',sans-serif; font-weight:800; font-size:42px; color:var(--gold); line-height:1; margin-bottom:6px; }
+.price-amount span { font-size:16px; font-weight:400; color:var(--gray); }
+.price-note { font-size:12px; color:var(--gray); margin-bottom:32px; }
+.price-features { list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:40px; }
+.price-features li { font-size:13.5px; color:rgba(242,240,235,.6); display:flex; gap:10px; align-items:flex-start; line-height:1.5; }
+.price-features li::before { content:'✓'; color:var(--gold); font-weight:700; min-width:16px; margin-top:1px; }
+.price-cta { width:100%; padding:14px; background:transparent; border:1px solid var(--border); color:var(--white); font-family:'DM Sans',sans-serif; font-size:12px; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; transition:all .3s; font-weight:500; }
+.price-cta:hover,.price-card.featured .price-cta { background:var(--gold); border-color:var(--gold); color:var(--black); }
+
+/* LEAD MAGNET */
+.lead-magnet { background:var(--black); }
+.lm-box { border:1px solid var(--gold); padding:64px; background:linear-gradient(135deg,rgba(201,168,76,.06),transparent); display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+.lm-tag { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:16px; }
+.lm-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(28px,3vw,42px); line-height:1.1; margin-bottom:16px; }
+.lm-title em { font-style:italic; color:var(--gold); }
+.lm-desc { font-size:15px; color:rgba(242,240,235,.5); line-height:1.8; margin-bottom:32px; }
+.lm-bullets { display:flex; flex-direction:column; gap:10px; }
+.lm-bullet { display:flex; gap:10px; font-size:13px; color:rgba(242,240,235,.6); }
+.lm-bullet::before { content:'→'; color:var(--gold); }
+
+/* FORM */
+.form-wrap { background:var(--card-bg); border:1px solid var(--border); padding:48px; }
+.form-title { font-family:'Syne',sans-serif; font-weight:700; font-size:20px; margin-bottom:8px; }
+.form-sub { font-size:13px; color:var(--gray); margin-bottom:32px; }
+.form-group { margin-bottom:20px; }
+.form-group label { display:block; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--gray); margin-bottom:8px; }
+.form-group input,.form-group select,.form-group textarea { width:100%; background:rgba(242,240,235,.03); border:1px solid var(--border); color:var(--white); padding:14px 16px; font-family:'DM Sans',sans-serif; font-size:14px; transition:border-color .3s; outline:none; }
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus { border-color:var(--gold); }
+.form-group select { cursor:pointer; }
+.form-group select option { background:var(--black); }
+.form-group textarea { resize:vertical; min-height:100px; }
+.form-submit { width:100%; background:var(--gold); color:var(--black); border:none; padding:16px; font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; cursor:pointer; transition:background .3s; margin-top:8px; }
+.form-submit:hover { background:var(--gold-light); }
+.form-success { display:none; text-align:center; padding:40px 20px; }
+.form-success .check { font-size:48px; margin-bottom:16px; }
+.form-success h3 { font-family:'Syne',sans-serif; font-size:22px; margin-bottom:8px; }
+.form-success p { color:var(--gray); font-size:14px; }
+
+/* MARKETS */
+.markets { background:#07070A; border-top:1px solid var(--border); }
+.markets-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:56px; }
+.market-card { border:1px solid var(--border); padding:36px 28px; position:relative; overflow:hidden; transition:border-color .3s,transform .3s; }
+.market-card:hover { border-color:var(--gold); transform:translateY(-4px); }
+.market-flag { font-size:36px; margin-bottom:16px; display:block; }
+.market-name { font-family:'Syne',sans-serif; font-weight:700; font-size:20px; margin-bottom:8px; }
+.market-desc { font-size:13px; color:var(--gray); line-height:1.6; }
+.market-glow { position:absolute; bottom:-40px; right:-40px; width:100px; height:100px; border-radius:50%; background:radial-gradient(circle,rgba(201,168,76,.15),transparent); opacity:0; transition:opacity .3s; }
+.market-card:hover .market-glow { opacity:1; }
+
+/* BLOG */
+.blog { background:var(--black); border-top:1px solid var(--border); }
+.blog-intro { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; }
+.blog-intro a { color:var(--gold); font-size:13px; letter-spacing:.08em; text-decoration:none; border-bottom:1px solid rgba(201,168,76,.3); padding-bottom:2px; }
+.blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.blog-card { border:1px solid var(--border); overflow:hidden; transition:border-color .3s,transform .3s; background:var(--card-bg); cursor:pointer; }
+.blog-card:hover { border-color:var(--gold); transform:translateY(-4px); }
+.blog-thumb { height:180px; background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(5,5,8,.8)); display:flex; align-items:center; justify-content:center; font-size:48px; position:relative; overflow:hidden; border-bottom:1px solid var(--border); }
+.blog-body { padding:28px; }
+.blog-cat { font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+.blog-title-card { font-family:'Syne',sans-serif; font-weight:700; font-size:17px; line-height:1.3; margin-bottom:10px; }
+.blog-excerpt { font-size:13px; color:rgba(242,240,235,.4); line-height:1.7; margin-bottom:18px; }
+.blog-meta { font-size:11px; color:var(--gray); display:flex; gap:16px; }
+
+/* ABOUT */
+.about { background:#07070A; border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:100px; align-items:center; }
+.about-visual { position:relative; height:460px; }
+.about-box { position:absolute; border:1px solid var(--border); background:linear-gradient(135deg,rgba(201,168,76,.05),transparent); }
+.about-box:nth-child(1) { inset:0; }
+.about-box:nth-child(2) { top:36px; left:36px; right:-18px; bottom:-18px; border-color:rgba(201,168,76,.07); }
+.about-inner { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:28px; padding:44px; z-index:1; }
+.about-center-stat { text-align:center; }
+.about-center-stat .big { font-family:'Syne',sans-serif; font-weight:800; font-size:60px; color:var(--gold); line-height:1; }
+.about-center-stat p { color:var(--gray); font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-top:6px; }
+.about-countries { display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; }
+.country-chip { border:1px solid var(--border); padding:10px 14px; display:flex; align-items:center; gap:8px; font-size:13px; color:rgba(242,240,235,.65); transition:all .3s; }
+.country-chip:hover { border-color:var(--gold); background:var(--gold-dim); }
+.about-content p { color:rgba(242,240,235,.5); font-size:15px; line-height:1.9; margin-bottom:22px; }
+.about-pills { display:flex; flex-wrap:wrap; gap:8px; margin-top:36px; }
+.pill { border:1px solid var(--border); padding:7px 16px; font-size:11px; letter-spacing:.08em; color:var(--gray); transition:all .3s; }
+.pill:hover { border-color:var(--gold); color:var(--gold); }
+
+/* CTA */
+.cta-section { background:var(--black); border-top:1px solid var(--border); text-align:center; padding:140px 60px; position:relative; overflow:hidden; }
+.cta-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(201,168,76,.06),transparent); }
+.cta-section .section-tag { justify-content:center; }
+.cta-section .section-tag::before { display:none; }
+.cta-section .section-title { margin-bottom:20px; }
+.cta-section > div > p { color:rgba(242,240,235,.45); font-size:17px; max-width:480px; margin:0 auto 48px; line-height:1.8; }
+.cta-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.contact-info { display:flex; justify-content:center; gap:56px; margin-top:72px; padding-top:56px; border-top:1px solid var(--border); flex-wrap:wrap; }
+.contact-item { text-align:center; }
+.contact-item .label { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gray); margin-bottom:7px; }
+.contact-item .value { font-size:14px; color:var(--white); }
+.contact-item a { color:var(--white); text-decoration:none; transition:color .3s; }
+.contact-item a:hover { color:var(--gold); }
+
+/* FOOTER */
+footer { background:var(--black); border-top:1px solid var(--border); padding:36px 60px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+.footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:18px; letter-spacing:.1em; }
+.footer-logo span { color:var(--gold); }
+.footer-copy,.footer-loc { font-size:11px; color:var(--gray); letter-spacing:.05em; }
+
+/* UTILS */
+.reveal { opacity:0; transform:translateY(36px); transition:opacity .8s ease,transform .8s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-thumb { background:var(--gold); }
+
+/* LANG HIDDEN */
+[data-es], [data-en] { }
+html[data-lang="en"] [data-es] { display:none !important; }
+html[data-lang="es"] [data-en] { display:none !important; }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/573025280632" class="wa-float" target="_blank" title="WhatsApp">
+  <div class="wa-pulse"></div>
+  💬
+</a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">GE<span>G</span>H</a>
+  <ul class="nav-links">
+    <li><a href="#servicios"><span data-es>Servicios</span><span data-en>Services</span></a></li>
+    <li><a href="#diferenciacion"><span data-es>Por qué nosotros</span><span data-en>Why us</span></a></li>
+    <li><a href="#precios"><span data-es>Precios</span><span data-en>Pricing</span></a></li>
+    <li><a href="#blog"><span data-es>Blog</span><span data-en>Blog</span></a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-toggle" id="langBtn">EN</button>
+    <button class="nav-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+      <span data-es>Hablar ahora</span><span data-en>Talk now</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span data-es>Bucaramanga · Colombia · Boutique de IA</span>
+      <span data-en>Bucaramanga · Colombia · AI Boutique</span>
+    </div>
+    <h1 class="hero-title">
+      <span data-es>IA que<br><em>transforma</em><br><span class="outline">empresas</span></span>
+      <span data-en>AI that<br><em>transforms</em><br><span class="outline">business</span></span>
+    </h1>
+    <p class="hero-sub">
+      <span data-es>Diseñamos, construimos y desplegamos sistemas de inteligencia artificial que generan ventajas reales y medibles. Implementación en menos de <strong style="color:var(--gold)">7 días.</strong></span>
+      <span data-en>We design, build and deploy AI systems that generate real, measurable advantages. Implementation in less than <strong style="color:var(--gold)">7 days.</strong></span>
+    </p>
+    <div class="hero-actions">
+      <a href="#diagnostico" class="btn-primary">
+        <span data-es>🎁 Diagnóstico gratis de IA</span>
+        <span data-en>🎁 Free AI Diagnosis</span>
+      </a>
+      <a href="#precios" class="btn-ghost">
+        <span data-es>Ver paquetes →</span>
+        <span data-en>See packages →</span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label"><span data-es>Especialistas</span><span data-en>Specialists</span></div></div>
+    <div class="stat"><div class="stat-num">7</div><div class="stat-label"><span data-es>Días de implementación</span><span data-en>Days to implement</span></div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label"><span data-es>Idiomas</span><span data-en>Languages</span></div></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>◆</span> <span data-es>Agentes de IA</span><span data-en>AI Agents</span></div>
+    <div class="marquee-item"><span>◆</span> <span data-es>Consultoría Estratégica</span><span data-en>Strategic Consulting</span></div>
+    <div class="marquee-item"><span>◆</span> <span data-es>Implementación en 7 días</span><span data-en>7-Day Implementation</span></div>
+    <div class="marquee-item"><span>◆</span> <span data-es>MLOps & Datos</span><span data-en>MLOps & Data</span></div>
+    <div class="marquee-item"><span>◆</span> ISO 42001</div>
+    <div class="marquee-item"><span>◆</span> <span data-es>Sector Salud · Agro · Educación</span><span data-en>Health · Agro · Education</span></div>
+    <div class="marquee-item"><span>◆</span> RAG · LLM · Agentic AI</div>
+    <div class="marquee-item"><span>◆</span> <span data-es>Colombia · Latam · USA · Europa</span><span data-en>Colombia · Latam · USA · Europe</span></div>
+    <!-- dup -->
+    <div class="marquee-item"><span>◆</span> <span data-es>Agentes de IA</span><span data-en>AI Agents</span></div>
+    <div class="marquee-item"><span>◆</span> <span data-es>Consultoría Estratégica</span><span data-en>Strategic Consulting</span></div>
+    <div class="marquee-item"><span>◆</span> <span data-es>Implementación en 7 días</span><span data-en>7-Day Implementation</span></div>
+    <div class="marquee-item"><span>◆</span> <span data-es>MLOps & Datos</span><span data-en>MLOps & Data</span></div>
+    <div class="marquee-item"><span>◆</span> ISO 42001</div>
+    <div class="marquee-item"><span>◆</span> <span data-es>Sector Salud · Agro · Educación</span><span data-en>Health · Agro · Education</span></div>
+    <div class="marquee-item"><span>◆</span> RAG · LLM · Agentic AI</div>
+    <div class="marquee-item"><span>◆</span> <span data-es>Colombia · Latam · USA · Europa</span><span data-en>Colombia · Latam · USA · Europe</span></div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="why reveal" id="diferenciacion">
+  <div class="why-grid">
+    <div class="why-intro">
+      <div class="section-tag"><span data-es>Por qué nosotros</span><span data-en>Why us</span></div>
+      <h2 class="section-title"><span data-es>No somos <em>genéricos</em></span><span data-en>We're not <em>generic</em></span></h2>
+      <p>
+        <span data-es>En Colombia hay muchas agencias digitales. GEGH es diferente: combinamos estrategia ejecutiva con ingeniería de IA de alto nivel — no solo entregamos tecnología, entregamos resultados medibles.</span>
+        <span data-en>There are many digital agencies in Colombia. GEGH is different: we combine executive strategy with high-level AI engineering — we don't just deliver technology, we deliver measurable results.</span>
+      </p>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="why-icon">⚡</div>
+          <div class="why-text">
+            <strong><span data-es>Implementación en 7 días</span><span data-en>7-Day Implementation</span></strong>
+            <p><span data-es>Prometemos y cumplimos. Tu proyecto en producción en una semana, no en meses.</span><span data-en>We promise and deliver. Your project in production in a week, not months.</span></p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🏥</div>
+          <div class="why-text">
+            <strong><span data-es>Especializados en salud, agro y educación</span><span data-en>Specialized in health, agro & education</span></strong>
+            <p><span data-es>No hacemos IA genérica. Conocemos tu industria y diseñamos soluciones para tu contexto real.</span><span data-en>We don't do generic AI. We know your industry and design solutions for your real context.</span></p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🧠</div>
+          <div class="why-text">
+            <strong><span data-es>IA + estrategia ejecutiva (no solo técnica)</span><span data-en>AI + executive strategy (not just technical)</span></strong>
+            <p><span data-es>Nuestro equipo incluye estrategas de negocio, no solo ingenieros. ROI medible desde el día 1.</span><span data-en>Our team includes business strategists, not just engineers. Measurable ROI from day 1.</span></p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🌍</div>
+          <div class="why-text">
+            <strong><span data-es>4 idiomas, alcance global</span><span data-en>4 languages, global reach</span></strong>
+            <p><span data-es>Español, inglés, portugués y alemán. Operamos en Latam, USA y Europa sin fricción.</span><span data-en>Spanish, English, Portuguese and German. We operate in Latam, USA and Europe seamlessly.</span></p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon">🛡️</div>
+          <div class="why-text">
+            <strong>ISO 42001 · AI Governance</strong>
+            <p><span data-es>Únicos en Colombia con foco en gobernanza responsable de IA. Tu empresa protegida desde el inicio.</span><span data-en>Unique in Colombia with focus on responsible AI governance. Your company protected from day one.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <div class="why-card">
+        <div class="why-card-num">01</div>
+        <h4><span data-es>Boutique, no fábrica</span><span data-en>Boutique, not factory</span></h4>
+        <p><span data-es>Máximo 5 proyectos simultáneos. Cada cliente recibe atención de nuestros mejores especialistas, no de un junior.</span><span data-en>Maximum 5 simultaneous projects. Each client gets attention from our best specialists, not a junior.</span></p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">02</div>
+        <h4><span data-es>ROI medible o te devolvemos tu dinero</span><span data-en>Measurable ROI or money back</span></h4>
+        <p><span data-es>Definimos KPIs claros antes de empezar. Si no alcanzamos los resultados pactados, el siguiente sprint es gratis.</span><span data-en>We define clear KPIs before starting. If we don't reach agreed results, the next sprint is free.</span></p>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">03</div>
+        <h4><span data-es>Soporte post-entrega incluido</span><span data-en>Post-delivery support included</span></h4>
+        <p><span data-es>No desaparecemos después de entregar. 30 días de acompañamiento incluidos en todos los paquetes.</span><span data-en>We don't disappear after delivery. 30 days of support included in all packages.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div class="services-intro reveal">
+    <div class="section-tag"><span data-es>Servicios</span><span data-en>Services</span></div>
+    <h2 class="section-title"><span data-es>Soluciones de IA <em>end-to-end</em></span><span data-en><em>End-to-end</em> AI solutions</span></h2>
+    <p><span data-es>Desde la estrategia ejecutiva hasta el despliegue en producción. Cada solución diseñada para generar ROI real.</span><span data-en>From executive strategy to production deployment. Every solution designed to generate real ROI.</span></p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">🤖</div>
+      <div class="service-name"><span data-es>Agentes de IA</span><span data-en>AI Agents</span></div>
+      <div class="service-desc"><span data-es>Agentes autónomos con LLMs que automatizan procesos completos, toman decisiones y se integran con tus sistemas via RAG y Agentic Workflows.</span><span data-en>Autonomous LLM agents that automate complete processes, make decisions and integrate with your systems via RAG and Agentic Workflows.</span></div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">🧭</div>
+      <div class="service-name"><span data-es>Consultoría Estratégica</span><span data-en>Strategic Consulting</span></div>
+      <div class="service-desc"><span data-es>Definimos el roadmap de IA de tu organización desde la visión ejecutiva hasta la arquitectura técnica, con foco en ROI medible.</span><span data-en>We define your AI roadmap from executive vision to technical architecture, focused on measurable ROI.</span></div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">🎓</div>
+      <div class="service-name"><span data-es>Formación Corporativa</span><span data-en>Corporate Training</span></div>
+      <div class="service-desc"><span data-es>Capacitamos equipos directivos y técnicos para adoptar la IA con confianza, desde fundamentos hasta implementación avanzada.</span><span data-en>We train executive and technical teams to adopt AI confidently, from fundamentals to advanced implementation.</span></div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-icon">⚙️</div>
+      <div class="service-name"><span data-es>Desarrollo de Productos IA</span><span data-en>AI Product Development</span></div>
+      <div class="service-desc"><span data-es>Construimos productos de IA verticales desde el MVP hasta producción con arquitectura robusta, UX excepcional y seguridad incorporada.</span><span data-en>We build vertical AI products from MVP to production with robust architecture, exceptional UX and built-in security.</span></div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-icon">📊</div>
+      <div class="service-name">MLOps & <span data-es>Datos</span><span data-en>Data</span></div>
+      <div class="service-desc"><span data-es>Desplegamos infraestructura de datos y modelos en cloud, pipelines, monitoreo continuo, fine-tuning y datasets listos para producción.</span><span data-en>We deploy cloud data and model infrastructure, pipelines, continuous monitoring, fine-tuning and production-ready datasets.</span></div>
+      <div class="service-arrow">→</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-icon">🌐</div>
+      <div class="service-name"><span data-es>Presencia Digital con IA</span><span data-en>AI-Powered Web Presence</span></div>
+      <div class="service-desc"><span data-es>Web profesional con IA integrada — diseño premium, SEO, Google My Business, correo corporativo y agente de WhatsApp. En menos de 7 días.</span><span data-en>Professional website with integrated AI — premium design, SEO, Google My Business, corporate email and WhatsApp agent. In less than 7 days.</span></div>
+      <div class="service-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="precios">
+  <div class="pricing-intro reveal">
+    <div class="section-tag"><span data-es>Paquetes</span><span data-en>Packages</span></div>
+    <h2 class="section-title"><span data-es>Oferta <em>irresistible</em></span><span data-en><em>Irresistible</em> offer</span></h2>
+    <p><span data-es>Precios claros. Sin sorpresas. Elige el paquete que se adapta a tu momento.</span><span data-en>Clear pricing. No surprises. Choose the package that fits your moment.</span></p>
+  </div>
+  <div class="pricing-grid reveal">
+
+    <div class="price-card">
+      <div class="price-stars">⭐</div>
+      <div class="price-name">Esencial</div>
+      <div class="price-who"><span data-es>Para empresas que están dando sus primeros pasos en IA</span><span data-en>For businesses taking their first steps in AI</span></div>
+      <div class="price-amount"><span data-es>Desde </span><span data-en>From </span>$990 <span>USD</span></div>
+      <div class="price-note"><span data-es>Pago único · Entrega en 7 días</span><span data-en>One-time payment · 7-day delivery</span></div>
+      <ul class="price-features">
+        <li><span data-es>Web profesional con IA integrada</span><span data-en>Professional website with integrated AI</span></li>
+        <li>SEO <span data-es>técnico básico</span><span data-en>technical basics</span></li>
+        <li><span data-es>Correo corporativo configurado</span><span data-en>Corporate email setup</span></li>
+        <li>Google My Business</li>
+        <li><span data-es>Agente de WhatsApp básico</span><span data-en>Basic WhatsApp agent</span></li>
+        <li><span data-es>30 días de soporte incluido</span><span data-en>30 days support included</span></li>
+      </ul>
+      <button class="price-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+        <span data-es>Quiero este plan</span><span data-en>I want this plan</span>
+      </button>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-badge"><span data-es>Más popular</span><span data-en>Most popular</span></div>
+      <div class="price-stars">⭐⭐</div>
+      <div class="price-name">Profesional</div>
+      <div class="price-who"><span data-es>Para empresas que quieren diferenciarse y crecer en digital</span><span data-en>For businesses that want to differentiate and grow digitally</span></div>
+      <div class="price-amount"><span data-es>Desde </span><span data-en>From </span>$2,500 <span>USD</span></div>
+      <div class="price-note"><span data-es>Pago único · Entrega en 7 días</span><span data-en>One-time payment · 7-day delivery</span></div>
+      <ul class="price-features">
+        <li><span data-es>Todo lo del plan Esencial</span><span data-en>Everything in Essential plan</span></li>
+        <li><span data-es>Diseño de logo e identidad visual</span><span data-en>Logo & visual identity design</span></li>
+        <li><span data-es>Google Maps optimizado</span><span data-en>Google Maps optimization</span></li>
+        <li><span data-es>Estrategia de contenido SEO (3 meses)</span><span data-en>SEO content strategy (3 months)</span></li>
+        <li><span data-es>Integraciones CRM básicas</span><span data-en>Basic CRM integrations</span></li>
+        <li><span data-es>Dashboard de métricas</span><span data-en>Metrics dashboard</span></li>
+        <li><span data-es>60 días de soporte incluido</span><span data-en>60 days support included</span></li>
+      </ul>
+      <button class="price-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+        <span data-es>Quiero este plan</span><span data-en>I want this plan</span>
+      </button>
+    </div>
+
+    <div class="price-card">
+      <div class="price-stars">⭐⭐⭐</div>
+      <div class="price-name">Premium IA</div>
+      <div class="price-who"><span data-es>Para empresas que quieren automatizar y escalar con IA real</span><span data-en>For businesses ready to automate and scale with real AI</span></div>
+      <div class="price-amount"><span data-es>Desde </span><span data-en>From </span>$5,000 <span>USD</span></div>
+      <div class="price-note"><span data-es>Pago fraccionado disponible</span><span data-en>Installment payment available</span></div>
+      <ul class="price-features">
+        <li><span data-es>Todo lo del plan Profesional</span><span data-en>Everything in Professional plan</span></li>
+        <li><span data-es>Agente de IA personalizado integrado</span><span data-en>Custom integrated AI agent</span></li>
+        <li><span data-es>Automatización de procesos internos</span><span data-en>Internal process automation</span></li>
+        <li><span data-es>Pipeline de datos y analítica avanzada</span><span data-en>Data pipeline & advanced analytics</span></li>
+        <li><span data-es>Formación de equipo (4 horas)</span><span data-en>Team training (4 hours)</span></li>
+        <li><span data-es>Consultoría estratégica de IA (2 sesiones)</span><span data-en>AI strategic consulting (2 sessions)</span></li>
+        <li><span data-es>90 días de soporte prioritario</span><span data-en>90 days priority support</span></li>
+      </ul>
+      <button class="price-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+        <span data-es>Quiero este plan</span><span data-en>I want this plan</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD MAGNET -->
+<section class="lead-magnet" id="diagnostico">
+  <div class="lm-box reveal">
+    <div>
+      <div class="lm-tag">🎁 <span data-es>Oferta gratuita</span><span data-en>Free offer</span></div>
+      <h2 class="lm-title"><span data-es><em>Diagnóstico gratuito</em><br>de IA para tu empresa</span><span data-en><em>Free AI Diagnosis</em><br>for your company</span></h2>
+      <p class="lm-desc"><span data-es>En 30 minutos te decimos exactamente cómo la IA puede impactar tu negocio. Sin compromiso. Sin venta agresiva. Solo claridad.</span><span data-en>In 30 minutes we tell you exactly how AI can impact your business. No commitment. No hard sell. Just clarity.</span></p>
+      <div class="lm-bullets">
+        <div class="lm-bullet"><span data-es>Identificamos 3 oportunidades concretas de IA en tu empresa</span><span data-en>We identify 3 concrete AI opportunities in your business</span></div>
+        <div class="lm-bullet"><span data-es>Estimamos el ROI potencial en 12 meses</span><span data-en>We estimate potential ROI in 12 months</span></div>
+        <div class="lm-bullet"><span data-es>Te entregamos un mini-roadmap de implementación</span><span data-en>We deliver a mini implementation roadmap</span></div>
+        <div class="lm-bullet"><span data-es>100% gratis, sin condiciones</span><span data-en>100% free, no strings attached</span></div>
+      </div>
+    </div>
+    <!-- FORM -->
+    <div class="form-wrap" id="contacto">
+      <div id="formContent">
+        <div class="form-title"><span data-es>Agenda tu diagnóstico</span><span data-en>Schedule your diagnosis</span></div>
+        <div class="form-sub"><span data-es>3 preguntas · Respuesta en menos de 24h</span><span data-en>3 questions · Response in less than 24h</span></div>
+        <div class="form-group">
+          <label><span data-es>Tu nombre y empresa</span><span data-en>Your name and company</span></label>
+          <input type="text" id="f-name" placeholder="Ej: Juan Pérez — Empresa XYZ">
+        </div>
+        <div class="form-group">
+          <label><span data-es>¿En qué sector opera tu empresa?</span><span data-en>What sector does your company operate in?</span></label>
+          <select id="f-sector">
+            <option value=""><span data-es>Selecciona un sector</span><span data-en>Select a sector</span></option>
+            <option><span data-es>Salud</span><span data-en>Health</span></option>
+            <option>Agro</option>
+            <option><span data-es>Educación</span><span data-en>Education</span></option>
+            <option><span data-es>Retail / Comercio</span><span data-en>Retail / Commerce</span></option>
+            <option>Fintech</option>
+            <option><span data-es>Manufactura</span><span data-en>Manufacturing</span></option>
+            <option><span data-es>Otro</span><span data-en>Other</span></option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><span data-es>¿Cuál es tu mayor reto operativo hoy?</span><span data-en>What is your biggest operational challenge today?</span></label>
+          <textarea id="f-reto" placeholder="Ej: Tardamos mucho en atender clientes, no tenemos datos centralizados..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp / Email</label>
+          <input type="text" id="f-contact" placeholder="+57 300 000 0000">
+        </div>
+        <button class="form-submit" onclick="submitForm()">
+          <span data-es>🚀 Quiero mi diagnóstico gratis</span><span data-en>🚀 I want my free diagnosis</span>
+        </button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="check">✅</div>
+        <h3><span data-es>¡Recibido!</span><span data-en>Received!</span></h3>
+        <p><span data-es>Te contactamos en menos de 24 horas para agendar tu diagnóstico gratuito.</span><span data-en>We'll contact you in less than 24 hours to schedule your free diagnosis.</span></p>
+        <br>
+        <a href="https://wa.me/573025280632" class="btn-primary" style="margin-top:16px">
+          <span data-es>O escríbenos por WhatsApp →</span><span data-en>Or message us on WhatsApp →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETS -->
+<section class="markets" id="mercados">
+  <div class="reveal">
+    <div class="section-tag"><span data-es>Cobertura global</span><span data-en>Global coverage</span></div>
+    <h2 class="section-title"><span data-es>Mercados <em>objetivo</em></span><span data-en>Target <em>markets</em></span></h2>
+  </div>
+  <div class="markets-grid reveal">
+    <div class="market-card"><span class="market-flag">🇨🇴</span><div class="market-name">Colombia</div><div class="market-desc"><span data-es>Mercado base. Salud, agro y educación privada.</span><span data-en>Home market. Health, agro and private education.</span></div><div class="market-glow"></div></div>
+    <div class="market-card"><span class="market-flag">🇧🇷</span><div class="market-name">Brasil</div><div class="market-desc"><span data-es>Mayor economía de Latam. Operamos en portugués.</span><span data-en>Largest Latam economy. We operate in Portuguese.</span></div><div class="market-glow"></div></div>
+    <div class="market-card"><span class="market-flag">🇺🇸</span><div class="market-name">USA</div><div class="market-desc"><span data-es>Startups hispanas y nearshore AI services.</span><span data-en>Hispanic startups and nearshore AI services.</span></div><div class="market-glow"></div></div>
+    <div class="market-card"><span class="market-flag">🇩🇪</span><div class="market-name">Alemania</div><div class="market-desc"><span data-es>Mittelstand europeo. Operamos en alemán.</span><span data-en>European Mittelstand. We operate in German.</span></div><div class="market-glow"></div></div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="blog" id="blog">
+  <div class="blog-intro reveal">
+    <div>
+      <div class="section-tag"><span data-es>Blog & Autoridad</span><span data-en>Blog & Authority</span></div>
+      <h2 class="section-title"><span data-es>IA que <em>educa</em></span><span data-en>AI that <em>educates</em></span></h2>
+    </div>
+    <a href="#blog"><span data-es>Ver todos los artículos →</span><span data-en>See all articles →</span></a>
+  </div>
+  <div class="blog-grid reveal">
+    <div class="blog-card">
+      <div class="blog-thumb">🏥</div>
+      <div class="blog-body">
+        <div class="blog-cat"><span data-es>Salud · IA</span><span data-en>Health · AI</span></div>
+        <div class="blog-title-card"><span data-es>Cómo usar IA en clínicas y hospitales en Colombia en 2026</span><span data-en>How to use AI in clinics and hospitals in Colombia in 2026</span></div>
+        <div class="blog-excerpt"><span data-es>Casos reales de automatización de historias clínicas, triaje inteligente y reducción de costos operativos.</span><span data-en>Real cases of clinical record automation, intelligent triage and operational cost reduction.</span></div>
+        <div class="blog-meta"><span>GEGH</span><span>·</span><span>Mar 2026</span><span>·</span><span>8 min</span></div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-thumb">🌾</div>
+      <div class="blog-body">
+        <div class="blog-cat"><span data-es>Agro · Colombia</span><span data-en>Agro · Colombia</span></div>
+        <div class="blog-title-card"><span data-es>IA para el sector agrícola: casos de uso en Latam</span><span data-en>AI for the agricultural sector: use cases in Latam</span></div>
+        <div class="blog-excerpt"><span data-es>Predicción de cosechas, drones autónomos y análisis de suelos con modelos de lenguaje. El agro del futuro ya existe.</span><span data-en>Crop prediction, autonomous drones and soil analysis with language models. The future of agriculture is here.</span></div>
+        <div class="blog-meta"><span>GEGH</span><span>·</span><span>Feb 2026</span><span>·</span><span>6 min</span></div>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-thumb">🚀</div>
+      <div class="blog-body">
+        <div class="blog-cat"><span data-es>Guía · 2026</span><span data-en>Guide · 2026</span></div>
+        <div class="blog-title-card"><span data-es>Guía completa para implementar IA en tu empresa en 2026</span><span data-en>Complete guide to implementing AI in your business in 2026</span></div>
+        <div class="blog-excerpt"><span data-es>Desde el diagnóstico inicial hasta el despliegue en producción. El roadmap que usamos en GEGH con nuestros clientes.</span><span data-en>From initial diagnosis to production deployment. The roadmap we use at GEGH with our clients.</span></div>
+        <div class="blog-meta"><span>GEGH</span><span>·</span><span>Ene 2026</span><span>·</span><span>12 min</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="nosotros">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-box"></div>
+      <div class="about-box"></div>
+      <div class="about-inner">
+        <div class="about-center-stat">
+          <div class="big">10+</div>
+          <p><span data-es>Especialistas en IA</span><span data-en>AI Specialists</span></p>
+        </div>
+        <div class="about-countries">
+          <div class="country-chip">🇨🇴 Colombia</div>
+          <div class="country-chip">🇧🇷 Brasil</div>
+          <div class="country-chip">🇺🇸 USA</div>
+          <div class="country-chip">🇩🇪 Alemania</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-content reveal">
+      <div class="section-tag"><span data-es>Quiénes somos</span><span data-en>Who we are</span></div>
+      <h2 class="section-title"><span data-es>Un equipo construido<br>para <em>ganar</em></span><span data-en>A team built<br>to <em>win</em></span></h2>
+      <p><span data-es>GEGH es una boutique de inteligencia artificial con sede en Bucaramanga, Colombia. Combinamos estrategia ejecutiva, ingeniería de alto nivel y gobierno responsable de IA para entregar soluciones que generan valor real.</span><span data-en>GEGH is an AI boutique based in Bucaramanga, Colombia. We combine executive strategy, high-level engineering and responsible AI governance to deliver solutions that generate real value.</span></p>
+      <p><span data-es>Operamos en español, inglés, portugués y alemán, alcanzando mercados en Latam, EEUU y Europa directamente.</span><span data-en>We operate in Spanish, English, Portuguese and German, reaching markets in Latam, USA and Europe directly.</span></p>
+      <div class="about-pills">
+        <div class="pill">ISO 42001</div>
+        <div class="pill">AI Governance</div>
+        <div class="pill">RAG</div>
+        <div class="pill">LLM Engineering</div>
+        <div class="pill">MLOps</div>
+        <div class="pill">Agentic AI</div>
+        <div class="pill">4 <span data-es>Idiomas</span><span data-en>Languages</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">GE<span>G</span>H</div>
+  <div class="footer-copy">© 2026 Grupo Empresarial Guerrero Herrera S.A.S.</div>
+  <div class="footer-loc">📍 Diamante II, Bucaramanga, Colombia</div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+(function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+document.querySelectorAll('a,button,.service-card,.market-card,.price-card,.blog-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cursor.style.width='18px'; cursor.style.height='18px'; ring.style.width='54px'; ring.style.height='54px'; });
+  el.addEventListener('mouseleave',()=>{ cursor.style.width='10px'; cursor.style.height='10px'; ring.style.width='36px'; ring.style.height='36px'; });
+});
+
+// Navbar
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', ()=> nav.classList.toggle('scrolled', window.scrollY>60));
+
+// Lang toggle
+const html = document.documentElement;
+const langBtn = document.getElementById('langBtn');
+langBtn.addEventListener('click', ()=>{
+  const isEs = html.getAttribute('data-lang') === 'es';
+  html.setAttribute('data-lang', isEs ? 'en' : 'es');
+  langBtn.textContent = isEs ? 'ES' : 'EN';
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => {
+    if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'), i*60); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+// Form submit
+function submitForm(){
+  const name = document.getElementById('f-name').value;
+  const contact = document.getElementById('f-contact').value;
+  if(!name || !contact){ alert('Por favor completa tu nombre y contacto.'); return; }
+  document.getElementById('formContent').style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+}
+</script>
+</body>
+</html>
