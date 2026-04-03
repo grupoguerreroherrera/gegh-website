@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GEGH — Boutique de Inteligencia Artificial en Colombia. Diseñamos, construimos y desplegamos sistemas de IA que generan ventajas reales. Implementación en 7 días.">
+<meta name="keywords" content="inteligencia artificial colombia, agentes IA, consultoría IA, MLOps, Bucaramanga, GEGH">
+<meta property="og:title" content="GEGH — IA que transforma empresas">
+<meta property="og:description" content="Boutique de IA en Colombia. Implementación en 7 días.">
+<meta property="og:url" content="https://grupoguerreroherrera.com">
+<title>GEGH — IA que transforma empresas | AI that transforms business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════
+   GEGH — BRAND COLORS & VARIABLES
+   Paleta oficial: Negro obsidiana + Oro/Ámbar premium
+   ══════════════════════════════════════════════ */
+:root {
+  --obsidian:    #07070f;
+  --void:        #0b0b18;
+  --deep:        #0f0f22;
+  --surface:     #13132a;
+  --card:        #16162e;
+  --border:      rgba(255,255,255,0.07);
+  --border-gold: rgba(196,160,80,0.3);
+
+  /* Gold palette — premium accent */
+  --gold:        #c4a050;
+  --gold-light:  #e8c97a;
+  --gold-pale:   #f5e4b0;
+  --gold-dim:    rgba(196,160,80,0.18);
+
+  /* Cyan — tech secondary */
+  --cyan:        #4dd9f5;
+  --cyan-dim:    rgba(77,217,245,0.15);
+
+  /* Text */
+  --white:       #f4f0e8;
+  --muted:       rgba(244,240,232,0.45);
+  --faint:       rgba(244,240,232,0.2);
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--obsidian);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── NOISE TEXTURE ── */
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:1;
+  opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px;
+}
+
+/* ── CURSOR ── */
+#cursor { position:fixed; width:10px; height:10px; border-radius:50%; background:var(--gold); pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .3s,height .3s; mix-blend-mode:screen; }
+#cursor-ring { position:fixed; width:34px; height:34px; border:1px solid rgba(196,160,80,0.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s; }
+
+/* ── CANVASES ── */
+#canvas-city, #canvas-neural {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  pointer-events:none; z-index:0;
+}
+#canvas-city   { opacity:0.55; }
+#canvas-neural { opacity:0.75; }
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  padding:22px 60px;
+  display:flex; justify-content:space-between; align-items:center;
+  transition:background .5s, border .5s;
+}
+nav.scrolled {
+  background:rgba(7,7,15,0.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border-gold);
+}
+.logo {
+  font-family:var(--font-display); font-weight:700; font-size:1.6rem;
+  color:var(--white); text-decoration:none; letter-spacing:0.06em;
+}
+.logo em { font-style:normal; color:var(--gold); }
+.nav-links { display:flex; gap:36px; list-style:none; }
+.nav-links a {
+  font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em;
+  color:var(--muted); text-decoration:none; text-transform:uppercase;
+  transition:color .2s;
+}
+.nav-links a:hover { color:var(--gold); }
+.nav-cta {
+  font-family:var(--font-mono); font-size:0.68rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase;
+  border:1px solid var(--gold); color:var(--gold);
+  padding:10px 22px; text-decoration:none;
+  transition:all .25s;
+}
+.nav-cta:hover { background:var(--gold); color:var(--obsidian); }
+
+/* ── SECTIONS ── */
+section { position:relative; z-index:2; }
+
+/* ── HERO ── */
+#hero {
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  text-align:center; padding:0 40px;
+}
+.hero-eyebrow {
+  font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.25em;
+  text-transform:uppercase; color:var(--gold);
+  margin-bottom:28px;
+  opacity:0; animation:fadeUp .9s .2s forwards;
+}
+.hero-title {
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(4rem,11vw,9.5rem);
+  line-height:.92; letter-spacing:-0.01em;
+  margin-bottom:10px;
+  opacity:0; animation:fadeUp .9s .4s forwards;
+}
+.hero-title em {
+  font-style:italic; color:var(--gold);
+  background:linear-gradient(135deg,var(--gold),var(--gold-light),var(--gold));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hero-subtitle {
+  font-family:var(--font-display); font-weight:400; font-style:italic;
+  font-size:clamp(1.6rem,4vw,3.2rem);
+  color:var(--muted); letter-spacing:0.04em; margin-bottom:36px;
+  opacity:0; animation:fadeUp .9s .55s forwards;
+}
+.hero-line {
+  width:60px; height:1px; background:var(--gold); margin:0 auto 36px;
+  opacity:0; animation:fadeUp .9s .65s forwards;
+}
+.hero-desc {
+  max-width:520px; margin:0 auto 52px;
+  font-size:1rem; color:var(--muted); line-height:1.75;
+  opacity:0; animation:fadeUp .9s .75s forwards;
+}
+.hero-desc strong { color:var(--gold-light); font-weight:500; }
+.hero-btns {
+  display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+  opacity:0; animation:fadeUp .9s .9s forwards;
+}
+.btn-gold {
+  font-family:var(--font-mono); font-size:0.72rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--obsidian); padding:15px 32px; text-decoration:none;
+  transition:all .25s; display:inline-block;
+}
+.btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(196,160,80,0.35); }
+.btn-outline {
+  font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+  border:1px solid var(--border-gold); color:var(--gold);
+  padding:15px 32px; text-decoration:none; transition:all .25s;
+}
+.btn-outline:hover { border-color:var(--gold); background:var(--gold-dim); }
+
+.hero-stats {
+  display:flex; gap:72px; justify-content:center; margin-top:88px;
+  opacity:0; animation:fadeUp .9s 1.1s forwards;
+}
+.stat { text-align:center; }
+.stat-n {
+  font-family:var(--font-display); font-weight:700; font-size:3.5rem;
+  color:var(--gold); line-height:1;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.stat-l { font-family:var(--font-mono); font-size:0.6rem; color:var(--muted); letter-spacing:0.12em; margin-top:8px; text-transform:uppercase; }
+
+.scroll-cue {
+  position:absolute; bottom:40px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  opacity:0; animation:fadeUp 1s 1.4s forwards;
+}
+.scroll-cue span { font-family:var(--font-mono); font-size:0.58rem; color:var(--faint); letter-spacing:0.2em; }
+.scroll-bar { width:1px; height:50px; background:linear-gradient(to bottom, var(--gold), transparent); animation:scrollPulse 2.2s infinite; }
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  padding:32px 0; overflow:hidden;
+  border-top:1px solid var(--border-gold);
+  border-bottom:1px solid var(--border-gold);
+  background:rgba(196,160,80,0.03);
+  position:relative; z-index:2;
+}
+.marquee-track { display:flex; gap:0; white-space:nowrap; animation:marquee 30s linear infinite; }
+.marquee-item {
+  font-family:var(--font-display); font-style:italic; font-size:1.05rem;
+  color:rgba(196,160,80,0.35); padding:0 40px;
+  display:flex; align-items:center; gap:16px; flex-shrink:0;
+}
+.marquee-dot { width:4px; height:4px; border-radius:50%; background:var(--gold); opacity:0.5; }
+
+/* ── SHARED SECTION STYLES ── */
+.sec-inner {
+  max-width:1160px; margin:0 auto; padding:120px 60px; width:100%;
+}
+.sec-tag {
+  font-family:var(--font-mono); font-size:0.65rem; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--gold); margin-bottom:18px;
+}
+.sec-title {
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(2.8rem,5.5vw,5rem);
+  line-height:1.02; letter-spacing:-0.01em; margin-bottom:72px;
+}
+.sec-title em { font-style:italic; color:var(--gold); }
+.sec-divider { width:48px; height:1px; background:var(--gold); margin-bottom:48px; }
+
+/* ── WHY GRID ── */
+.why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border-gold); }
+.why-card {
+  background:var(--void); padding:44px 36px;
+  position:relative; overflow:hidden;
+  transition:background .4s;
+}
+.why-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  transform:scaleX(0); transform-origin:left; transition:transform .5s;
+}
+.why-card:hover { background:var(--surface); }
+.why-card:hover::before { transform:scaleX(1); }
+.why-card-num {
+  font-family:var(--font-mono); font-size:0.6rem; color:var(--gold);
+  letter-spacing:0.15em; margin-bottom:24px; opacity:0.7;
+}
+.why-icon { font-size:1.8rem; margin-bottom:18px; display:block; }
+.why-card-title {
+  font-family:var(--font-display); font-weight:600; font-size:1.25rem;
+  margin-bottom:6px; line-height:1.3;
+}
+.why-card-sub { font-size:0.78rem; color:var(--gold); font-style:italic; margin-bottom:14px; }
+.why-card-desc { font-size:0.85rem; color:var(--muted); line-height:1.7; }
+
+/* Guarantee row */
+.guarantees { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); margin-top:1px; }
+.g-card { background:var(--void); padding:32px 36px; display:flex; gap:20px; align-items:flex-start; }
+.g-num { font-family:var(--font-display); font-size:2.5rem; color:var(--gold); opacity:0.25; flex-shrink:0; line-height:1; font-weight:700; }
+.g-text h4 { font-family:var(--font-display); font-size:1rem; font-weight:600; margin-bottom:6px; }
+.g-text p { font-size:0.82rem; color:var(--muted); line-height:1.6; }
+
+/* ── SERVICES ── */
+.svc-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:28px 0; border-bottom:1px solid var(--border);
+  transition:all .3s; cursor:default; position:relative; overflow:hidden;
+}
+.svc-row::before {
+  content:''; position:absolute; left:-100%; top:0; bottom:0; width:100%;
+  background:linear-gradient(90deg, var(--gold-dim), transparent);
+  transition:left .4s;
+}
+.svc-row:hover::before { left:0; }
+.svc-row:hover { padding-left:20px; border-color:var(--border-gold); }
+.svc-n { font-family:var(--font-mono); font-size:0.6rem; color:var(--gold); width:44px; flex-shrink:0; opacity:0.6; }
+.svc-name {
+  font-family:var(--font-display); font-weight:600;
+  font-size:clamp(1.3rem,2.3vw,1.9rem); flex:1; padding:0 28px;
+  transition:color .3s;
+}
+.svc-row:hover .svc-name { color:var(--gold-light); }
+.svc-desc { font-size:0.8rem; color:var(--muted); max-width:300px; line-height:1.5; }
+.svc-arr { font-size:1.1rem; color:var(--gold); margin-left:20px; transform:rotate(-45deg); transition:transform .3s; }
+.svc-row:hover .svc-arr { transform:rotate(0deg); }
+
+/* ── PRICING ── */
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border-gold); }
+.p-card {
+  background:var(--void); padding:52px 40px;
+  position:relative; overflow:hidden; transition:background .3s;
+}
+.p-card.featured { background:var(--surface); }
+.p-card.featured::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));
+}
+.p-badge {
+  position:absolute; top:20px; right:20px;
+  font-family:var(--font-mono); font-size:0.55rem; letter-spacing:0.12em;
+  background:var(--gold); color:var(--obsidian); padding:4px 10px; text-transform:uppercase;
+}
+.p-icon { font-size:1.3rem; margin-bottom:14px; }
+.p-name { font-family:var(--font-display); font-weight:700; font-size:2rem; margin-bottom:10px; }
+.p-tagline { font-size:0.82rem; color:var(--muted); margin-bottom:32px; line-height:1.55; }
+.p-price {
+  font-family:var(--font-display); font-size:2.8rem; font-weight:700; color:var(--gold-light);
+  margin-bottom:4px; line-height:1;
+}
+.p-price span { font-size:1rem; color:var(--muted); }
+.p-note { font-family:var(--font-mono); font-size:0.6rem; color:var(--muted); letter-spacing:0.1em; margin-bottom:32px; text-transform:uppercase; }
+.p-features { list-style:none; margin-bottom:40px; }
+.p-features li {
+  font-size:0.83rem; color:var(--muted); padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  display:flex; align-items:flex-start; gap:10px; line-height:1.4;
+}
+.p-features li::before { content:'◆'; color:var(--gold); font-size:0.5rem; flex-shrink:0; margin-top:3px; }
+.p-btn {
+  display:block; text-align:center;
+  font-family:var(--font-mono); font-size:0.68rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase;
+  padding:14px; text-decoration:none; transition:all .25s;
+  border:1px solid var(--border-gold); color:var(--gold);
+}
+.p-card.featured .p-btn { background:var(--gold); color:var(--obsidian); border-color:var(--gold); }
+.p-btn:hover { background:var(--gold); color:var(--obsidian); border-color:var(--gold); }
+
+/* ── DIAGNOSIS FORM ── */
+#diagnosis { background:var(--void); }
+.diag-inner { max-width:700px; }
+.diag-perks { display:flex; flex-direction:column; gap:14px; margin-bottom:52px; }
+.diag-perk { display:flex; gap:16px; align-items:flex-start; }
+.diag-perk-icon { color:var(--gold); flex-shrink:0; font-size:1rem; margin-top:2px; }
+.diag-perk-text { font-size:0.9rem; color:var(--muted); line-height:1.6; }
+.form-field { margin-bottom:20px; }
+.form-field label { display:block; font-family:var(--font-mono); font-size:0.62rem; color:var(--gold); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:8px; }
+.form-field input, .form-field select, .form-field textarea {
+  width:100%; background:var(--surface); border:1px solid var(--border);
+  color:var(--white); font-family:var(--font-body); font-size:0.9rem;
+  padding:14px 16px; outline:none; transition:border .2s;
+  -webkit-appearance:none;
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color:var(--gold); }
+.form-field select option { background:var(--surface); }
+.form-field textarea { resize:vertical; min-height:100px; }
+.form-submit { margin-top:28px; }
+#form-success { display:none; padding:24px; background:var(--gold-dim); border:1px solid var(--border-gold); margin-top:24px; }
+#form-success p { font-family:var(--font-display); font-size:1.1rem; color:var(--gold-light); }
+
+/* ── MARKETS ── */
+.mkt-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border-gold); }
+.mkt-card { background:var(--void); padding:48px 28px; text-align:center; transition:background .3s; }
+.mkt-card:hover { background:var(--surface); }
+.mkt-flag { font-size:2.6rem; display:block; margin-bottom:16px; }
+.mkt-name { font-family:var(--font-display); font-size:1.35rem; font-weight:600; margin-bottom:10px; }
+.mkt-desc { font-size:0.8rem; color:var(--muted); line-height:1.6; }
+
+/* ── BLOG ── */
+.blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); }
+.blog-card { background:var(--void); padding:36px 32px; transition:background .3s; }
+.blog-card:hover { background:var(--surface); }
+.blog-tag { font-family:var(--font-mono); font-size:0.58rem; color:var(--gold); letter-spacing:0.15em; margin-bottom:14px; text-transform:uppercase; }
+.blog-title { font-family:var(--font-display); font-size:1.25rem; font-weight:600; line-height:1.35; margin-bottom:12px; }
+.blog-excerpt { font-size:0.82rem; color:var(--muted); line-height:1.65; margin-bottom:20px; }
+.blog-meta { font-family:var(--font-mono); font-size:0.58rem; color:var(--faint); letter-spacing:0.1em; }
+
+/* ── ABOUT ── */
+#about { background:var(--void); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+.about-text p { font-size:1rem; color:var(--muted); line-height:1.8; margin-bottom:20px; }
+.about-tags { display:flex; flex-wrap:wrap; gap:10px; margin-top:36px; }
+.about-tag {
+  font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.1em;
+  border:1px solid var(--border-gold); color:var(--gold);
+  padding:7px 14px; text-transform:uppercase;
+}
+.about-visual { display:flex; flex-direction:column; gap:16px; }
+.kpi-row { display:flex; align-items:center; gap:20px; padding:20px 24px; background:var(--surface); border-left:2px solid var(--gold); }
+.kpi-n { font-family:var(--font-display); font-size:2.2rem; font-weight:700; color:var(--gold); min-width:70px; }
+.kpi-l { font-size:0.82rem; color:var(--muted); line-height:1.4; }
+
+/* ── CTA ── */
+#cta-final {
+  text-align:center; padding:160px 60px;
+  background:radial-gradient(ellipse at 50% 100%, rgba(196,160,80,0.07) 0%, transparent 55%);
+}
+.cta-title {
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(3rem,7vw,6.5rem); line-height:.95; letter-spacing:-0.01em; margin-bottom:28px;
+}
+.cta-title em { font-style:italic; color:var(--gold); }
+.cta-sub { font-size:1rem; color:var(--muted); max-width:440px; margin:0 auto 52px; line-height:1.75; }
+.cta-note { font-family:var(--font-mono); font-size:0.62rem; color:var(--faint); margin-top:20px; letter-spacing:0.12em; }
+
+/* ── FOOTER ── */
+footer {
+  padding:48px 60px; border-top:1px solid var(--border-gold);
+  display:flex; justify-content:space-between; align-items:center;
+  position:relative; z-index:2;
+  background:var(--obsidian);
+}
+.foot-logo { font-family:var(--font-display); font-weight:700; font-size:1.3rem; }
+.foot-logo em { font-style:normal; color:var(--gold); }
+.foot-copy { font-family:var(--font-mono); font-size:0.6rem; color:var(--faint); letter-spacing:0.08em; text-align:center; }
+.foot-loc { font-family:var(--font-mono); font-size:0.6rem; color:var(--muted); text-align:right; }
+.wa-float {
+  position:fixed; bottom:32px; right:32px; z-index:300;
+  width:52px; height:52px; border-radius:50%;
+  background:linear-gradient(135deg,#25d366,#1da851);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem; text-decoration:none;
+  box-shadow:0 4px 20px rgba(37,211,102,0.4);
+  transition:transform .2s, box-shadow .2s;
+}
+.wa-float:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(37,211,102,0.55); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes scrollPulse {
+  0%,100% { opacity:1; }
+  50%      { opacity:0.2; transform:scaleY(.5); transform-origin:top; }
+}
+@keyframes marquee {
+  from { transform:translateX(0); }
+  to   { transform:translateX(-50%); }
+}
+
+/* Reveal */
+.rv { opacity:0; transform:translateY(36px); transition:opacity .85s ease, transform .85s ease; }
+.rv.in { opacity:1; transform:translateY(0); }
+.rv-d1{transition-delay:.08s}
+.rv-d2{transition-delay:.16s}
+.rv-d3{transition-delay:.24s}
+.rv-d4{transition-delay:.32s}
+.rv-d5{transition-delay:.40s}
+.rv-d6{transition-delay:.48s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav { padding:16px 24px; }
+  .nav-links { display:none; }
+  .sec-inner { padding:80px 24px; }
+  .why-grid,.guarantees,.pricing-grid,.mkt-grid,.blog-grid { grid-template-columns:1fr; }
+  .about-grid { grid-template-columns:1fr; gap:40px; }
+  .hero-stats { gap:32px; flex-wrap:wrap; }
+  footer { flex-direction:column; gap:16px; text-align:center; }
+  .foot-loc { text-align:center; }
+  #cta-final { padding:100px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- CANVASES: City (back) + Neural (front) -->
+<canvas id="canvas-city"></canvas>
+<canvas id="canvas-neural"></canvas>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/573025280632" class="wa-float" title="WhatsApp">💬</a>
+
+<!-- ─────────────── NAV ─────────────── -->
+<nav id="nav">
+  <a href="#" class="logo">GE<em>G</em>H</a>
+  <ul class="nav-links">
+    <li><a href="#why">Por qué nosotros</a></li>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#pricing">Precios</a></li>
+    <li><a href="#diagnosis">Diagnóstico</a></li>
+    <li><a href="#blog">Blog</a></li>
+  </ul>
+  <a href="https://wa.me/573025280632" class="nav-cta">Hablar ahora →</a>
+</nav>
+
+<!-- ─────────────── HERO ─────────────── -->
+<section id="hero">
+  <p class="hero-eyebrow">Bucaramanga · Colombia · Boutique de IA · AI Boutique</p>
+  <h1 class="hero-title">IA que <em>transforma</em></h1>
+  <p class="hero-subtitle">AI that transforms business</p>
+  <div class="hero-line"></div>
+  <p class="hero-desc">
+    Diseñamos, construimos y desplegamos sistemas de inteligencia artificial que generan ventajas reales y medibles.<br>
+    Implementación en menos de <strong>7 días.</strong>
+  </p>
+  <div class="hero-btns">
+    <a href="#diagnosis" class="btn-gold">🎁 Diagnóstico gratis de IA</a>
+    <a href="#pricing" class="btn-outline">Ver paquetes →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n" id="c1">0</div><div class="stat-l">Especialistas<br>Specialists</div></div>
+    <div class="stat"><div class="stat-n" id="c2">0</div><div class="stat-l">Días implementación<br>Days to implement</div></div>
+    <div class="stat"><div class="stat-n" id="c3">0</div><div class="stat-l">Idiomas<br>Languages</div></div>
+  </div>
+  <div class="scroll-cue">
+    <span>scroll</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ─────────────── MARQUEE ─────────────── -->
+<div class="marquee-wrap" style="position:relative;z-index:2;">
+  <div class="marquee-track" id="mq">
+    <div class="marquee-item">Agentes de IA <div class="marquee-dot"></div></div>
+    <div class="marquee-item">RAG · LLM · Agentic AI <div class="marquee-dot"></div></div>
+    <div class="marquee-item">ISO 42001 · AI Governance <div class="marquee-dot"></div></div>
+    <div class="marquee-item">MLOps &amp; Datos <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Implementación en 7 días <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Colombia · Latam · USA · Europa <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Consultoría Estratégica <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Agentes de IA <div class="marquee-dot"></div></div>
+    <div class="marquee-item">RAG · LLM · Agentic AI <div class="marquee-dot"></div></div>
+    <div class="marquee-item">ISO 42001 · AI Governance <div class="marquee-dot"></div></div>
+    <div class="marquee-item">MLOps &amp; Datos <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Implementación en 7 días <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Colombia · Latam · USA · Europa <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Consultoría Estratégica <div class="marquee-dot"></div></div>
+  </div>
+</div>
+
+<!-- ─────────────── WHY ─────────────── -->
+<section id="why" style="position:relative;z-index:2;">
+  <div class="sec-inner">
+    <p class="sec-tag rv">Por qué nosotros · Why us</p>
+    <h2 class="sec-title rv">No somos <em>genéricos</em><br>We're not <em>generic</em></h2>
+    <div class="why-grid">
+      <div class="why-card rv rv-d1">
+        <div class="why-card-num">01 ◆</div>
+        <span class="why-icon">⚡</span>
+        <h3 class="why-card-title">Implementación en 7 días</h3>
+        <p class="why-card-sub">7-Day Implementation</p>
+        <p class="why-card-desc">Prometemos y cumplimos. Tu proyecto en producción en una semana, no en meses.</p>
+      </div>
+      <div class="why-card rv rv-d2">
+        <div class="why-card-num">02 ◆</div>
+        <span class="why-icon">🏥</span>
+        <h3 class="why-card-title">Salud · Agro · Educación</h3>
+        <p class="why-card-sub">Health · Agro · Education</p>
+        <p class="why-card-desc">No hacemos IA genérica. Conocemos tu industria y diseñamos para tu contexto real.</p>
+      </div>
+      <div class="why-card rv rv-d3">
+        <div class="why-card-num">03 ◆</div>
+        <span class="why-icon">🧠</span>
+        <h3 class="why-card-title">IA + Estrategia Ejecutiva</h3>
+        <p class="why-card-sub">AI + Executive Strategy</p>
+        <p class="why-card-desc">Estrategas de negocio e ingenieros. ROI medible desde el día 1.</p>
+      </div>
+      <div class="why-card rv rv-d4">
+        <div class="why-card-num">04 ◆</div>
+        <span class="why-icon">🌍</span>
+        <h3 class="why-card-title">4 Idiomas · Alcance Global</h3>
+        <p class="why-card-sub">4 Languages · Global Reach</p>
+        <p class="why-card-desc">Español, inglés, portugués y alemán. Latam, USA y Europa sin fricción.</p>
+      </div>
+      <div class="why-card rv rv-d5">
+        <div class="why-card-num">05 ◆</div>
+        <span class="why-icon">🛡️</span>
+        <h3 class="why-card-title">ISO 42001 · AI Governance</h3>
+        <p class="why-card-sub">Responsible AI</p>
+        <p class="why-card-desc">Únicos en Colombia con foco en gobernanza responsable de IA.</p>
+      </div>
+      <div class="why-card rv rv-d6">
+        <div class="why-card-num">06 ◆</div>
+        <span class="why-icon">💎</span>
+        <h3 class="why-card-title">Boutique, no fábrica</h3>
+        <p class="why-card-sub">Boutique, not factory</p>
+        <p class="why-card-desc">Máximo 5 proyectos simultáneos. Cada cliente con nuestros mejores especialistas.</p>
+      </div>
+    </div>
+    <div class="guarantees rv">
+      <div class="g-card">
+        <div class="g-num">01</div>
+        <div class="g-text"><h4>Boutique, no fábrica</h4><p>Atención de especialistas top, no de un junior.</p></div>
+      </div>
+      <div class="g-card">
+        <div class="g-num">02</div>
+        <div class="g-text"><h4>ROI medible o devolvemos</h4><p>Si no alcanzamos los KPIs pactados, el siguiente sprint es gratis.</p></div>
+      </div>
+      <div class="g-card">
+        <div class="g-num">03</div>
+        <div class="g-text"><h4>Soporte post-entrega</h4><p>30 días de acompañamiento incluidos en todos los paquetes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── SERVICES ─────────────── -->
+<section id="services" style="background:var(--void);position:relative;z-index:2;">
+  <div class="sec-inner">
+    <p class="sec-tag rv">Servicios · Services</p>
+    <h2 class="sec-title rv">Soluciones de IA <em>end-to-end</em></h2>
+    <div class="services-list rv">
+      <div class="svc-row">
+        <span class="svc-n">01</span>
+        <span class="svc-name">🤖 Agentes de IA · AI Agents</span>
+        <span class="svc-desc">Automatización de procesos completos con LLMs, RAG y Agentic Workflows.</span>
+        <span class="svc-arr">↗</span>
+      </div>
+      <div class="svc-row">
+        <span class="svc-n">02</span>
+        <span class="svc-name">🧭 Consultoría Estratégica</span>
+        <span class="svc-desc">Roadmap de IA desde visión ejecutiva hasta arquitectura técnica.</span>
+        <span class="svc-arr">↗</span>
+      </div>
+      <div class="svc-row">
+        <span class="svc-n">03</span>
+        <span class="svc-name">🎓 Formación Corporativa</span>
+        <span class="svc-desc">Capacitación de equipos directivos y técnicos para adoptar IA.</span>
+        <span class="svc-arr">↗</span>
+      </div>
+      <div class="svc-row">
+        <span class="svc-n">04</span>
+        <span class="svc-name">⚙️ Desarrollo de Productos IA</span>
+        <span class="svc-desc">MVP a producción: arquitectura robusta, UX excepcional, seguridad.</span>
+        <span class="svc-arr">↗</span>
+      </div>
+      <div class="svc-row">
+        <span class="svc-n">05</span>
+        <span class="svc-name">📊 MLOps &amp; Datos · Data</span>
+        <span class="svc-desc">Cloud, pipelines, monitoreo continuo y fine-tuning en producción.</span>
+        <span class="svc-arr">↗</span>
+      </div>
+      <div class="svc-row">
+        <span class="svc-n">06</span>
+        <span class="svc-name">🌐 Presencia Digital con IA</span>
+        <span class="svc-desc">Web premium, SEO, Google My Business, agente WhatsApp. En 7 días.</span>
+        <span class="svc-arr">↗</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── PRICING ─────────────── -->
+<section id="pricing" style="position:relative;z-index:2;">
+  <div class="sec-inner">
+    <p class="sec-tag rv">Precios · Pricing</p>
+    <h2 class="sec-title rv">Oferta <em>irresistible</em></h2>
+    <div class="pricing-grid">
+      <div class="p-card rv rv-d1">
+        <div class="p-icon">⭐</div>
+        <div class="p-name">Esencial</div>
+        <div class="p-tagline">Para empresas dando sus primeros pasos en IA · First steps in AI</div>
+        <div class="p-price">$990 <span>USD</span></div>
+        <div class="p-note">Pago único · Entrega en 7 días</div>
+        <ul class="p-features">
+          <li>Web profesional con IA integrada</li>
+          <li>SEO técnico básico</li>
+          <li>Correo corporativo configurado</li>
+          <li>Google My Business</li>
+          <li>Agente de WhatsApp básico</li>
+          <li>30 días de soporte incluido</li>
+        </ul>
+        <a href="https://wa.me/573025280632" class="p-btn">Quiero este plan →</a>
+      </div>
+      <div class="p-card featured rv rv-d2">
+        <div class="p-badge">Más popular</div>
+        <div class="p-icon">⭐⭐</div>
+        <div class="p-name">Profesional</div>
+        <div class="p-tagline">Para empresas que quieren diferenciarse · Stand out digitally</div>
+        <div class="p-price">$2,500 <span>USD</span></div>
+        <div class="p-note">Pago único · Entrega en 7 días</div>
+        <ul class="p-features">
+          <li>Todo lo del plan Esencial</li>
+          <li>Logo e identidad visual</li>
+          <li>Google Maps optimizado</li>
+          <li>Estrategia SEO 3 meses</li>
+          <li>Integraciones CRM básicas</li>
+          <li>Dashboard de métricas</li>
+          <li>60 días de soporte incluido</li>
+        </ul>
+        <a href="https://wa.me/573025280632" class="p-btn">Quiero este plan →</a>
+      </div>
+      <div class="p-card rv rv-d3">
+        <div class="p-icon">⭐⭐⭐</div>
+        <div class="p-name">Premium IA</div>
+        <div class="p-tagline">Para empresas listas para escalar con IA real · Scale with real AI</div>
+        <div class="p-price">$5,000 <span>USD</span></div>
+        <div class="p-note">Pago fraccionado disponible</div>
+        <ul class="p-features">
+          <li>Todo lo del plan Profesional</li>
+          <li>Agente de IA personalizado</li>
+          <li>Automatización de procesos</li>
+          <li>Pipeline de datos y analítica</li>
+          <li>Formación de equipo (4h)</li>
+          <li>Consultoría estratégica (2 sesiones)</li>
+          <li>90 días de soporte prioritario</li>
+        </ul>
+        <a href="https://wa.me/573025280632" class="p-btn">Quiero este plan →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── DIAGNOSIS ─────────────── -->
+<section id="diagnosis" style="background:var(--void);position:relative;z-index:2;">
+  <div class="sec-inner">
+    <div class="diag-inner">
+      <p class="sec-tag rv">Oferta gratuita · Free offer</p>
+      <h2 class="sec-title rv"><em>Diagnóstico gratuito</em><br>de IA para tu empresa</h2>
+      <div class="diag-perks rv">
+        <div class="diag-perk"><span class="diag-perk-icon">◆</span><p class="diag-perk-text">Identificamos 3 oportunidades concretas de IA en tu empresa</p></div>
+        <div class="diag-perk"><span class="diag-perk-icon">◆</span><p class="diag-perk-text">Estimamos el ROI potencial en 12 meses</p></div>
+        <div class="diag-perk"><span class="diag-perk-icon">◆</span><p class="diag-perk-text">Te entregamos un mini-roadmap de implementación</p></div>
+        <div class="diag-perk"><span class="diag-perk-icon">◆</span><p class="diag-perk-text">100% gratis, sin condiciones · Free, no strings attached</p></div>
+      </div>
+      <form id="diag-form" class="rv" onsubmit="submitForm(event)">
+        <div class="form-field">
+          <label>Nombre y empresa · Name and company</label>
+          <input type="text" placeholder="Ej: Juan Pérez — Clínica San Pablo" required>
+        </div>
+        <div class="form-field">
+          <label>Sector · Industry</label>
+          <select required>
+            <option value="">Selecciona un sector</option>
+            <option>Salud · Health</option>
+            <option>Agro</option>
+            <option>Educación · Education</option>
+            <option>Retail / Comercio</option>
+            <option>Fintech</option>
+            <option>Manufactura · Manufacturing</option>
+            <option>Otro · Other</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Mayor reto operativo · Biggest operational challenge</label>
+          <textarea placeholder="Cuéntanos cuál es tu mayor dolor operativo hoy..."></textarea>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn-gold">🚀 Quiero mi diagnóstico gratis</button>
+        </div>
+      </form>
+      <div id="form-success" class="rv">
+        <p>✅ ¡Recibido! Te contactamos en menos de 24 horas.</p>
+        <p style="margin-top:8px;font-size:.85rem;color:var(--muted);">O escríbenos directamente: <a href="https://wa.me/573025280632" style="color:var(--gold);">WhatsApp →</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── MARKETS ─────────────── -->
+<section id="markets" style="position:relative;z-index:2;">
+  <div class="sec-inner">
+    <p class="sec-tag rv">Mercados · Markets</p>
+    <h2 class="sec-title rv">Alcance <em>global</em></h2>
+    <div class="mkt-grid">
+      <div class="mkt-card rv rv-d1"><span class="mkt-flag">🇨🇴</span><div class="mkt-name">Colombia</div><div class="mkt-desc">Mercado base. Salud, agro y educación privada.</div></div>
+      <div class="mkt-card rv rv-d2"><span class="mkt-flag">🇧🇷</span><div class="mkt-name">Brasil</div><div class="mkt-desc">Mayor economía de Latam. Operamos en portugués.</div></div>
+      <div class="mkt-card rv rv-d3"><span class="mkt-flag">🇺🇸</span><div class="mkt-name">USA</div><div class="mkt-desc">Startups hispanas y nearshore AI services.</div></div>
+      <div class="mkt-card rv rv-d4"><span class="mkt-flag">🇩🇪</span><div class="mkt-name">Alemania</div><div class="mkt-desc">Mittelstand europeo. Operamos en alemán.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── BLOG ─────────────── -->
+<section id="blog" style="background:var(--void);position:relative;z-index:2;">
+  <div class="sec-inner">
+    <p class="sec-tag rv">Blog &amp; Autoridad · Blog &amp; Authority</p>
+    <h2 class="sec-title rv">IA que <em>educa</em></h2>
+    <div class="blog-grid">
+      <div class="blog-card rv rv-d1">
+        <div class="blog-tag">🏥 Salud · IA</div>
+        <h3 class="blog-title">Cómo usar IA en clínicas y hospitales en Colombia en 2026</h3>
+        <p class="blog-excerpt">Casos reales de automatización de historias clínicas, triaje inteligente y reducción de costos operativos.</p>
+        <div class="blog-meta">GEGH · Mar 2026 · 8 min</div>
+      </div>
+      <div class="blog-card rv rv-d2">
+        <div class="blog-tag">🌾 Agro · Colombia</div>
+        <h3 class="blog-title">IA para el sector agrícola: casos de uso en Latam</h3>
+        <p class="blog-excerpt">Predicción de cosechas, drones autónomos y análisis de suelos con modelos de lenguaje.</p>
+        <div class="blog-meta">GEGH · Feb 2026 · 6 min</div>
+      </div>
+      <div class="blog-card rv rv-d3">
+        <div class="blog-tag">🚀 Guía · 2026</div>
+        <h3 class="blog-title">Guía completa para implementar IA en tu empresa en 2026</h3>
+        <p class="blog-excerpt">Desde el diagnóstico inicial hasta el despliegue en producción. El roadmap que usamos en GEGH.</p>
+        <div class="blog-meta">GEGH · Ene 2026 · 12 min</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── ABOUT ─────────────── -->
+<section id="about" style="position:relative;z-index:2;">
+  <div class="sec-inner">
+    <div class="about-grid">
+      <div class="about-text rv">
+        <p class="sec-tag">Quiénes somos · Who we are</p>
+        <h2 class="sec-title" style="margin-bottom:32px;">Un equipo construido para <em>ganar</em></h2>
+        <p>GEGH es una boutique de inteligencia artificial con sede en Bucaramanga, Colombia. Combinamos estrategia ejecutiva, ingeniería de alto nivel y gobierno responsable de IA.</p>
+        <p>Operamos en español, inglés, portugués y alemán, alcanzando mercados en Latam, EEUU y Europa directamente.</p>
+        <div class="about-tags">
+          <span class="about-tag">ISO 42001</span>
+          <span class="about-tag">AI Governance</span>
+          <span class="about-tag">RAG</span>
+          <span class="about-tag">LLM Engineering</span>
+          <span class="about-tag">MLOps</span>
+          <span class="about-tag">Agentic AI</span>
+          <span class="about-tag">4 Idiomas</span>
+        </div>
+      </div>
+      <div class="about-visual rv rv-d2">
+        <div class="kpi-row"><div class="kpi-n">10+</div><div class="kpi-l">Especialistas en IA<br>AI Specialists</div></div>
+        <div class="kpi-row"><div class="kpi-n">7</div><div class="kpi-l">Días de implementación<br>Days to implement</div></div>
+        <div class="kpi-row"><div class="kpi-n">4</div><div class="kpi-l">Idiomas de operación<br>Languages of operation</div></div>
+        <div class="kpi-row"><div class="kpi-n">5</div><div class="kpi-l">Proyectos simultáneos máx.<br>Max simultaneous projects</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── FINAL CTA ─────────────── -->
+<section id="cta-final" style="position:relative;z-index:2;">
+  <p class="sec-tag rv" style="margin-bottom:24px;">Comienza hoy · Start today</p>
+  <h2 class="cta-title rv">¿Listo para <em>transformar</em><br>tu empresa con IA?</h2>
+  <p class="cta-sub rv">En 30 minutos te decimos exactamente cómo la IA puede impactar tu negocio. Sin compromiso. Solo claridad.</p>
+  <div class="rv">
+    <a href="https://wa.me/573025280632" class="btn-gold" style="font-size:.85rem;padding:18px 44px;">🚀 Agenda tu diagnóstico gratis</a>
+  </div>
+  <p class="cta-note rv">3 preguntas · Respuesta en menos de 24h</p>
+</section>
+
+<!-- ─────────────── FOOTER ─────────────── -->
+<footer>
+  <div class="foot-logo">GE<em>G</em>H</div>
+  <div class="foot-copy">© 2026 Grupo Empresarial Guerrero Herrera S.A.S.<br>Todos los derechos reservados</div>
+  <div class="foot-loc">📍 Diamante II, Bucaramanga, Colombia<br><a href="https://wa.me/573025280632" style="color:var(--gold);text-decoration:none;">+57 302 528 0632</a></div>
+</footer>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+/* ── CURSOR ── */
+const cur = document.getElementById('cursor');
+const rng = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;rng.style.left=rx+'px';rng.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.p-card,.why-card,.mkt-card,.svc-row').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';rng.style.width='52px';rng.style.height='52px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';rng.style.width='34px';rng.style.height='34px';});
+});
+
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+
+/* ── COUNTERS ── */
+function count(el,to,suf=''){
+  let v=0;const d=2000,s=16,i=to/(d/s);
+  const t=setInterval(()=>{v+=i;if(v>=to){v=to;clearInterval(t);}el.textContent=Math.floor(v)+suf;},s);
+}
+const cobs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){count(document.getElementById('c1'),10,'+');count(document.getElementById('c2'),7);count(document.getElementById('c3'),4);cobs.disconnect();}});},{threshold:.5});
+cobs.observe(document.querySelector('.hero-stats'));
+
+/* ── REVEAL ── */
+new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.1}).observe(document.body);
+const rvObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+
+/* ── FORM ── */
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('diag-form').style.display='none';
+  document.getElementById('form-success').style.display='block';
+}
+
+/* ══════════════════════════════════════════════
+   DUAL CANVAS: CONNECTED CITY + NEURAL NETWORK
+   ══════════════════════════════════════════════ */
+
+// ─── CITY CANVAS ───────────────────────────────
+(function cityCanvas(){
+  const cv=document.getElementById('canvas-city');
+  const cx=cv.getContext('2d');
+  function rsz(){cv.width=innerWidth;cv.height=innerHeight;}
+  rsz();window.addEventListener('resize',rsz);
+
+  const GOLD='rgba(196,160,80,';
+  const CYAN='rgba(77,217,245,';
+
+  // City skyline buildings
+  const buildings=[];
+  function genBuildings(){
+    buildings.length=0;
+    const W=cv.width,H=cv.height;
+    const count=Math.floor(W/22);
+    for(let i=0;i<count;i++){
+      const w=Math.random()*18+8;
+      const h=Math.random()*H*0.38+H*0.08;
+      const x=i*(W/count)+(Math.random()-0.5)*10;
+      buildings.push({
+        x,y:H-h,w,h,
+        floors:Math.floor(h/14)+1,
+        color:Math.random()>.6?GOLD:CYAN,
+        lit:[],
+        pulse:Math.random()*Math.PI*2,
+        speed:Math.random()*.012+.004,
+        antennaH:Math.random()>.7?Math.random()*20+10:0,
+        beam:Math.random()>.85,
+        beamAngle:Math.random()*Math.PI/3-Math.PI/6,
+        beamPulse:Math.random()*Math.PI*2,
+      });
+      // random lit windows
+      const b=buildings[buildings.length-1];
+      for(let f=0;f<b.floors;f++){
+        b.lit.push(Math.random()>.4);
+      }
+    }
+  }
+  genBuildings();
+  window.addEventListener('resize',genBuildings);
+
+  // Aerial connections between buildings
+  function drawConnections(b1,b2,alpha){
+    const x1=b1.x+b1.w/2, y1=b1.y;
+    const x2=b2.x+b2.w/2, y2=b2.y;
+    const mid=(y1+y2)/2-60;
+    cx.beginPath();
+    cx.moveTo(x1,y1);
+    cx.quadraticCurveTo((x1+x2)/2,mid,x2,y2);
+    cx.strokeStyle=GOLD+alpha+')';
+    cx.lineWidth=.5;
+    cx.stroke();
+  }
+
+  // Data packets flowing along connections
+  const packets=[];
+  function spawnPacket(){
+    if(buildings.length<2)return;
+    const i=Math.floor(Math.random()*buildings.length);
+    let j;do{j=Math.floor(Math.random()*buildings.length);}while(Math.abs(i-j)<3||Math.abs(i-j)>18);
+    packets.push({from:i,to:j,t:0,speed:Math.random()*.008+.003});
+  }
+  setInterval(spawnPacket,400);
+
+  let frame=0;
+  function drawCity(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    frame++;
+    const W=cv.width,H=cv.height;
+    const scrollRatio=Math.min(scrollY/(document.body.scrollHeight-innerHeight||1),1);
+
+    // Ground glow
+    const grd=cx.createLinearGradient(0,H*.6,0,H);
+    grd.addColorStop(0,'transparent');
+    grd.addColorStop(.7,GOLD+'0.04)');
+    grd.addColorStop(1,GOLD+'0.1)');
+    cx.fillStyle=grd;
+    cx.fillRect(0,H*.6,W,H*.4);
+
+    // Horizon glow
+    const hgrd=cx.createRadialGradient(W/2,H,0,W/2,H,W*.7);
+    hgrd.addColorStop(0,GOLD+'0.06)');
+    hgrd.addColorStop(1,'transparent');
+    cx.fillStyle=hgrd;
+    cx.fillRect(0,0,W,H);
+
+    // Draw buildings
+    buildings.forEach((b,i)=>{
+      b.pulse+=b.speed;
+      const alpha=0.18+Math.sin(b.pulse)*.06;
+
+      // Building body gradient
+      const bgrd=cx.createLinearGradient(b.x,b.y,b.x+b.w,b.y+b.h);
+      bgrd.addColorStop(0,GOLD+(alpha*.9)+')');
+      bgrd.addColorStop(.5,b.color+(alpha*.5)+')');
+      bgrd.addColorStop(1,GOLD+(alpha*.2)+')');
+      cx.fillStyle=bgrd;
+      cx.fillRect(b.x,b.y,b.w,b.h);
+
+      // Windows
+      const wH=10,wW=Math.max(3,b.w*.3);
+      for(let f=0;f<b.floors;f++){
+        const wy=b.y+b.h-f*14-14;
+        if(wy<b.y+4)break;
+        if(b.lit[f]){
+          cx.fillStyle=GOLD+(0.3+Math.sin(b.pulse+f)*.15)+')';
+          cx.fillRect(b.x+b.w/2-wW/2,wy,wW,wH*.6);
+        }
+      }
+
+      // Antenna
+      if(b.antennaH>0){
+        cx.beginPath();
+        cx.moveTo(b.x+b.w/2,b.y);
+        cx.lineTo(b.x+b.w/2,b.y-b.antennaH);
+        cx.strokeStyle=GOLD+'0.4)';cx.lineWidth=1;cx.stroke();
+        // blinking top
+        if(frame%60<30){
+          cx.beginPath();
+          cx.arc(b.x+b.w/2,b.y-b.antennaH,2,0,Math.PI*2);
+          cx.fillStyle=GOLD+'0.9)';cx.fill();
+        }
+      }
+
+      // Beam
+      if(b.beam){
+        b.beamPulse+=.008;
+        const ba=b.beamAngle+Math.sin(b.beamPulse)*.2;
+        cx.save();
+        cx.translate(b.x+b.w/2,b.y);
+        const bgr=cx.createLinearGradient(0,0,Math.sin(ba)*80,-80);
+        bgr.addColorStop(0,CYAN+'0.18)');
+        bgr.addColorStop(1,CYAN+'0)');
+        cx.beginPath();
+        cx.moveTo(0,0);
+        cx.lineTo(Math.sin(ba-0.08)*80,-80);
+        cx.lineTo(Math.sin(ba+0.08)*80,-80);
+        cx.closePath();
+        cx.fillStyle=bgr;cx.fill();
+        cx.restore();
+      }
+
+      // Aerial connections between nearby buildings
+      if(i<buildings.length-1&&Math.abs(buildings[i+1].x-b.x)<100){
+        const dist=Math.abs(buildings[i+1].x-b.x);
+        drawConnections(b,buildings[i+1],Math.max(0,(1-dist/100)*.08));
+      }
+    });
+
+    // Ground line
+    cx.beginPath();
+    cx.moveTo(0,H);cx.lineTo(W,H);
+    cx.strokeStyle=GOLD+'0.15)';cx.lineWidth=1;cx.stroke();
+
+    // Packets
+    packets.forEach((p,i)=>{
+      p.t+=p.speed;
+      if(p.t>=1){packets.splice(i,1);return;}
+      const b1=buildings[p.from],b2=buildings[p.to];
+      if(!b1||!b2)return;
+      const x1=b1.x+b1.w/2,y1=b1.y,x2=b2.x+b2.w/2,y2=b2.y;
+      const mx2=(x1+x2)/2,my2=(y1+y2)/2-60;
+      const t=p.t;
+      const px=Math.pow(1-t,2)*x1+2*(1-t)*t*mx2+t*t*x2;
+      const py=Math.pow(1-t,2)*y1+2*(1-t)*t*my2+t*t*y2;
+      cx.beginPath();cx.arc(px,py,2,0,Math.PI*2);
+      cx.fillStyle=GOLD+'0.9)';cx.fill();
+      // trail
+      for(let k=1;k<=4;k++){
+        const tt=Math.max(0,t-k*.015);
+        const tpx=Math.pow(1-tt,2)*x1+2*(1-tt)*tt*mx2+tt*tt*x2;
+        const tpy=Math.pow(1-tt,2)*y1+2*(1-tt)*tt*my2+tt*tt*y2;
+        cx.beginPath();cx.arc(tpx,tpy,1.5-k*.2,0,Math.PI*2);
+        cx.fillStyle=GOLD+(0.5-k*.1)+')';cx.fill();
+      }
+    });
+
+    requestAnimationFrame(drawCity);
+  }
+  drawCity();
+})();
+
+// ─── NEURAL CANVAS ─────────────────────────────
+(function neuralCanvas(){
+  const cv=document.getElementById('canvas-neural');
+  const cx=cv.getContext('2d');
+  function rsz(){cv.width=innerWidth;cv.height=innerHeight;}
+  rsz();window.addEventListener('resize',rsz);
+
+  const GOLD='rgba(196,160,80,';
+  const CYAN='rgba(77,217,245,';
+  const PURP='rgba(180,100,255,';
+
+  const N=55;
+  const nodes=[];
+  for(let i=0;i<N;i++){
+    nodes.push({
+      x:Math.random()*innerWidth,
+      y:Math.random()*innerHeight,
+      vx:(Math.random()-.5)*.35,
+      vy:(Math.random()-.5)*.35,
+      r:Math.random()*2+1,
+      pulse:Math.random()*Math.PI*2,
+      ps:Math.random()*.018+.008,
+      type:Math.random()>.75?'hub':'node',
+      active:false, aTime:0
+    });
+  }
+
+  let mouseX=innerWidth/2,mouseY=innerHeight/2;
+  document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
+
+  setInterval(()=>{
+    const n=nodes[Math.floor(Math.random()*nodes.length)];
+    n.active=true;n.aTime=Date.now();
+    setTimeout(()=>{n.active=false;},900);
+  },280);
+
+  const MAX=170;
+  function drawNeural(){
+    cx.clearRect(0,0,cv.width,cv.height);
+
+    nodes.forEach(n=>{
+      n.pulse+=n.ps;
+      n.x+=n.vx;n.y+=n.vy;
+      // mouse repulsion
+      const dx=n.x-mouseX,dy=n.y-mouseY;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<110){n.vx+=dx/d*.25;n.vy+=dy/d*.25;}
+      n.vx*=.98;n.vy*=.98;
+      n.vx=Math.max(-1.4,Math.min(1.4,n.vx));
+      n.vy=Math.max(-1.4,Math.min(1.4,n.vy));
+      if(n.x<-20)n.x=cv.width+20;
+      if(n.x>cv.width+20)n.x=-20;
+      if(n.y<-20)n.y=cv.height+20;
+      if(n.y>cv.height+20)n.y=-20;
+    });
+
+    // Connections
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const a=nodes[i],b=nodes[j];
+        const dx=a.x-b.x,dy=a.y-b.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<MAX){
+          const al=(1-dist/MAX)*.28;
+          if(a.active||b.active){
+            const t=(Date.now()-Math.max(a.aTime,b.aTime))/900;
+            const grd=cx.createLinearGradient(a.x,a.y,b.x,b.y);
+            grd.addColorStop(0,GOLD+'0)');
+            grd.addColorStop(Math.max(0,t-.1),GOLD+'0)');
+            grd.addColorStop(Math.min(1,t),GOLD+'.85)');
+            grd.addColorStop(Math.min(1,t+.1),GOLD+'0)');
+            grd.addColorStop(1,GOLD+'0)');
+            cx.strokeStyle=grd;cx.lineWidth=1.5;
+          } else {
+            cx.strokeStyle=CYAN+al+')';cx.lineWidth=.4;
+          }
+          cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke();
+        }
+      }
+    }
+
+    // Nodes
+    nodes.forEach(n=>{
+      const al=0.35+Math.sin(n.pulse)*.25;
+      const sz=n.type==='hub'?3.5:n.r;
+      const glow=n.type==='hub'?9:5;
+      if(n.active){
+        cx.beginPath();cx.arc(n.x,n.y,18,0,Math.PI*2);
+        cx.fillStyle=GOLD+'.04)';cx.fill();
+        cx.beginPath();cx.arc(n.x,n.y,9,0,Math.PI*2);
+        cx.fillStyle=GOLD+'.12)';cx.fill();
+      }
+      const g=cx.createRadialGradient(n.x,n.y,0,n.x,n.y,sz*glow);
+      if(n.active){g.addColorStop(0,GOLD+'.95)');g.addColorStop(.4,GOLD+'.25)');g.addColorStop(1,GOLD+'0)');}
+      else if(n.type==='hub'){g.addColorStop(0,GOLD+al+')');g.addColorStop(.4,GOLD+(al*.3)+')');g.addColorStop(1,GOLD+'0)');}
+      else{g.addColorStop(0,PURP+(al*.8)+')');g.addColorStop(.5,CYAN+(al*.3)+')');g.addColorStop(1,'rgba(0,0,0,0)');}
+      cx.beginPath();cx.arc(n.x,n.y,sz*glow,0,Math.PI*2);cx.fillStyle=g;cx.fill();
+      cx.beginPath();cx.arc(n.x,n.y,sz,0,Math.PI*2);
+      cx.fillStyle=n.active?GOLD+'1)':n.type==='hub'?GOLD+'.85)':PURP+'.65)';cx.fill();
+    });
+
+    requestAnimationFrame(drawNeural);
+  }
+  drawNeural();
+})();
+</script>
+</body>
+</html>
