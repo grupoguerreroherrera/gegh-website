@@ -1,0 +1,1989 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Hard reset: prevent any server/theme CSS from interfering -->
+<style>html,body{background:#06060e!important;color:#f2eed8!important;margin:0!important;padding:0!important;}*{box-sizing:border-box!important;}</style>
+<meta name="description" content="GEGH — Boutique de Inteligencia Artificial en Colombia. Diseñamos, construimos y desplegamos sistemas de IA con ROI medible. Implementación en 7 días. ISO 42001.">
+<meta name="keywords" content="inteligencia artificial colombia, agentes IA bucaramanga, consultoría IA empresarial, MLOps colombia, automatización empresas, GEGH">
+<meta name="author" content="Grupo Empresarial Guerrero Herrera S.A.S.">
+<meta property="og:title" content="GEGH — IA que transforma empresas">
+<meta property="og:description" content="Boutique de IA en Colombia. Implementación en 7 días. ROI medible desde el día 1.">
+<meta property="og:url" content="https://grupoguerreroherrera.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://grupoguerreroherrera.com">
+
+<!-- Schema.org structured data -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"ProfessionalService",
+  "name":"Grupo Empresarial Guerrero Herrera",
+  "alternateName":"GEGH",
+  "description":"Boutique de Inteligencia Artificial en Colombia. Agentes IA, consultoría estratégica e implementación en 7 días.",
+  "url":"https://grupoguerreroherrera.com",
+  "telephone":"+573025280632",
+  "email":"direccioncomercial@grupoguerreroherrera.com",
+  "address":{"@type":"PostalAddress","streetAddress":"Diamante II","addressLocality":"Bucaramanga","addressCountry":"CO"},
+  "priceRange":"$$$",
+  "knowsLanguage":["es","en","pt","de"]
+}
+</script>
+
+<title>GEGH — IA que transforma empresas | AI that transforms business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   GEGH ELITE — DESIGN SYSTEM
+   Negro obsidiana + Oro imperial + Editorial
+   ═══════════════════════════════════════════ */
+:root {
+  --obsidian:  #06060e;
+  --void:      #09091a;
+  --deep:      #0d0d24;
+  --surface:   #121228;
+  --lift:      #181835;
+  --border:    rgba(255,255,255,0.06);
+  --b-gold:    rgba(196,158,72,0.25);
+  --b-gold-h:  rgba(196,158,72,0.55);
+
+  --gold:      #c49e48;
+  --gold-l:    #e6c46e;
+  --gold-xl:   #f5dfa0;
+  --gold-dim:  rgba(196,158,72,0.12);
+  --gold-glow: rgba(196,158,72,0.08);
+
+  --cyan:      #3ecfed;
+  --cyan-d:    rgba(62,207,237,0.12);
+
+  --white:     #f2eed8;
+  --muted:     rgba(242,238,216,0.42);
+  --faint:     rgba(242,238,216,0.18);
+  --ghost:     rgba(242,238,216,0.08);
+
+  --ff-disp:  'Cormorant Garamond', Georgia, serif;
+  --ff-body:  'DM Sans', sans-serif;
+  --ff-mono:  'Space Mono', monospace;
+
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:   cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-circ: cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+body {
+  background:var(--obsidian);
+  color:var(--white);
+  font-family:var(--ff-body);
+  overflow-x:hidden;
+  cursor:none;
+  -webkit-font-smoothing:antialiased;
+}
+
+
+
+/* ── 3D SCENE ── */
+#canvas-3d {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  z-index:0; pointer-events:none; opacity:.85;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cur-dot {
+  position:fixed; width:8px; height:8px; border-radius:50%;
+  background:var(--gold); pointer-events:none; z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .25s, height .25s, opacity .25s;
+  mix-blend-mode:screen;
+}
+#cur-ring {
+  position:fixed; width:36px; height:36px;
+  border:1px solid rgba(196,158,72,.45); border-radius:50%;
+  pointer-events:none; z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width .35s var(--ease-out), height .35s var(--ease-out), border-color .3s;
+}
+body.cursor-hover #cur-dot  { width:14px; height:14px; }
+body.cursor-hover #cur-ring { width:56px; height:56px; border-color:rgba(196,158,72,.7); }
+body.cursor-click #cur-dot  { transform:translate(-50%,-50%) scale(.6); }
+
+/* ── NOISE + GRADIENTS ── */
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.032;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px;
+}
+
+/* ── VISUAL BACKGROUND SYSTEM (CSS-only, works on any server) ── */
+#bg-wrap {
+  position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  background:transparent;
+}
+.bg-glow {
+  position:absolute; border-radius:50%; filter:blur(80px);
+}
+.bg-glow-1 {
+  width:700px; height:700px;
+  background:radial-gradient(circle, rgba(196,158,72,0.11) 0%, transparent 70%);
+  top:-200px; left:-150px;
+  animation:glowDrift1 18s ease-in-out infinite alternate;
+}
+.bg-glow-2 {
+  width:600px; height:600px;
+  background:radial-gradient(circle, rgba(62,207,237,0.08) 0%, transparent 70%);
+  bottom:-150px; right:-100px;
+  animation:glowDrift2 22s ease-in-out infinite alternate;
+}
+.bg-glow-3 {
+  width:500px; height:500px;
+  background:radial-gradient(circle, rgba(196,158,72,0.07) 0%, transparent 70%);
+  top:40%; left:50%; transform:translate(-50%,-50%);
+  animation:glowPulse 9s ease-in-out infinite;
+}
+@keyframes glowDrift1 { 0%{transform:translate(0,0)} 100%{transform:translate(80px,60px)} }
+@keyframes glowDrift2 { 0%{transform:translate(0,0)} 100%{transform:translate(-60px,-80px)} }
+@keyframes glowPulse  { 0%,100%{opacity:.35} 50%{opacity:.9} }
+
+#bg-svg { position:absolute; inset:0; width:100%; height:100%; }
+
+/* Scan line */
+.scan-line {
+  position:absolute; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(196,158,72,.5),rgba(230,196,110,.8),rgba(196,158,72,.5),transparent);
+  animation:scanDown 14s linear infinite;
+}
+@keyframes scanDown {
+  0%   { top:0; opacity:0; }
+  3%   { opacity:1; }
+  97%  { opacity:.6; }
+  100% { top:100%; opacity:0; }
+}
+
+/* Luxury corner brackets */
+.corner { position:fixed; width:36px; height:36px; pointer-events:none; z-index:3; opacity:.3; }
+.corner-tl { top:18px; left:18px; border-top:1px solid #c49e48; border-left:1px solid #c49e48; }
+.corner-tr { top:18px; right:18px; border-top:1px solid #c49e48; border-right:1px solid #c49e48; }
+.corner-bl { bottom:18px; left:18px; border-bottom:1px solid #c49e48; border-left:1px solid #c49e48; }
+.corner-br { bottom:18px; right:18px; border-bottom:1px solid #c49e48; border-right:1px solid #c49e48; }
+
+/* ── TRANSITION OVERLAY ── */
+#transition-veil {
+  position:fixed; inset:0; z-index:5000; pointer-events:none;
+  background:var(--gold);
+  transform:scaleX(0); transform-origin:left;
+}
+
+/* ═══════════ NAV ═══════════ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  padding:24px 64px;
+  display:flex; justify-content:space-between; align-items:center;
+  transition:all .5s var(--ease-out);
+}
+nav.scrolled {
+  padding:16px 64px;
+  background:rgba(6,6,14,.9);
+  backdrop-filter:blur(20px) saturate(1.5);
+  border-bottom:1px solid var(--b-gold);
+}
+.logo-mark {
+  display:flex; align-items:center; gap:12px;
+  text-decoration:none;
+}
+.logo-svg {
+  width:36px; height:36px;
+  border:1px solid var(--b-gold);
+  display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+  transition:border-color .3s;
+}
+.logo-svg::before {
+  content:''; position:absolute; inset:0;
+  background:var(--gold-dim);
+  transform:scaleY(0); transform-origin:bottom;
+  transition:transform .4s var(--ease-out);
+}
+.logo-mark:hover .logo-svg::before { transform:scaleY(1); }
+.logo-mark:hover .logo-svg { border-color:var(--gold); }
+.logo-svg span {
+  font-family:var(--ff-disp); font-weight:700; font-size:.95rem;
+  color:var(--gold); z-index:1; letter-spacing:.05em;
+}
+.logo-text {
+  font-family:var(--ff-mono); font-size:.6rem;
+  letter-spacing:.18em; color:var(--muted); text-transform:uppercase;
+}
+.nav-center { display:flex; gap:40px; }
+.nav-center a {
+  font-family:var(--ff-mono); font-size:.62rem; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--muted); text-decoration:none;
+  position:relative; transition:color .25s;
+}
+.nav-center a::after {
+  content:''; position:absolute; bottom:-4px; left:0; right:0; height:1px;
+  background:var(--gold); transform:scaleX(0); transform-origin:left;
+  transition:transform .35s var(--ease-out);
+}
+.nav-center a:hover { color:var(--gold-l); }
+.nav-center a:hover::after { transform:scaleX(1); }
+.nav-right { display:flex; align-items:center; gap:20px; }
+.nav-lang {
+  font-family:var(--ff-mono); font-size:.58rem; letter-spacing:.15em;
+  color:var(--faint); text-decoration:none; transition:color .25s;
+}
+.nav-lang:hover { color:var(--gold); }
+.nav-cta {
+  font-family:var(--ff-mono); font-size:.62rem; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--obsidian);
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  padding:11px 24px; text-decoration:none;
+  position:relative; overflow:hidden;
+  transition:transform .25s, box-shadow .25s;
+}
+.nav-cta::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,var(--gold-l),var(--gold-xl));
+  opacity:0; transition:opacity .25s;
+}
+.nav-cta:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(196,158,72,.35); }
+.nav-cta:hover::before { opacity:1; }
+.nav-cta span { position:relative; z-index:1; }
+
+/* ═══════════ HERO ═══════════ */
+#hero {
+  min-height:100vh;
+  display:grid; grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:120px 64px 80px;
+  position:relative; z-index:2; gap:60px;
+}
+.hero-left { position:relative; }
+.hero-tag {
+  font-family:var(--ff-mono); font-size:.62rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--gold);
+  display:flex; align-items:center; gap:12px; margin-bottom:32px;
+  animation:slideRight .9s .2s var(--ease-out) both;
+}
+.hero-tag::before {
+  content:''; width:32px; height:1px; background:var(--gold); flex-shrink:0;
+}
+.hero-h1 {
+  font-family:var(--ff-disp); font-weight:700;
+  font-size:clamp(4rem,8vw,7.5rem);
+  line-height:.9; letter-spacing:-.01em;
+  margin-bottom:20px;
+  animation:slideRight .9s .35s var(--ease-out) both;
+}
+.hero-h1 em {
+  font-style:italic;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-l) 50%,var(--gold) 100%);
+  background-size:200%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:goldShimmer 4s linear infinite;
+}
+@keyframes goldShimmer { to { background-position:200% 0; } }
+.hero-h2 {
+  font-family:var(--ff-disp); font-style:italic; font-weight:300;
+  font-size:clamp(1.8rem,3.5vw,3rem);
+  color:var(--muted); margin-bottom:40px;
+  animation:slideRight .9s .48s var(--ease-out) both;
+}
+.hero-rule {
+  width:1px; height:60px;
+  background:linear-gradient(to bottom, var(--gold), transparent);
+  margin-bottom:32px;
+  animation:slideRight .9s .58s var(--ease-out) both;
+}
+.hero-desc {
+  font-size:1rem; color:var(--muted); line-height:1.8; max-width:440px;
+  margin-bottom:48px;
+  animation:slideRight .9s .68s var(--ease-out) both;
+}
+.hero-desc strong { color:var(--gold-l); font-weight:500; }
+.hero-btns {
+  display:flex; gap:14px; flex-wrap:wrap;
+  animation:slideRight .9s .8s var(--ease-out) both;
+}
+.btn-primary {
+  font-family:var(--ff-mono); font-size:.68rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  color:var(--obsidian); padding:15px 32px; text-decoration:none;
+  position:relative; overflow:hidden;
+  transition:transform .25s var(--ease-out), box-shadow .25s;
+  display:inline-block;
+}
+.btn-primary::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,var(--gold-l),var(--gold-xl));
+  opacity:0; transition:opacity .25s;
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 36px rgba(196,158,72,.4); }
+.btn-primary:hover::after { opacity:1; }
+.btn-primary span { position:relative; z-index:1; }
+.btn-ghost {
+  font-family:var(--ff-mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
+  border:1px solid var(--b-gold); color:var(--gold);
+  padding:15px 32px; text-decoration:none;
+  transition:all .3s var(--ease-out);
+  position:relative; overflow:hidden;
+}
+.btn-ghost::before {
+  content:''; position:absolute; inset:0;
+  background:var(--gold-dim); transform:scaleX(0); transform-origin:left;
+  transition:transform .35s var(--ease-out);
+}
+.btn-ghost:hover { border-color:var(--gold); color:var(--gold-l); }
+.btn-ghost:hover::before { transform:scaleX(1); }
+.btn-ghost span { position:relative; z-index:1; }
+
+/* Hero right — stat panel */
+.hero-right {
+  animation:slideLeft .9s .5s var(--ease-out) both;
+}
+.hero-panel {
+  border:1px solid var(--b-gold);
+  background:rgba(12,12,28,.7); backdrop-filter:blur(12px);
+  padding:48px 40px; position:relative; overflow:hidden;
+}
+.hero-panel::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), var(--gold-l), transparent);
+}
+.panel-title {
+  font-family:var(--ff-mono); font-size:.58rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:36px; display:flex; align-items:center; gap:10px;
+}
+.panel-title::after { content:''; flex:1; height:1px; background:var(--border); }
+.kpi-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-bottom:2px; }
+.kpi {
+  background:var(--ghost); padding:28px 24px;
+  border:1px solid var(--border); transition:all .3s;
+  position:relative; overflow:hidden;
+}
+.kpi::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  transform:scaleX(0); transform-origin:left; transition:transform .4s;
+}
+.kpi:hover { background:var(--gold-glow); border-color:var(--b-gold); }
+.kpi:hover::after { transform:scaleX(1); }
+.kpi-n {
+  font-family:var(--ff-disp); font-weight:700; font-size:2.8rem; line-height:1;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:6px;
+}
+.kpi-l { font-family:var(--ff-mono); font-size:.56rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; line-height:1.4; }
+.kpi-full {
+  background:var(--ghost); padding:20px 24px;
+  border:1px solid var(--border); display:flex; align-items:center; justify-content:space-between;
+  transition:all .3s;
+}
+.kpi-full:hover { background:var(--gold-glow); border-color:var(--b-gold); }
+.kpi-full-text { font-size:.82rem; color:var(--muted); }
+.kpi-full-badge {
+  font-family:var(--ff-mono); font-size:.55rem; letter-spacing:.1em;
+  background:var(--gold-dim); border:1px solid var(--b-gold);
+  color:var(--gold); padding:4px 10px;
+}
+
+/* Hero scroll indicator */
+.hero-scroll {
+  position:absolute; bottom:40px; left:64px;
+  display:flex; align-items:center; gap:16px;
+  font-family:var(--ff-mono); font-size:.55rem; letter-spacing:.18em;
+  color:var(--faint); text-transform:uppercase;
+  animation:fadeUp .9s 1.3s var(--ease-out) both;
+}
+.scroll-track { width:48px; height:1px; background:var(--border); position:relative; overflow:hidden; }
+.scroll-fill { position:absolute; left:-100%; top:0; height:100%; background:var(--gold); width:100%; animation:scrollTrack 2.5s var(--ease-out) 1.5s infinite; }
+@keyframes scrollTrack { 0%{left:-100%} 60%{left:0} 100%{left:100%} }
+
+/* ═══════════ MARQUEE ═══════════ */
+.marquee-band {
+  padding:20px 0; overflow:hidden;
+  border-top:1px solid var(--b-gold); border-bottom:1px solid var(--b-gold);
+  background:linear-gradient(90deg, var(--obsidian), var(--void), var(--obsidian));
+  position:relative; z-index:2;
+}
+.marquee-track { display:flex; gap:0; animation:marquee 35s linear infinite; }
+.mq-item {
+  font-family:var(--ff-disp); font-style:italic; font-size:1rem;
+  color:rgba(196,158,72,.3); padding:0 36px; flex-shrink:0;
+  display:flex; align-items:center; gap:14px;
+  transition:color .3s;
+}
+.mq-item:hover { color:rgba(196,158,72,.7); }
+.mq-dot { width:3px; height:3px; border-radius:50%; background:var(--gold); opacity:.5; flex-shrink:0; }
+
+/* ═══════════ SHARED ═══════════ */
+.wrap { max-width:1200px; margin:0 auto; padding:0 64px; }
+.sec { position:relative; z-index:2; padding:128px 0; }
+.sec-alt { background:var(--void); }
+.s-eyebrow {
+  font-family:var(--ff-mono); font-size:.6rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--gold);
+  display:flex; align-items:center; gap:12px; margin-bottom:20px;
+}
+.s-eyebrow::before { content:''; width:24px; height:1px; background:var(--gold); flex-shrink:0; }
+.s-title {
+  font-family:var(--ff-disp); font-weight:700;
+  font-size:clamp(2.8rem,5vw,4.8rem); line-height:1.02;
+  letter-spacing:-.01em; margin-bottom:72px;
+}
+.s-title em { font-style:italic; color:var(--gold); }
+
+/* ═══════════ WHY GRID ═══════════ */
+.why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--b-gold); }
+.w-card {
+  background:var(--void); padding:44px 36px;
+  position:relative; overflow:hidden; transition:background .4s;
+}
+.w-card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-l));
+  transform:scaleX(0); transform-origin:left; transition:transform .5s var(--ease-out);
+}
+.w-card:hover { background:var(--surface); }
+.w-card:hover::after { transform:scaleX(1); }
+.w-num { font-family:var(--ff-mono); font-size:.56rem; color:var(--gold); letter-spacing:.15em; margin-bottom:22px; opacity:.6; }
+.w-icon { font-size:1.7rem; margin-bottom:18px; display:block; }
+.w-name { font-family:var(--ff-disp); font-weight:600; font-size:1.2rem; margin-bottom:4px; }
+.w-sub  { font-size:.75rem; color:var(--gold); font-style:italic; margin-bottom:14px; }
+.w-desc { font-size:.83rem; color:var(--muted); line-height:1.72; }
+.guarantees { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); margin-top:1px; }
+.g { background:var(--void); padding:28px 36px; display:flex; gap:18px; align-items:flex-start; }
+.g-n { font-family:var(--ff-disp); font-size:2.2rem; font-weight:700; color:var(--gold); opacity:.2; flex-shrink:0; line-height:1; }
+.g-t h4 { font-family:var(--ff-disp); font-size:.95rem; font-weight:600; margin-bottom:5px; }
+.g-t p { font-size:.8rem; color:var(--muted); line-height:1.6; }
+
+/* ═══════════ SERVICES LIST ═══════════ */
+/* Mini 3D canvas per service */
+.svc-canvas {
+  width:72px; height:72px; flex-shrink:0;
+  border:1px solid rgba(196,158,72,0.15);
+  background:transparent;
+  transition:border-color .3s, box-shadow .3s;
+}
+.svc:hover .svc-canvas {
+  border-color:rgba(196,158,72,0.45);
+  box-shadow:0 0 20px rgba(196,158,72,0.15);
+}
+.svc-list { width:100%; }
+.svc {
+  display:grid; grid-template-columns:52px 72px 1fr auto auto;
+  align-items:center; gap:20px;
+  padding:26px 0; border-bottom:1px solid var(--border);
+  position:relative; overflow:hidden;
+  transition:padding .3s var(--ease-out);
+}
+.svc::before {
+  content:''; position:absolute; left:-100%; top:0; bottom:0; width:100%;
+  background:linear-gradient(90deg,var(--gold-glow),transparent);
+  transition:left .45s var(--ease-out);
+}
+.svc:hover { padding-left:16px; border-color:var(--b-gold); }
+.svc:hover::before { left:0; }
+.svc-n { font-family:var(--ff-mono); font-size:.56rem; color:var(--gold); letter-spacing:.12em; opacity:.55; }
+.svc-name {
+  font-family:var(--ff-disp); font-weight:600;
+  font-size:clamp(1.3rem,2.2vw,1.9rem);
+  transition:color .3s; line-height:1.2;
+}
+.svc:hover .svc-name { color:var(--gold-l); }
+.svc-tag {
+  font-family:var(--ff-mono); font-size:.58rem; letter-spacing:.1em;
+  border:1px solid var(--border); color:var(--muted);
+  padding:6px 14px; white-space:nowrap; transition:all .3s;
+}
+.svc:hover .svc-tag { border-color:var(--b-gold); color:var(--gold); }
+.svc-arr { color:var(--gold); font-size:1.1rem; transform:rotate(-45deg); transition:transform .3s var(--ease-out); }
+.svc:hover .svc-arr { transform:rotate(0); }
+
+/* ═══════════ PRICING ═══════════ */
+.price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--b-gold); }
+.p-card {
+  background:var(--void); padding:52px 40px;
+  position:relative; overflow:hidden; transition:background .3s;
+}
+.p-card.feat { background:var(--surface); }
+.p-card.feat::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-l),var(--gold));
+  background-size:200%; animation:goldShimmer 3s linear infinite;
+}
+.p-badge {
+  position:absolute; top:20px; right:20px;
+  font-family:var(--ff-mono); font-size:.52rem; letter-spacing:.1em;
+  background:var(--gold); color:var(--obsidian); padding:4px 10px; text-transform:uppercase;
+}
+.p-icon { font-size:1.2rem; margin-bottom:14px; }
+.p-name { font-family:var(--ff-disp); font-weight:700; font-size:2rem; margin-bottom:10px; }
+.p-tagline { font-size:.82rem; color:var(--muted); margin-bottom:32px; line-height:1.55; }
+.p-price {
+  font-family:var(--ff-disp); font-size:3rem; font-weight:700; line-height:1;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:4px;
+}
+.p-price span { font-size:1rem; -webkit-text-fill-color:var(--muted); }
+.p-note { font-family:var(--ff-mono); font-size:.58rem; color:var(--muted); letter-spacing:.1em; margin-bottom:32px; text-transform:uppercase; }
+
+.p-price-label {
+  font-family:var(--ff-mono); font-size:.58rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--gold); opacity:.7; margin-bottom:2px;
+}
+
+.p-features { list-style:none; margin-bottom:40px; }
+.p-features li {
+  font-size:.83rem; color:var(--muted); padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  display:flex; align-items:flex-start; gap:10px; line-height:1.45;
+}
+.p-features li::before { content:'◆'; color:var(--gold); font-size:.45rem; flex-shrink:0; margin-top:4px; }
+.p-btn {
+  display:block; text-align:center;
+  font-family:var(--ff-mono); font-size:.65rem; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase;
+  padding:14px; text-decoration:none; transition:all .3s;
+  border:1px solid var(--b-gold); color:var(--gold);
+  position:relative; overflow:hidden;
+}
+.p-btn::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  transform:scaleY(0); transform-origin:bottom; transition:transform .35s var(--ease-out);
+}
+.p-btn:hover { color:var(--obsidian); border-color:var(--gold); }
+.p-btn:hover::before { transform:scaleY(1); }
+.p-btn span { position:relative; z-index:1; }
+.p-card.feat .p-btn {
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  color:var(--obsidian); border-color:var(--gold);
+}
+.p-card.feat .p-btn::before { background:linear-gradient(135deg,var(--gold-l),var(--gold-xl)); }
+.p-card.feat .p-btn:hover { color:var(--obsidian); }
+
+/* ═══════════ DIAGNOSIS FORM ═══════════ */
+.diag-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.diag-perks { display:flex; flex-direction:column; gap:20px; margin-bottom:48px; }
+.diag-perk { display:flex; gap:16px; }
+.dp-icon { color:var(--gold); flex-shrink:0; margin-top:2px; }
+.dp-text { font-size:.88rem; color:var(--muted); line-height:1.65; }
+.diag-social {
+  padding:28px 32px; border:1px solid var(--b-gold);
+  background:var(--gold-glow); margin-top:40px;
+}
+.ds-title { font-family:var(--ff-mono); font-size:.58rem; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+.ds-text { font-size:.85rem; color:var(--muted); line-height:1.6; }
+.form-field { margin-bottom:18px; }
+.form-field label {
+  display:block; font-family:var(--ff-mono); font-size:.58rem;
+  color:var(--gold); letter-spacing:.16em; text-transform:uppercase; margin-bottom:8px;
+}
+.form-field input, .form-field select, .form-field textarea {
+  width:100%; background:var(--surface); border:1px solid var(--border);
+  color:var(--white); font-family:var(--ff-body); font-size:.9rem;
+  padding:14px 16px; outline:none; transition:border .25s, background .25s;
+  -webkit-appearance:none; border-radius:0;
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+  border-color:var(--gold); background:var(--lift);
+}
+.form-field select option { background:var(--surface); }
+.form-field textarea { resize:vertical; min-height:100px; }
+#form-success {
+  display:none; padding:28px;
+  background:var(--gold-glow); border:1px solid var(--b-gold); margin-top:20px;
+}
+#form-success p { font-family:var(--ff-disp); font-size:1.1rem; color:var(--gold-l); }
+#form-error {
+  display:none; padding:20px;
+  background:rgba(255,70,70,.08); border:1px solid rgba(255,70,70,.25); margin-top:20px;
+}
+#form-error p { font-size:.85rem; color:#ffaaaa; }
+
+/* ═══════════ MARKETS ═══════════ */
+.mkt-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--b-gold); }
+.mkt {
+  background:var(--void); padding:48px 28px; text-align:center;
+  transition:background .3s; position:relative; overflow:hidden;
+}
+.mkt::before {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transform:scaleX(0); transition:transform .4s var(--ease-out);
+}
+.mkt:hover { background:var(--surface); }
+.mkt:hover::before { transform:scaleX(1); }
+.mkt-flag { font-size:2.4rem; display:block; margin-bottom:16px; }
+.mkt-name { font-family:var(--ff-disp); font-size:1.3rem; font-weight:600; margin-bottom:10px; }
+.mkt-desc { font-size:.78rem; color:var(--muted); line-height:1.6; }
+
+/* ═══════════ BLOG ═══════════ */
+.blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); }
+.blog-card {
+  background:var(--void); padding:36px 32px; transition:background .3s;
+  display:flex; flex-direction:column;
+}
+.blog-card:hover { background:var(--surface); }
+.blog-tag { font-family:var(--ff-mono); font-size:.56rem; color:var(--gold); letter-spacing:.15em; margin-bottom:14px; text-transform:uppercase; }
+.blog-title { font-family:var(--ff-disp); font-size:1.2rem; font-weight:600; line-height:1.35; margin-bottom:12px; flex:1; }
+.blog-excerpt { font-size:.8rem; color:var(--muted); line-height:1.65; margin-bottom:20px; }
+.blog-meta { font-family:var(--ff-mono); font-size:.56rem; color:var(--faint); letter-spacing:.1em; }
+.blog-read {
+  display:inline-flex; align-items:center; gap:8px; margin-top:20px;
+  font-family:var(--ff-mono); font-size:.58rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--gold); text-decoration:none;
+  transition:gap .3s;
+}
+.blog-read:hover { gap:14px; }
+
+/* ═══════════ ABOUT ═══════════ */
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+.about-text p { font-size:.95rem; color:var(--muted); line-height:1.85; margin-bottom:20px; }
+.about-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:32px; }
+.a-tag {
+  font-family:var(--ff-mono); font-size:.58rem; letter-spacing:.1em;
+  border:1px solid var(--b-gold); color:var(--gold);
+  padding:7px 14px; text-transform:uppercase; transition:all .3s;
+}
+.a-tag:hover { background:var(--gold-dim); }
+.kpi-stack { display:flex; flex-direction:column; gap:1px; }
+.kpi-row {
+  display:flex; align-items:center; gap:20px;
+  padding:24px 28px; background:var(--surface); border-left:2px solid var(--gold);
+  transition:all .3s;
+}
+.kpi-row:hover { background:var(--lift); padding-left:36px; }
+.kpi-row-n { font-family:var(--ff-disp); font-size:2.2rem; font-weight:700; color:var(--gold); min-width:68px; }
+.kpi-row-l { font-size:.82rem; color:var(--muted); line-height:1.45; }
+
+/* ═══════════ CTA FINAL ═══════════ */
+#cta-final {
+  text-align:center; padding:160px 64px;
+  background:radial-gradient(ellipse at 50% 120%, rgba(196,158,72,.09) 0%, transparent 60%);
+}
+.cta-title {
+  font-family:var(--ff-disp); font-weight:700;
+  font-size:clamp(3rem,6.5vw,6rem); line-height:.95; letter-spacing:-.01em; margin-bottom:28px;
+}
+.cta-title em { font-style:italic; color:var(--gold); }
+.cta-sub { font-size:.98rem; color:var(--muted); max-width:440px; margin:0 auto 52px; line-height:1.8; }
+.cta-note { font-family:var(--ff-mono); font-size:.58rem; color:var(--faint); margin-top:20px; letter-spacing:.14em; }
+
+/* ═══════════ FOOTER ═══════════ */
+footer {
+  border-top:1px solid var(--b-gold);
+  background:var(--obsidian); position:relative; z-index:2;
+}
+.foot-top {
+  padding:60px 64px; display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:48px; border-bottom:1px solid var(--border);
+}
+.foot-brand {}
+.foot-brand-logo { font-family:var(--ff-disp); font-weight:700; font-size:1.6rem; margin-bottom:12px; }
+.foot-brand-logo em { font-style:normal; color:var(--gold); }
+.foot-brand-desc { font-size:.82rem; color:var(--muted); line-height:1.65; max-width:260px; }
+.foot-col-title { font-family:var(--ff-mono); font-size:.58rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+.foot-links { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.foot-links a { font-size:.85rem; color:var(--muted); text-decoration:none; transition:color .25s; }
+.foot-links a:hover { color:var(--gold-l); }
+.foot-contact { display:flex; flex-direction:column; gap:10px; }
+.foot-contact a { font-size:.82rem; color:var(--muted); text-decoration:none; transition:color .25s; display:flex; align-items:center; gap:8px; }
+.foot-contact a:hover { color:var(--gold-l); }
+.foot-bottom {
+  padding:24px 64px; display:flex; justify-content:space-between; align-items:center;
+}
+.foot-copy { font-family:var(--ff-mono); font-size:.56rem; color:var(--faint); letter-spacing:.08em; }
+.foot-loc { font-family:var(--ff-mono); font-size:.56rem; color:var(--faint); }
+
+/* ═══════════ AI CHAT WIDGET ═══════════ */
+#ai-chat-btn {
+  position:fixed; bottom:32px; right:32px; z-index:400;
+  width:56px; height:56px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  border-radius:50%; border:none; cursor:none;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 24px rgba(196,158,72,.4);
+  transition:transform .25s var(--ease-out), box-shadow .25s;
+  font-size:1.4rem;
+}
+#ai-chat-btn:hover { transform:scale(1.1); box-shadow:0 6px 32px rgba(196,158,72,.6); }
+#ai-chat-panel {
+  position:fixed; bottom:100px; right:32px; z-index:400;
+  width:360px; max-height:520px;
+  background:var(--void); border:1px solid var(--b-gold);
+  display:flex; flex-direction:column;
+  transform:translateY(20px) scale(.95); opacity:0;
+  pointer-events:none;
+  transition:all .4s var(--ease-out);
+  box-shadow:0 20px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(196,158,72,.1);
+}
+#ai-chat-panel.open { transform:translateY(0) scale(1); opacity:1; pointer-events:all; }
+.chat-head {
+  padding:20px 24px; border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+  background:var(--surface);
+  position:relative; overflow:hidden;
+}
+.chat-head::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-l),var(--gold));
+}
+.chat-head-info h4 { font-family:var(--ff-disp); font-size:1.05rem; font-weight:600; }
+.chat-head-info p { font-family:var(--ff-mono); font-size:.55rem; color:var(--gold); letter-spacing:.1em; }
+.chat-close {
+  background:none; border:none; color:var(--muted); cursor:none;
+  font-size:1.1rem; line-height:1; padding:4px; transition:color .2s;
+}
+.chat-close:hover { color:var(--gold); }
+.chat-status { display:flex; align-items:center; gap:6px; margin-top:4px; }
+.chat-dot { width:6px; height:6px; border-radius:50%; background:#4cff8a; animation:blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.chat-status span { font-family:var(--ff-mono); font-size:.5rem; color:var(--muted); letter-spacing:.1em; }
+.chat-messages {
+  flex:1; overflow-y:auto; padding:20px;
+  display:flex; flex-direction:column; gap:12px;
+  min-height:200px; max-height:320px;
+  scrollbar-width:thin; scrollbar-color:var(--b-gold) transparent;
+}
+.msg { max-width:85%; display:flex; flex-direction:column; gap:4px; }
+.msg.bot { align-self:flex-start; }
+.msg.user { align-self:flex-end; }
+.msg-bubble {
+  padding:12px 16px; font-size:.83rem; line-height:1.55;
+}
+.msg.bot .msg-bubble {
+  background:var(--surface); border:1px solid var(--border); color:var(--white);
+}
+.msg.user .msg-bubble {
+  background:var(--gold-dim); border:1px solid var(--b-gold); color:var(--white);
+}
+.msg-time { font-family:var(--ff-mono); font-size:.48rem; color:var(--faint); letter-spacing:.08em; }
+.msg.user .msg-time { text-align:right; }
+.chat-typing { display:none; align-self:flex-start; padding:12px 16px; background:var(--surface); border:1px solid var(--border); }
+.typing-dots { display:flex; gap:4px; }
+.typing-dots span { width:5px; height:5px; border-radius:50%; background:var(--gold); opacity:.4; animation:typingDot 1.2s infinite; }
+.typing-dots span:nth-child(2) { animation-delay:.2s; }
+.typing-dots span:nth-child(3) { animation-delay:.4s; }
+@keyframes typingDot { 0%,100%{opacity:.4;transform:translateY(0)} 50%{opacity:1;transform:translateY(-3px)} }
+.chat-input-row {
+  padding:16px 20px; border-top:1px solid var(--border);
+  display:flex; gap:10px; background:var(--surface);
+}
+.chat-input {
+  flex:1; background:var(--void); border:1px solid var(--border);
+  color:var(--white); font-family:var(--ff-body); font-size:.82rem;
+  padding:10px 14px; outline:none; transition:border .2s;
+}
+.chat-input:focus { border-color:var(--gold); }
+.chat-send {
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  border:none; color:var(--obsidian);
+  padding:10px 16px; cursor:none; font-size:1rem;
+  transition:transform .2s, box-shadow .2s;
+}
+.chat-send:hover { transform:scale(1.05); box-shadow:0 3px 12px rgba(196,158,72,.4); }
+.chat-suggestions { padding:0 20px 16px; display:flex; flex-wrap:wrap; gap:6px; }
+.chat-sug {
+  font-family:var(--ff-mono); font-size:.55rem; letter-spacing:.08em;
+  border:1px solid var(--b-gold); color:var(--gold);
+  padding:5px 10px; background:none; cursor:none; transition:all .2s;
+}
+.chat-sug:hover { background:var(--gold-dim); }
+
+/* ═══════════ WA FLOAT ═══════════ */
+#wa-btn {
+  position:fixed; bottom:32px; left:32px; z-index:400;
+  display:flex; align-items:center; gap:10px;
+  background:linear-gradient(135deg,#25d366,#1da851);
+  padding:12px 18px;
+  box-shadow:0 4px 20px rgba(37,211,102,.35);
+  text-decoration:none; transition:transform .25s, box-shadow .25s;
+  font-family:var(--ff-mono); font-size:.6rem; letter-spacing:.1em;
+  color:#fff; text-transform:uppercase;
+}
+#wa-btn:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(37,211,102,.5); }
+
+/* ═══════════ REVEAL ═══════════ */
+.rv, .rv-l, .rv-r { opacity:1; transform:none; transition:opacity .9s var(--ease-out), transform .9s var(--ease-out); }
+.rv.animate  { opacity:0; transform:translateY(32px); }
+.rv-l.animate{ opacity:0; transform:translateX(-32px); }
+.rv-r.animate{ opacity:0; transform:translateX(32px); }
+.rv.in, .rv-l.in, .rv-r.in { opacity:1 !important; transform:none !important; }
+.d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s}
+.d4{transition-delay:.32s} .d5{transition-delay:.40s} .d6{transition-delay:.48s}
+
+/* ═══════════ ANIMATIONS ═══════════ */
+@keyframes slideRight { from{opacity:0;transform:translateX(-30px)} to{opacity:1;transform:translateX(0)} }
+@keyframes slideLeft  { from{opacity:0;transform:translateX(30px)}  to{opacity:1;transform:translateX(0)} }
+@keyframes fadeUp     { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
+@keyframes marquee    { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media(max-width:960px){
+  nav { padding:16px 24px; }
+  .nav-center { display:none; }
+  #hero { grid-template-columns:1fr; padding:100px 24px 60px; gap:40px; }
+  .hero-right { display:none; }
+  .hero-scroll { left:24px; }
+  .wrap { padding:0 24px; }
+  .sec { padding:80px 0; }
+  .why-grid,.guarantees,.price-grid,.mkt-grid,.blog-grid { grid-template-columns:1fr; }
+  .diag-layout,.about-grid { grid-template-columns:1fr; gap:40px; }
+  .foot-top { grid-template-columns:1fr; gap:32px; }
+  .foot-bottom { flex-direction:column; gap:12px; text-align:center; }
+  #cta-final { padding:100px 24px; }
+  footer .foot-bottom { padding:24px; }
+  #ai-chat-panel { width:calc(100vw - 48px); right:24px; }
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+
+
+<!-- ── CURSOR ── -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<!-- ── 3D CANVAS ── -->
+<canvas id="canvas-3d"></canvas>
+
+<!-- ── CSS VISUAL BACKGROUND ── -->
+<!-- Luxury corner brackets -->
+<div class="corner corner-tl"></div>
+<div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div>
+<div class="corner corner-br"></div>
+
+<div id="bg-wrap">
+  <!-- Ambient glows -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+  <!-- Scan line -->
+  <div class="scan-line"></div>
+
+  <!-- SVG: City skyline + Neural network — CSS animated, no JS -->
+  <svg id="bg-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="cityGlow" cx="50%" cy="100%" r="60%">
+        <stop offset="0%" stop-color="#c49e48" stop-opacity="0.12"/>
+        <stop offset="100%" stop-color="#c49e48" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="bldGold" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c49e48" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#c49e48" stop-opacity="0.06"/>
+      </linearGradient>
+      <linearGradient id="bldCyan" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3ecfed" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#3ecfed" stop-opacity="0.04"/>
+      </linearGradient>
+      <filter id="glow-gold">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="glow-soft">
+        <feGaussianBlur stdDeviation="6" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- Horizon glow -->
+    <rect width="1440" height="900" fill="url(#cityGlow)"/>
+
+    <!-- ── CITY SKYLINE ── -->
+    <!-- Far background buildings (very faint) -->
+    <rect x="0"   y="720" width="18" height="180" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="22"  y="700" width="14" height="200" fill="url(#bldCyan)" opacity="0.25"/>
+    <rect x="40"  y="730" width="20" height="170" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="65"  y="680" width="16" height="220" fill="url(#bldGold)" opacity="0.35"/>
+    <rect x="85"  y="710" width="22" height="190" fill="url(#bldCyan)" opacity="0.25"/>
+    <rect x="112" y="695" width="18" height="205" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="135" y="725" width="14" height="175" fill="url(#bldCyan)" opacity="0.2"/>
+    <rect x="155" y="670" width="24" height="230" fill="url(#bldGold)" opacity="0.4"/>
+    <rect x="184" y="700" width="16" height="200" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="205" y="715" width="20" height="185" fill="url(#bldCyan)" opacity="0.25"/>
+    <rect x="230" y="685" width="18" height="215" fill="url(#bldGold)" opacity="0.35"/>
+    <rect x="253" y="720" width="14" height="180" fill="url(#bldCyan)" opacity="0.2"/>
+    <rect x="272" y="665" width="26" height="235" fill="url(#bldGold)" opacity="0.4"/>
+    <rect x="303" y="700" width="18" height="200" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="326" y="710" width="22" height="190" fill="url(#bldCyan)" opacity="0.25"/>
+    <rect x="353" y="675" width="20" height="225" fill="url(#bldGold)" opacity="0.38"/>
+    <rect x="378" y="695" width="16" height="205" fill="url(#bldCyan)" opacity="0.22"/>
+    <rect x="399" y="660" width="28" height="240" fill="url(#bldGold)" opacity="0.42"/>
+    <rect x="432" y="705" width="18" height="195" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="455" y="715" width="20" height="185" fill="url(#bldCyan)" opacity="0.25"/>
+    <rect x="480" y="680" width="22" height="220" fill="url(#bldGold)" opacity="0.36"/>
+    <rect x="507" y="690" width="16" height="210" fill="url(#bldCyan)" opacity="0.22"/>
+    <rect x="528" y="655" width="30" height="245" fill="url(#bldGold)" opacity="0.44"/>
+    <rect x="563" y="700" width="18" height="200" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="586" y="712" width="22" height="188" fill="url(#bldCyan)" opacity="0.25"/>
+    <rect x="613" y="672" width="24" height="228" fill="url(#bldGold)" opacity="0.38"/>
+    <rect x="642" y="688" width="18" height="212" fill="url(#bldCyan)" opacity="0.22"/>
+    <rect x="665" y="650" width="32" height="250" fill="url(#bldGold)" opacity="0.45"/>
+    <rect x="702" y="695" width="20" height="205" fill="url(#bldGold)" opacity="0.32"/>
+    <rect x="727" y="708" width="18" height="192" fill="url(#bldCyan)" opacity="0.24"/>
+    <rect x="750" y="668" width="26" height="232" fill="url(#bldGold)" opacity="0.38"/>
+    <rect x="781" y="685" width="20" height="215" fill="url(#bldCyan)" opacity="0.22"/>
+    <rect x="806" y="648" width="34" height="252" fill="url(#bldGold)" opacity="0.44"/>
+    <rect x="845" y="692" width="22" height="208" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="872" y="705" width="18" height="195" fill="url(#bldCyan)" opacity="0.24"/>
+    <rect x="895" y="662" width="28" height="238" fill="url(#bldGold)" opacity="0.38"/>
+    <rect x="928" y="680" width="20" height="220" fill="url(#bldCyan)" opacity="0.22"/>
+    <rect x="953" y="645" width="36" height="255" fill="url(#bldGold)" opacity="0.44"/>
+    <rect x="994" y="690" width="22" height="210" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="1021" y="702" width="18" height="198" fill="url(#bldCyan)" opacity="0.24"/>
+    <rect x="1044" y="658" width="30" height="242" fill="url(#bldGold)" opacity="0.38"/>
+    <rect x="1079" y="675" width="22" height="225" fill="url(#bldCyan)" opacity="0.22"/>
+    <rect x="1106" y="640" width="38" height="260" fill="url(#bldGold)" opacity="0.45"/>
+    <rect x="1149" y="685" width="24" height="215" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="1178" y="698" width="20" height="202" fill="url(#bldCyan)" opacity="0.24"/>
+    <rect x="1203" y="652" width="32" height="248" fill="url(#bldGold)" opacity="0.38"/>
+    <rect x="1240" y="668" width="24" height="232" fill="url(#bldCyan)" opacity="0.22"/>
+    <rect x="1269" y="635" width="40" height="265" fill="url(#bldGold)" opacity="0.45"/>
+    <rect x="1314" y="680" width="26" height="220" fill="url(#bldGold)" opacity="0.3"/>
+    <rect x="1345" y="692" width="22" height="208" fill="url(#bldCyan)" opacity="0.24"/>
+    <rect x="1372" y="645" width="34" height="255" fill="url(#bldGold)" opacity="0.38"/>
+    <rect x="1410" y="660" width="30" height="240" fill="url(#bldCyan)" opacity="0.22"/>
+
+    <!-- Antennas (lines on top of taller buildings) -->
+    <line x1="155" y1="670" x2="155" y2="645" stroke="#c49e48" stroke-width="1" opacity="0.5"/>
+    <line x1="272" y1="665" x2="272" y2="638" stroke="#c49e48" stroke-width="1" opacity="0.5"/>
+    <line x1="399" y1="660" x2="399" y2="630" stroke="#c49e48" stroke-width="1" opacity="0.5"/>
+    <line x1="528" y1="655" x2="528" y2="625" stroke="#c49e48" stroke-width="1" opacity="0.5"/>
+    <line x1="665" y1="650" x2="665" y2="618" stroke="#c49e48" stroke-width="1" opacity="0.5"/>
+    <line x1="806" y1="648" x2="806" y2="615" stroke="#c49e48" stroke-width="1" opacity="0.5"/>
+    <line x1="953" y1="645" x2="953" y2="610" stroke="#c49e48" stroke-width="1" opacity="0.5"/>
+    <line x1="1106" y1="640" x2="1106" y2="604" stroke="#c49e48" stroke-width="1" opacity="0.5"/>
+    <line x1="1269" y1="635" x2="1269" y2="598" stroke="#c49e48" stroke-width="1" opacity="0.5"/>
+
+    <!-- Blinking antenna lights -->
+    <circle cx="155" cy="645" r="2" fill="#c49e48" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="2.1s" repeatCount="indefinite"/></circle>
+    <circle cx="272" cy="638" r="2" fill="#c49e48" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="1.7s" repeatCount="indefinite"/></circle>
+    <circle cx="399" cy="630" r="2" fill="#c49e48" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="2.3s" repeatCount="indefinite"/></circle>
+    <circle cx="528" cy="625" r="2" fill="#3ecfed" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="1.9s" repeatCount="indefinite"/></circle>
+    <circle cx="665" cy="618" r="2" fill="#c49e48" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="2.5s" repeatCount="indefinite"/></circle>
+    <circle cx="806" cy="615" r="2" fill="#3ecfed" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="1.6s" repeatCount="indefinite"/></circle>
+    <circle cx="953" cy="610" r="2" fill="#c49e48" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="2.2s" repeatCount="indefinite"/></circle>
+    <circle cx="1106" cy="604" r="2" fill="#c49e48" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="1.8s" repeatCount="indefinite"/></circle>
+    <circle cx="1269" cy="598" r="2" fill="#3ecfed" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="2.0s" repeatCount="indefinite"/></circle>
+
+    <!-- Ground line -->
+    <line x1="0" y1="899" x2="1440" y2="899" stroke="#c49e48" stroke-width="0.5" opacity="0.2"/>
+
+    <!-- ── NEURAL NETWORK NODES + CONNECTIONS ── -->
+    <!-- Static connections (lines) -->
+    <line x1="100" y1="150" x2="280" y2="220" stroke="#c49e48" stroke-width="0.4" opacity="0.18"/>
+    <line x1="280" y1="220" x2="450" y2="140" stroke="#3ecfed" stroke-width="0.4" opacity="0.15"/>
+    <line x1="450" y1="140" x2="620" y2="280" stroke="#c49e48" stroke-width="0.4" opacity="0.18"/>
+    <line x1="620" y1="280" x2="820" y2="180" stroke="#3ecfed" stroke-width="0.4" opacity="0.15"/>
+    <line x1="820" y1="180" x2="1000" y2="300" stroke="#c49e48" stroke-width="0.4" opacity="0.18"/>
+    <line x1="1000" y1="300" x2="1200" y2="200" stroke="#3ecfed" stroke-width="0.4" opacity="0.15"/>
+    <line x1="1200" y1="200" x2="1380" y2="320" stroke="#c49e48" stroke-width="0.4" opacity="0.18"/>
+    <line x1="100" y1="150" x2="200" y2="350" stroke="#c49e48" stroke-width="0.4" opacity="0.14"/>
+    <line x1="280" y1="220" x2="380" y2="400" stroke="#3ecfed" stroke-width="0.4" opacity="0.12"/>
+    <line x1="450" y1="140" x2="520" y2="380" stroke="#c49e48" stroke-width="0.4" opacity="0.14"/>
+    <line x1="620" y1="280" x2="700" y2="450" stroke="#3ecfed" stroke-width="0.4" opacity="0.12"/>
+    <line x1="820" y1="180" x2="880" y2="420" stroke="#c49e48" stroke-width="0.4" opacity="0.14"/>
+    <line x1="1000" y1="300" x2="1060" y2="500" stroke="#3ecfed" stroke-width="0.4" opacity="0.12"/>
+    <line x1="1200" y1="200" x2="1260" y2="440" stroke="#c49e48" stroke-width="0.4" opacity="0.14"/>
+    <line x1="200" y1="350" x2="380" y2="400" stroke="#c49e48" stroke-width="0.4" opacity="0.12"/>
+    <line x1="380" y1="400" x2="520" y2="380" stroke="#3ecfed" stroke-width="0.4" opacity="0.1"/>
+    <line x1="520" y1="380" x2="700" y2="450" stroke="#c49e48" stroke-width="0.4" opacity="0.12"/>
+    <line x1="700" y1="450" x2="880" y2="420" stroke="#3ecfed" stroke-width="0.4" opacity="0.1"/>
+    <line x1="880" y1="420" x2="1060" y2="500" stroke="#c49e48" stroke-width="0.4" opacity="0.12"/>
+    <line x1="1060" y1="500" x2="1260" y2="440" stroke="#3ecfed" stroke-width="0.4" opacity="0.1"/>
+
+    <!-- Animated pulse along key connections -->
+    <circle r="3" fill="#c49e48" filter="url(#glow-gold)" opacity="0.9">
+      <animateMotion dur="6s" repeatCount="indefinite">
+        <mpath>
+          <path d="M100,150 L280,220 L450,140 L620,280 L820,180 L1000,300 L1200,200 L1380,320"/>
+        </mpath>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.05;0.95;1" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="2.5" fill="#3ecfed" filter="url(#glow-gold)" opacity="0.8">
+      <animateMotion dur="8s" begin="2s" repeatCount="indefinite">
+        <mpath>
+          <path d="M1380,320 L1200,200 L1000,300 L820,180 L620,280 L450,140 L280,220 L100,150"/>
+        </mpath>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.05;0.95;1" dur="8s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle r="2" fill="#c49e48" filter="url(#glow-gold)" opacity="0.7">
+      <animateMotion dur="7s" begin="4s" repeatCount="indefinite">
+        <mpath>
+          <path d="M200,350 L380,400 L520,380 L700,450 L880,420 L1060,500 L1260,440"/>
+        </mpath>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;0.7;0.7;0" keyTimes="0;0.05;0.95;1" dur="7s" begin="4s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Neural nodes — pulsing circles -->
+    <circle cx="100" cy="150" r="4" fill="#c49e48" opacity="0.7" filter="url(#glow-gold)"><animate attributeName="r" values="4;6;4" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="280" cy="220" r="5" fill="#c49e48" opacity="0.8" filter="url(#glow-gold)"><animate attributeName="r" values="5;7;5" dur="3.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;1;0.8" dur="3.5s" repeatCount="indefinite"/></circle>
+    <circle cx="450" cy="140" r="3.5" fill="#3ecfed" opacity="0.7" filter="url(#glow-soft)"><animate attributeName="r" values="3.5;5.5;3.5" dur="4s" repeatCount="indefinite"/></circle>
+    <circle cx="620" cy="280" r="5" fill="#c49e48" opacity="0.75" filter="url(#glow-gold)"><animate attributeName="r" values="5;7.5;5" dur="2.8s" repeatCount="indefinite"/></circle>
+    <circle cx="820" cy="180" r="4" fill="#3ecfed" opacity="0.7" filter="url(#glow-soft)"><animate attributeName="r" values="4;6;4" dur="3.2s" repeatCount="indefinite"/></circle>
+    <circle cx="1000" cy="300" r="5.5" fill="#c49e48" opacity="0.8" filter="url(#glow-gold)"><animate attributeName="r" values="5.5;8;5.5" dur="3.7s" repeatCount="indefinite"/></circle>
+    <circle cx="1200" cy="200" r="4" fill="#3ecfed" opacity="0.7" filter="url(#glow-soft)"><animate attributeName="r" values="4;6;4" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="1380" cy="320" r="3.5" fill="#c49e48" opacity="0.65" filter="url(#glow-gold)"><animate attributeName="r" values="3.5;5.5;3.5" dur="4.2s" repeatCount="indefinite"/></circle>
+    <!-- Second layer nodes -->
+    <circle cx="200" cy="350" r="3" fill="#c49e48" opacity="0.55" filter="url(#glow-gold)"><animate attributeName="r" values="3;5;3" dur="4s" begin="1s" repeatCount="indefinite"/></circle>
+    <circle cx="380" cy="400" r="3.5" fill="#3ecfed" opacity="0.5" filter="url(#glow-soft)"><animate attributeName="r" values="3.5;5.5;3.5" dur="3.8s" begin="0.5s" repeatCount="indefinite"/></circle>
+    <circle cx="520" cy="380" r="3" fill="#c49e48" opacity="0.55" filter="url(#glow-gold)"><animate attributeName="r" values="3;5;3" dur="4.5s" begin="1.5s" repeatCount="indefinite"/></circle>
+    <circle cx="700" cy="450" r="4" fill="#3ecfed" opacity="0.5" filter="url(#glow-soft)"><animate attributeName="r" values="4;6;4" dur="3.3s" begin="2s" repeatCount="indefinite"/></circle>
+    <circle cx="880" cy="420" r="3" fill="#c49e48" opacity="0.55" filter="url(#glow-gold)"><animate attributeName="r" values="3;5;3" dur="4.1s" begin="0.8s" repeatCount="indefinite"/></circle>
+    <circle cx="1060" cy="500" r="3.5" fill="#3ecfed" opacity="0.5" filter="url(#glow-soft)"><animate attributeName="r" values="3.5;5.5;3.5" dur="3.6s" begin="1.2s" repeatCount="indefinite"/></circle>
+    <circle cx="1260" cy="440" r="3" fill="#c49e48" opacity="0.55" filter="url(#glow-gold)"><animate attributeName="r" values="3;5;3" dur="4.3s" begin="0.3s" repeatCount="indefinite"/></circle>
+
+    <!-- Floating micro-particles -->
+    <circle cx="180" cy="80"  r="1.5" fill="#c49e48" opacity="0.4"><animate attributeName="cy" values="80;60;80" dur="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0.8;0.4" dur="6s" repeatCount="indefinite"/></circle>
+    <circle cx="420" cy="60"  r="1"   fill="#3ecfed" opacity="0.35"><animate attributeName="cy" values="60;40;60" dur="8s" repeatCount="indefinite"/></circle>
+    <circle cx="760" cy="90"  r="1.5" fill="#c49e48" opacity="0.4"><animate attributeName="cy" values="90;65;90" dur="7s" repeatCount="indefinite"/></circle>
+    <circle cx="960" cy="70"  r="1"   fill="#3ecfed" opacity="0.35"><animate attributeName="cy" values="70;50;70" dur="5.5s" repeatCount="indefinite"/></circle>
+    <circle cx="1150" cy="100" r="1.5" fill="#c49e48" opacity="0.4"><animate attributeName="cy" values="100;75;100" dur="6.5s" repeatCount="indefinite"/></circle>
+    <circle cx="1350" cy="80"  r="1"   fill="#3ecfed" opacity="0.35"><animate attributeName="cy" values="80;55;80" dur="7.5s" repeatCount="indefinite"/></circle>
+
+    <!-- Diagonal grid lines (subtle) -->
+    <line x1="0" y1="0" x2="1440" y2="900" stroke="#c49e48" stroke-width="0.3" opacity="0.04"/>
+    <line x1="0" y1="900" x2="1440" y2="0" stroke="#c49e48" stroke-width="0.3" opacity="0.04"/>
+    <line x1="720" y1="0" x2="720" y2="900" stroke="#c49e48" stroke-width="0.3" opacity="0.05"/>
+    <line x1="0" y1="450" x2="1440" y2="450" stroke="#c49e48" stroke-width="0.3" opacity="0.05"/>
+  </svg>
+</div>
+
+<!-- ── WA FLOAT ── -->
+<a href="https://wa.me/573025280632" id="wa-btn" title="WhatsApp">
+  💬 WhatsApp
+</a>
+
+<!-- ── AI CHAT ── -->
+<button id="ai-chat-btn" aria-label="Abrir chat de IA">🤖</button>
+<div id="ai-chat-panel" role="dialog" aria-label="Chat de IA GEGH">
+  <div class="chat-head">
+    <div class="chat-head-info">
+      <h4>Asistente GEGH</h4>
+      <div class="chat-status"><div class="chat-dot"></div><span>En línea · Online</span></div>
+    </div>
+    <button class="chat-close" id="chat-close-btn" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-typing" id="chat-typing"><div class="typing-dots"><span></span><span></span><span></span></div></div>
+  <div class="chat-suggestions" id="chat-sugs"></div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" placeholder="Escribe tu pregunta..." autocomplete="off">
+    <button class="chat-send" id="chat-send" aria-label="Enviar">↑</button>
+  </div>
+</div>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="nav">
+  <a href="#" class="logo-mark">
+    <div class="logo-svg"><span>G</span></div>
+    <span class="logo-text">GEGH · Boutique IA</span>
+  </a>
+  <div class="nav-center">
+    <a href="#why">Por qué nosotros</a>
+    <a href="#services">Servicios</a>
+    <a href="#pricing">Precios</a>
+    <a href="#diagnosis">Diagnóstico</a>
+    <a href="#blog">Blog</a>
+  </div>
+  <div class="nav-right">
+    <a href="#" class="nav-lang">ES · EN</a>
+    <a href="https://wa.me/573025280632" class="nav-cta"><span>Hablar ahora →</span></a>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-tag">Bucaramanga · Colombia · Boutique de IA</p>
+    <h1 class="hero-h1">IA que<br><em>transforma</em></h1>
+    <p class="hero-h2">AI that transforms business</p>
+    <div class="hero-rule"></div>
+    <p class="hero-desc">
+      Diseñamos, construimos y desplegamos sistemas de inteligencia artificial que generan ventajas reales y medibles.<br>
+      Implementación en menos de <strong>7 días.</strong>
+    </p>
+    <div class="hero-btns">
+      <a href="#diagnosis" class="btn-primary"><span>🎁 Diagnóstico gratis de IA</span></a>
+      <a href="#pricing"   class="btn-ghost"><span>Ver paquetes →</span></a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-panel">
+      <p class="panel-title">Métricas clave · Key metrics</p>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-n" id="k1">0+</div><div class="kpi-l">Especialistas<br>Specialists</div></div>
+        <div class="kpi"><div class="kpi-n" id="k2">0</div><div class="kpi-l">Días implementación<br>Days to implement</div></div>
+        <div class="kpi"><div class="kpi-n" id="k3">0</div><div class="kpi-l">Idiomas<br>Languages</div></div>
+        <div class="kpi"><div class="kpi-n">5</div><div class="kpi-l">Proyectos máx.<br>Max. projects</div></div>
+      </div>
+      <div class="kpi-full" style="margin-top:1px">
+        <span class="kpi-full-text">ISO 42001 · AI Governance · Colombia</span>
+        <span class="kpi-full-badge">Certificados</span>
+      </div>
+      <div class="kpi-full" style="margin-top:1px">
+        <span class="kpi-full-text">ROI medible o próximo sprint gratis</span>
+        <span class="kpi-full-badge">Garantía</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <div class="scroll-track"><div class="scroll-fill"></div></div>
+  </div>
+</section>
+
+<!-- ══════════════ MARQUEE ══════════════ -->
+<div class="marquee-band">
+  <div class="marquee-track">
+    <div class="mq-item">Agentes de IA<div class="mq-dot"></div></div>
+    <div class="mq-item">RAG · LLM · Agentic AI<div class="mq-dot"></div></div>
+    <div class="mq-item">ISO 42001 · AI Governance<div class="mq-dot"></div></div>
+    <div class="mq-item">MLOps &amp; Datos<div class="mq-dot"></div></div>
+    <div class="mq-item">Implementación en 7 días<div class="mq-dot"></div></div>
+    <div class="mq-item">Colombia · Latam · USA · Europa<div class="mq-dot"></div></div>
+    <div class="mq-item">Consultoría Estratégica<div class="mq-dot"></div></div>
+    <div class="mq-item">Agentes de IA<div class="mq-dot"></div></div>
+    <div class="mq-item">RAG · LLM · Agentic AI<div class="mq-dot"></div></div>
+    <div class="mq-item">ISO 42001 · AI Governance<div class="mq-dot"></div></div>
+    <div class="mq-item">MLOps &amp; Datos<div class="mq-dot"></div></div>
+    <div class="mq-item">Implementación en 7 días<div class="mq-dot"></div></div>
+    <div class="mq-item">Colombia · Latam · USA · Europa<div class="mq-dot"></div></div>
+    <div class="mq-item">Consultoría Estratégica<div class="mq-dot"></div></div>
+  </div>
+</div>
+
+<!-- ══════════════ WHY ══════════════ -->
+<section id="why" class="sec">
+  <div class="wrap">
+    <p class="s-eyebrow rv">Por qué nosotros · Why us</p>
+    <h2 class="s-title rv">No somos <em>genéricos</em><br>We're not <em>generic</em></h2>
+    <div class="why-grid">
+      <div class="w-card rv d1"><div class="w-num">01 ◆</div><span class="w-icon">⚡</span><h3 class="w-name">Implementación en 7 días</h3><p class="w-sub">7-Day Implementation</p><p class="w-desc">Prometemos y cumplimos. Tu proyecto en producción en una semana, no en meses.</p></div>
+      <div class="w-card rv d2"><div class="w-num">02 ◆</div><span class="w-icon">🏥</span><h3 class="w-name">Salud · Agro · Educación</h3><p class="w-sub">Health · Agro · Education</p><p class="w-desc">No hacemos IA genérica. Conocemos tu industria y diseñamos para tu contexto real.</p></div>
+      <div class="w-card rv d3"><div class="w-num">03 ◆</div><span class="w-icon">🧠</span><h3 class="w-name">IA + Estrategia Ejecutiva</h3><p class="w-sub">AI + Executive Strategy</p><p class="w-desc">Estrategas de negocio e ingenieros. ROI medible desde el día 1.</p></div>
+      <div class="w-card rv d4"><div class="w-num">04 ◆</div><span class="w-icon">🌍</span><h3 class="w-name">4 Idiomas · Alcance Global</h3><p class="w-sub">4 Languages · Global Reach</p><p class="w-desc">Español, inglés, portugués y alemán. Latam, USA y Europa sin fricción.</p></div>
+      <div class="w-card rv d5"><div class="w-num">05 ◆</div><span class="w-icon">🛡️</span><h3 class="w-name">ISO 42001 · AI Governance</h3><p class="w-sub">Responsible AI</p><p class="w-desc">Únicos en Colombia con foco en gobernanza responsable de IA desde el inicio.</p></div>
+      <div class="w-card rv d6"><div class="w-num">06 ◆</div><span class="w-icon">💎</span><h3 class="w-name">Boutique, no fábrica</h3><p class="w-sub">Boutique, not factory</p><p class="w-desc">Máximo 5 proyectos simultáneos. Atención de nuestros mejores especialistas.</p></div>
+    </div>
+    <div class="guarantees">
+      <div class="g rv d1"><div class="g-n">01</div><div class="g-t"><h4>Boutique, no fábrica</h4><p>Atención personalizada de especialistas top, nunca de un junior.</p></div></div>
+      <div class="g rv d2"><div class="g-n">02</div><div class="g-t"><h4>ROI medible o devolvemos</h4><p>Si no alcanzamos los KPIs pactados, el siguiente sprint es gratis.</p></div></div>
+      <div class="g rv d3"><div class="g-n">03</div><div class="g-t"><h4>Soporte post-entrega</h4><p>30 días de acompañamiento incluidos en todos los paquetes.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SERVICES ══════════════ -->
+<section id="services" class="sec sec-alt">
+  <div class="wrap">
+    <p class="s-eyebrow rv">Servicios · Services</p>
+    <h2 class="s-title rv">Soluciones de IA <em>end-to-end</em></h2>
+    <div class="svc-list rv">
+      <div class="svc" data-svc="1"><span class="svc-n">01</span><canvas class="svc-canvas" id="sc1"></canvas><span class="svc-name">Agentes de IA · AI Agents</span><span class="svc-tag">RAG · LLM</span><span class="svc-arr">↗</span></div>
+      <div class="svc" data-svc="2"><span class="svc-n">02</span><canvas class="svc-canvas" id="sc2"></canvas><span class="svc-name">Consultoría Estratégica</span><span class="svc-tag">Roadmap · ROI</span><span class="svc-arr">↗</span></div>
+      <div class="svc" data-svc="3"><span class="svc-n">03</span><canvas class="svc-canvas" id="sc3"></canvas><span class="svc-name">Formación Corporativa</span><span class="svc-tag">Equipos · Training</span><span class="svc-arr">↗</span></div>
+      <div class="svc" data-svc="4"><span class="svc-n">04</span><canvas class="svc-canvas" id="sc4"></canvas><span class="svc-name">Desarrollo de Productos IA</span><span class="svc-tag">MVP → Producción</span><span class="svc-arr">↗</span></div>
+      <div class="svc" data-svc="5"><span class="svc-n">05</span><canvas class="svc-canvas" id="sc5"></canvas><span class="svc-name">MLOps &amp; Datos · Data</span><span class="svc-tag">Cloud · Pipelines</span><span class="svc-arr">↗</span></div>
+      <div class="svc" data-svc="6"><span class="svc-n">06</span><canvas class="svc-canvas" id="sc6"></canvas><span class="svc-name">Presencia Digital con IA</span><span class="svc-tag">Web · SEO · WhatsApp</span><span class="svc-arr">↗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PRICING ══════════════ -->
+<section id="pricing" class="sec">
+  <div class="wrap">
+    <p class="s-eyebrow rv">Precios · Pricing</p>
+    <h2 class="s-title rv">Oferta <em>irresistible</em></h2>
+    <div class="price-grid">
+      <div class="p-card rv d1">
+        <div class="p-icon">⭐</div>
+        <div class="p-name">Esencial</div>
+        <div class="p-tagline">Para empresas dando sus primeros pasos en IA</div>
+        <div class="p-price-label">Desde</div><div class="p-price">$990 <span>USD</span></div>
+        <div class="p-note">Pago único · Entrega en 7 días</div>
+        <ul class="p-features">
+          <li>Web profesional con IA integrada</li>
+          <li>SEO técnico básico</li>
+          <li>Correo corporativo configurado</li>
+          <li>Google My Business</li>
+          <li>Agente de WhatsApp básico</li>
+          <li>30 días de soporte incluido</li>
+        </ul>
+        <a href="https://wa.me/573025280632" class="p-btn"><span>Quiero este plan →</span></a>
+      </div>
+      <div class="p-card feat rv d2">
+        <div class="p-badge">Más popular</div>
+        <div class="p-icon">⭐⭐</div>
+        <div class="p-name">Profesional</div>
+        <div class="p-tagline">Para empresas que quieren diferenciarse digitalmente</div>
+        <div class="p-price-label">Desde</div><div class="p-price">$2,500 <span>USD</span></div>
+        <div class="p-note">Pago único · Entrega en 7 días</div>
+        <ul class="p-features">
+          <li>Todo lo del plan Esencial</li>
+          <li>Logo e identidad visual</li>
+          <li>Google Maps optimizado</li>
+          <li>Estrategia SEO 3 meses</li>
+          <li>Integraciones CRM básicas</li>
+          <li>Dashboard de métricas</li>
+          <li>60 días de soporte incluido</li>
+        </ul>
+        <a href="https://wa.me/573025280632" class="p-btn"><span>Quiero este plan →</span></a>
+      </div>
+      <div class="p-card rv d3">
+        <div class="p-icon">⭐⭐⭐</div>
+        <div class="p-name">Premium IA</div>
+        <div class="p-tagline">Para empresas listas para escalar con IA real</div>
+        <div class="p-price-label">Desde</div><div class="p-price">$5,000 <span>USD</span></div>
+        <div class="p-note">Pago fraccionado disponible</div>
+        <ul class="p-features">
+          <li>Todo lo del plan Profesional</li>
+          <li>Agente de IA personalizado</li>
+          <li>Automatización de procesos</li>
+          <li>Pipeline de datos y analítica</li>
+          <li>Formación de equipo (4h)</li>
+          <li>Consultoría estratégica (2 sesiones)</li>
+          <li>90 días de soporte prioritario</li>
+        </ul>
+        <a href="https://wa.me/573025280632" class="p-btn"><span>Quiero este plan →</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ DIAGNOSIS ══════════════ -->
+<section id="diagnosis" class="sec sec-alt">
+  <div class="wrap">
+    <div class="diag-layout">
+      <div>
+        <p class="s-eyebrow rv">Oferta gratuita · Free offer</p>
+        <h2 class="s-title rv" style="margin-bottom:36px;"><em>Diagnóstico gratuito</em><br>de IA</h2>
+        <div class="diag-perks rv">
+          <div class="diag-perk"><span class="dp-icon">◆</span><p class="dp-text">Identificamos 3 oportunidades concretas de IA en tu empresa</p></div>
+          <div class="diag-perk"><span class="dp-icon">◆</span><p class="dp-text">Estimamos el ROI potencial en 12 meses</p></div>
+          <div class="diag-perk"><span class="dp-icon">◆</span><p class="dp-text">Te entregamos un mini-roadmap de implementación</p></div>
+          <div class="diag-perk"><span class="dp-icon">◆</span><p class="dp-text">100% gratis, sin condiciones · Free, no strings attached</p></div>
+        </div>
+        <div class="diag-social rv">
+          <div class="ds-title">Contacto directo</div>
+          <div class="ds-text">
+            ✉️ <a href="/cdn-cgi/l/email-protection#7b1f12091e18181214151814161e0918121a173b1c090e0b141c0e1e09091e0914131e09091e091a55181416" style="color:var(--gold);text-decoration:none;"><span class="__cf_email__" data-cfemail="b9ddd0cbdcdadad0d6d7dad6d4dccbdad0d8d5f9decbccc9d6deccdccbcbdccbd6d1dccbcbdccbd897dad6d4">[email&#160;protected]</span></a><br>
+            💬 <a href="https://wa.me/573025280632" style="color:var(--gold);text-decoration:none;">+57 302 528 0632</a>
+          </div>
+        </div>
+      </div>
+      <div class="rv d2">
+        <!--
+          FORMSPREE SETUP:
+          1. Ve a https://formspree.io → regístrate con direccioncomercial@grupoguerreroherrera.com
+          2. Crea un nuevo Form → copia el Form ID (ej: xpwzabcd)
+          3. Reemplaza TU_FORM_ID abajo con ese ID
+        -->
+        <form id="diag-form"
+              action="https://formspree.io/f/xkopvylv"
+              method="POST"
+              onsubmit="handleForm(event)">
+          <input type="hidden" name="_subject" value="🧠 Nuevo diagnóstico de IA — GEGH">
+          <div class="form-field">
+            <label>Nombre y empresa · Name and company</label>
+            <input type="text" name="nombre_empresa" placeholder="Ej: Juan Pérez — Clínica San Pablo" required>
+          </div>
+          <div class="form-field">
+            <label>Correo electrónico · Email</label>
+            <input type="email" name="correo" placeholder="tucorreo@empresa.com" required>
+          </div>
+          <div class="form-field">
+            <label>Teléfono / WhatsApp · Phone</label>
+            <input type="tel" name="telefono" placeholder="+57 300 000 0000">
+          </div>
+          <div class="form-field">
+            <label>Sector · Industry</label>
+            <select name="sector" required>
+              <option value="">Selecciona un sector</option>
+              <option>Salud · Health</option>
+              <option>Agro</option>
+              <option>Educación · Education</option>
+              <option>Retail / Comercio</option>
+              <option>Fintech</option>
+              <option>Manufactura · Manufacturing</option>
+              <option>Otro · Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Mayor reto operativo · Biggest challenge</label>
+            <textarea name="reto" placeholder="Cuéntanos cuál es tu mayor dolor operativo hoy..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary" id="submit-btn" style="width:100%;margin-top:8px;display:block;text-align:center;border:none;cursor:none;"><span>🚀 Quiero mi diagnóstico gratis</span></button>
+        </form>
+        <div id="form-success">
+          <p>✅ ¡Recibido! Te contactamos en menos de 24 horas.</p>
+          <p style="margin-top:10px;font-size:.82rem;color:var(--muted);">
+            También puedes escribirnos:<br>
+            <a href="https://wa.me/573025280632" style="color:var(--gold);">💬 WhatsApp →</a> &nbsp;·&nbsp;
+            <a href="/cdn-cgi/l/email-protection#f6929f849395959f999895999b9384959f979ab6918483869991839384849384999e938484938497d895999b" style="color:var(--gold);">✉️ Email →</a>
+          </p>
+        </div>
+        <div id="form-error">
+          <p>Hubo un problema. Escríbenos a <a href="/cdn-cgi/l/email-protection#187c716a7d7b7b7177767b77757d6a7b717974587f6a6d68777f6d7d6a6a7d6a77707d6a6a7d6a79367b7775" style="color:var(--gold);"><span class="__cf_email__" data-cfemail="42262b302721212b2d2c212d2f2730212b232e02253037322d253727303027302d2a2730302730236c212d2f">[email&#160;protected]</span></a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ MARKETS ══════════════ -->
+<section id="markets" class="sec">
+  <div class="wrap">
+    <p class="s-eyebrow rv">Mercados · Markets</p>
+    <h2 class="s-title rv">Alcance <em>global</em></h2>
+    <div class="mkt-grid">
+      <div class="mkt rv d1"><span class="mkt-flag">🇨🇴</span><div class="mkt-name">Colombia</div><div class="mkt-desc">Mercado base. Salud, agro y educación privada.</div></div>
+      <div class="mkt rv d2"><span class="mkt-flag">🇧🇷</span><div class="mkt-name">Brasil</div><div class="mkt-desc">Mayor economía de Latam. Operamos en portugués.</div></div>
+      <div class="mkt rv d3"><span class="mkt-flag">🇺🇸</span><div class="mkt-name">USA</div><div class="mkt-desc">Startups hispanas y nearshore AI services.</div></div>
+      <div class="mkt rv d4"><span class="mkt-flag">🇩🇪</span><div class="mkt-name">Alemania</div><div class="mkt-desc">Mittelstand europeo. Operamos en alemán.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ BLOG ══════════════ -->
+<section id="blog" class="sec sec-alt">
+  <div class="wrap">
+    <p class="s-eyebrow rv">Blog &amp; Autoridad · Blog &amp; Authority</p>
+    <h2 class="s-title rv">IA que <em>educa</em></h2>
+    <div class="blog-grid">
+      <div class="blog-card rv d1">
+        <div class="blog-tag">🏥 Salud · IA</div>
+        <h3 class="blog-title">Cómo usar IA en clínicas y hospitales en Colombia en 2026</h3>
+        <p class="blog-excerpt">Casos reales de automatización de historias clínicas, triaje inteligente y reducción de costos operativos.</p>
+        <div class="blog-meta">GEGH · Mar 2026 · 8 min</div>
+        <a href="#" class="blog-read">Leer artículo →</a>
+      </div>
+      <div class="blog-card rv d2">
+        <div class="blog-tag">🌾 Agro · Colombia</div>
+        <h3 class="blog-title">IA para el sector agrícola: casos de uso en Latam</h3>
+        <p class="blog-excerpt">Predicción de cosechas, drones autónomos y análisis de suelos con modelos de lenguaje.</p>
+        <div class="blog-meta">GEGH · Feb 2026 · 6 min</div>
+        <a href="#" class="blog-read">Leer artículo →</a>
+      </div>
+      <div class="blog-card rv d3">
+        <div class="blog-tag">🚀 Guía · 2026</div>
+        <h3 class="blog-title">Guía completa para implementar IA en tu empresa en 2026</h3>
+        <p class="blog-excerpt">Desde el diagnóstico inicial hasta el despliegue en producción. El roadmap que usamos en GEGH.</p>
+        <div class="blog-meta">GEGH · Ene 2026 · 12 min</div>
+        <a href="#" class="blog-read">Leer artículo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ABOUT ══════════════ -->
+<section id="about" class="sec">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="rv-l">
+        <p class="s-eyebrow">Quiénes somos · Who we are</p>
+        <h2 class="s-title" style="margin-bottom:32px;">Un equipo construido<br>para <em>ganar</em></h2>
+        <div class="about-text">
+          <p>GEGH es una boutique de inteligencia artificial con sede en Bucaramanga, Colombia. Combinamos estrategia ejecutiva, ingeniería de alto nivel y gobierno responsable de IA para entregar soluciones con valor real y medible.</p>
+          <p>Operamos en español, inglés, portugués y alemán, alcanzando mercados en Latam, EEUU y Europa directamente.</p>
+        </div>
+        <div class="about-tags">
+          <span class="a-tag">ISO 42001</span><span class="a-tag">AI Governance</span>
+          <span class="a-tag">RAG</span><span class="a-tag">LLM Engineering</span>
+          <span class="a-tag">MLOps</span><span class="a-tag">Agentic AI</span>
+          <span class="a-tag">4 Idiomas</span>
+        </div>
+      </div>
+      <div class="rv-r d2">
+        <div class="kpi-stack">
+          <div class="kpi-row"><div class="kpi-row-n">10+</div><div class="kpi-row-l">Especialistas en IA<br>AI Specialists</div></div>
+          <div class="kpi-row"><div class="kpi-row-n">7</div><div class="kpi-row-l">Días de implementación<br>Days to implement</div></div>
+          <div class="kpi-row"><div class="kpi-row-n">4</div><div class="kpi-row-l">Idiomas de operación<br>Languages of operation</div></div>
+          <div class="kpi-row"><div class="kpi-row-n">≤5</div><div class="kpi-row-l">Proyectos simultáneos máx.<br>Max simultaneous projects</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CTA ══════════════ -->
+<section id="cta-final" style="position:relative;z-index:2;">
+  <p class="s-eyebrow rv" style="justify-content:center;margin-bottom:24px;">Comienza hoy · Start today</p>
+  <h2 class="cta-title rv">¿Listo para <em>transformar</em><br>tu empresa con IA?</h2>
+  <p class="cta-sub rv">En 30 minutos te decimos exactamente cómo la IA puede impactar tu negocio. Sin compromiso. Solo claridad.</p>
+  <div class="rv">
+    <a href="https://wa.me/573025280632" class="btn-primary" style="font-size:.8rem;padding:18px 48px;display:inline-block;"><span>🚀 Agenda tu diagnóstico gratis</span></a>
+  </div>
+  <p class="cta-note rv">3 preguntas · Respuesta en menos de 24h</p>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer style="position:relative;z-index:2;">
+  <div class="foot-top">
+    <div class="foot-brand">
+      <div class="foot-brand-logo">GE<em>G</em>H</div>
+      <p class="foot-brand-desc">Boutique de Inteligencia Artificial. Bucaramanga, Colombia. Implementamos IA que genera ROI real en menos de 7 días.</p>
+    </div>
+    <div>
+      <div class="foot-col-title">Navegación</div>
+      <ul class="foot-links">
+        <li><a href="#why">Por qué nosotros</a></li>
+        <li><a href="#services">Servicios</a></li>
+        <li><a href="#pricing">Precios</a></li>
+        <li><a href="#diagnosis">Diagnóstico gratis</a></li>
+        <li><a href="#blog">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-col-title">Contacto</div>
+      <div class="foot-contact">
+        <a href="/cdn-cgi/l/email-protection#e3878a918680808a8c8d808c8e8691808a828fa3849196938c849686919186918c8b869191869182cd808c8e">✉️ <span class="__cf_email__" data-cfemail="abcfc2d9cec8c8c2c4c5c8c4c6ced9c8c2cac7ebccd9dedbc4ccdeced9d9ced9c4c3ced9d9ced9ca85c8c4c6">[email&#160;protected]</span></a>
+        <a href="https://wa.me/573025280632">💬 +57 302 528 0632</a>
+        <a href="#">📍 Diamante II, Bucaramanga, Colombia</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-copy">© 2026 Grupo Empresarial Guerrero Herrera S.A.S. · Todos los derechos reservados</div>
+    <div class="foot-loc">ISO 42001 · AI Governance · Colombia · Latam · USA · Europa</div>
+  </div>
+</footer>
+
+<!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── LOADER ── */
+
+
+/* ── CURSOR ── */
+const dot=document.getElementById('cur-dot');
+const rng=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+document.addEventListener('mousedown',()=>document.body.classList.add('cursor-click'));
+document.addEventListener('mouseup',()=>document.body.classList.remove('cursor-click'));
+(function loop(){
+  rx+=(mx-rx)*.1; ry+=(my-ry)*.1;
+  rng.style.left=rx+'px'; rng.style.top=ry+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.p-card,.w-card,.mkt,.svc,.kpi,.kpi-full,.kpi-row').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+});
+
+/* ── NAV ── */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+
+/* ── COUNTERS ── */
+function counter(el,to,suf=''){
+  let v=0; const d=1800,s=14,i=to/(d/s);
+  const t=setInterval(()=>{v+=i;if(v>=to){v=to;clearInterval(t);}el.textContent=Math.floor(v)+suf;},s);
+}
+new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){
+    counter(document.getElementById('k1'),10,'+');
+    counter(document.getElementById('k2'),7);
+    counter(document.getElementById('k3'),4);
+  }
+}),{threshold:.5}).observe(document.querySelector('.hero-panel'));
+
+/* ── REVEAL ── */
+const rvObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.1});
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>rvObs.observe(el));
+
+/* ── FORM ── */
+async function handleForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('submit-btn');
+  btn.querySelector('span').textContent='Enviando...';
+  btn.style.opacity='.7'; btn.disabled=true;
+  const form=document.getElementById('diag-form');
+  try{
+    const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+    if(res.ok){form.style.display='none';document.getElementById('form-success').style.display='block';}
+    else throw 0;
+  }catch{
+    btn.querySelector('span').textContent='🚀 Quiero mi diagnóstico gratis';
+    btn.style.opacity='1'; btn.disabled=false;
+    document.getElementById('form-error').style.display='block';
+  }
+}
+
+/* ════════ AI CHAT WIDGET ════════ */
+const chatPanel=document.getElementById('ai-chat-panel');
+const chatMsgs=document.getElementById('chat-messages');
+const chatInput=document.getElementById('chat-input');
+const chatTyping=document.getElementById('chat-typing');
+const chatSugs=document.getElementById('chat-sugs');
+let chatHistory=[];
+
+const SYSTEM_PROMPT=`Eres el asistente virtual de GEGH (Grupo Empresarial Guerrero Herrera), una boutique de Inteligencia Artificial con sede en Bucaramanga, Colombia. 
+
+Tu misión: ayudar a los visitantes a entender los servicios de GEGH, responder preguntas sobre IA empresarial, y agendar diagnósticos gratuitos.
+
+Datos clave:
+- Servicios: Agentes de IA, Consultoría Estratégica, Formación Corporativa, Desarrollo de Productos IA, MLOps & Datos, Presencia Digital con IA
+- Precios: Esencial $990 USD, Profesional $2,500 USD, Premium IA $5,000 USD
+- Implementación en 7 días garantizada
+- ISO 42001 · AI Governance
+- Sectores: Salud, Agro, Educación, Retail, Fintech, Manufactura
+- Contacto: direccioncomercial@grupoguerreroherrera.com | +57 302 528 0632
+- Diagnóstico gratis de 30 minutos disponible
+
+Responde siempre en español de forma concisa (máximo 3 oraciones). Sé cálido, profesional y orientado a generar leads. Si preguntan por precios, menciónalos y sugiere el diagnóstico gratis. Nunca inventas información que no esté aquí.`;
+
+const SUGGESTIONS=[
+  '¿Qué es un Agente de IA?',
+  '¿Cuánto cuesta implementar IA?',
+  '¿Cómo funciona el diagnóstico gratis?',
+  '¿En qué sectores trabajan?',
+];
+
+function renderSuggestions(sugs){
+  chatSugs.innerHTML='';
+  sugs.forEach(s=>{
+    const b=document.createElement('button');
+    b.className='chat-sug'; b.textContent=s;
+    b.onclick=()=>{ chatInput.value=s; sendChat(); };
+    chatSugs.appendChild(b);
+  });
+}
+
+function addMsg(role,text){
+  const now=new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  const div=document.createElement('div');
+  div.className=`msg ${role}`;
+  div.innerHTML=`<div class="msg-bubble">${text}</div><div class="msg-time">${now}</div>`;
+  chatMsgs.appendChild(div);
+  chatMsgs.scrollTop=chatMsgs.scrollHeight;
+  chatSugs.innerHTML='';
+}
+
+async function sendChat(){
+  const text=chatInput.value.trim();
+  if(!text)return;
+  chatInput.value='';
+  addMsg('user',text);
+  chatHistory.push({role:'user',content:text});
+
+  chatTyping.style.display='block';
+  chatMsgs.scrollTop=chatMsgs.scrollHeight;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:300,
+        system:SYSTEM_PROMPT,
+        messages:chatHistory.slice(-8)
+      })
+    });
+    const data=await res.json();
+    const reply=data.content?.[0]?.text||'Lo siento, hubo un error. Escríbenos directamente a WhatsApp.';
+    chatHistory.push({role:'assistant',content:reply});
+    chatTyping.style.display='none';
+    addMsg('bot',reply);
+    // Dynamic follow-up suggestions
+    if(text.toLowerCase().includes('precio')||text.toLowerCase().includes('costo')){
+      renderSuggestions(['¿Hay pago fraccionado?','¿Qué incluye el Premium IA?','Quiero el diagnóstico gratis']);
+    } else if(text.toLowerCase().includes('diagnóstico')||text.toLowerCase().includes('gratis')){
+      renderSuggestions(['¿Cuánto dura?','¿Qué información necesitan?','Agendar ahora por WhatsApp']);
+    } else {
+      renderSuggestions(['¿Cómo empezamos?','¿Tienen casos de éxito?','Ver precios']);
+    }
+  }catch{
+    chatTyping.style.display='none';
+    addMsg('bot','En este momento no puedo responder. Escríbenos directo: <a href="https://wa.me/573025280632" style="color:var(--gold)">WhatsApp →</a>');
+  }
+}
+
+// Init chat
+document.getElementById('ai-chat-btn').addEventListener('click',()=>{
+  chatPanel.classList.toggle('open');
+  if(chatPanel.classList.contains('open')&&chatMsgs.children.length===0){
+    setTimeout(()=>{
+      addMsg('bot','¡Hola! 👋 Soy el asistente de <strong>GEGH</strong>. ¿En qué puedo ayudarte hoy?');
+      renderSuggestions(SUGGESTIONS);
+    },400);
+  }
+});
+document.getElementById('chat-close-btn').addEventListener('click',()=>chatPanel.classList.remove('open'));
+document.getElementById('chat-send').addEventListener('click',sendChat);
+chatInput.addEventListener('keydown',e=>{ if(e.key==='Enter')sendChat(); });
+
+/* ═══════════════════════════════════════════════
+   THREE.JS 3D SCENE — Geometric AI universe
+   ═══════════════════════════════════════════════ */
+(function init3D(){
+  var canvas = document.getElementById('canvas-3d');
+  if(!canvas || typeof THREE === 'undefined') return;
+
+  var W=window.innerWidth, H=window.innerHeight;
+  var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true});
+  renderer.setSize(W,H);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setClearColor(0x000000,0);
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(60,W/H,0.1,1000);
+  camera.position.set(0,0,22);
+
+  window.addEventListener('resize',function(){
+    var w=window.innerWidth,h=window.innerHeight;
+    renderer.setSize(w,h);
+    camera.aspect=w/h; camera.updateProjectionMatrix();
+  });
+
+  var matGold = new THREE.MeshStandardMaterial({color:0xc49e48,metalness:.9,roughness:.15,emissive:0x3a2800,emissiveIntensity:.3});
+  var matGoldWire = new THREE.MeshBasicMaterial({color:0xc49e48,wireframe:true,transparent:true,opacity:.15});
+  var matCyan = new THREE.MeshStandardMaterial({color:0x3ecfed,metalness:.8,roughness:.2,emissive:0x003040,emissiveIntensity:.4});
+  var matGlowG = new THREE.MeshBasicMaterial({color:0xe6c46e,transparent:true,opacity:.6});
+  var matGlowC = new THREE.MeshBasicMaterial({color:0x3ecfed,transparent:true,opacity:.5});
+
+  scene.add(new THREE.AmbientLight(0x111122,1.5));
+  var gl = new THREE.PointLight(0xc49e48,4,40); gl.position.set(8,8,8); scene.add(gl);
+  var cl = new THREE.PointLight(0x3ecfed,3,40); cl.position.set(-8,-6,6); scene.add(cl);
+
+  // Torus Knot — core AI brain
+  var tkGeo = new THREE.TorusKnotGeometry(3.2,.55,180,20,2,3);
+  var tk = new THREE.Mesh(tkGeo, matGold);
+  tk.position.set(6,0,-8); scene.add(tk);
+  var tkW = new THREE.Mesh(new THREE.TorusKnotGeometry(3.28,.58,80,16,2,3), matGoldWire);
+  tkW.position.copy(tk.position); scene.add(tkW);
+
+  // Orbiting spheres
+  var orbits=[];
+  [{r:6.5,spd:.008,ph:0,s:.4,m:matGlowG,tilt:.4},{r:7.8,spd:.006,ph:2.1,s:.3,m:matGlowC,tilt:-.6},
+   {r:5.8,spd:.011,ph:4.2,s:.35,m:matGlowG,tilt:.9},{r:9.0,spd:.004,ph:1.0,s:.5,m:matGlowC,tilt:-.3},
+   {r:8.5,spd:.007,ph:3.5,s:.28,m:matGlowG,tilt:1.2},{r:6.2,spd:.009,ph:5.1,s:.32,m:matGlowC,tilt:.7}
+  ].forEach(function(d){
+    var m=new THREE.Mesh(new THREE.SphereGeometry(d.s,12,12),d.m);
+    var p=new THREE.Object3D(); p.rotation.z=d.tilt; p.position.copy(tk.position);
+    m.position.set(d.r,0,0); p.add(m); scene.add(p);
+    orbits.push({pivot:p,mesh:m,spd:d.spd,ph:d.ph,r:d.r});
+  });
+
+  // Orbit rings
+  [6.5,7.8,9.0].forEach(function(r,i){
+    var ring=new THREE.Mesh(new THREE.TorusGeometry(r,.02,6,80),new THREE.MeshBasicMaterial({color:0xc49e48,transparent:true,opacity:.1}));
+    ring.position.copy(tk.position); ring.rotation.x=Math.PI/2+i*.4; scene.add(ring);
+  });
+
+  // Icosahedron
+  var ico=new THREE.Mesh(new THREE.IcosahedronGeometry(1.8,1),matCyan);
+  ico.position.set(-9,3,-6); scene.add(ico);
+  var icoW=new THREE.Mesh(new THREE.IcosahedronGeometry(1.85,1),new THREE.MeshBasicMaterial({color:0x3ecfed,wireframe:true,transparent:true,opacity:.22}));
+  icoW.position.copy(ico.position); scene.add(icoW);
+
+  // Octahedron
+  var octa=new THREE.Mesh(new THREE.OctahedronGeometry(1.2,0),matGold);
+  octa.position.set(11,6,-10); scene.add(octa);
+  var octaW=new THREE.Mesh(new THREE.OctahedronGeometry(1.25,0),matGoldWire);
+  octaW.position.copy(octa.position); scene.add(octaW);
+
+  // Dodecahedron
+  var dod=new THREE.Mesh(new THREE.DodecahedronGeometry(1.0,0),new THREE.MeshStandardMaterial({color:0xc49e48,metalness:.85,roughness:.2,emissive:0x2a1800,emissiveIntensity:.4}));
+  dod.position.set(-11,-5,-8); scene.add(dod);
+
+  // Particles (gold)
+  var pN=320, pPos=new Float32Array(pN*3), pSpd=[];
+  for(var i=0;i<pN;i++){
+    pPos[i*3]=(Math.random()-.5)*60; pPos[i*3+1]=(Math.random()-.5)*40; pPos[i*3+2]=(Math.random()-.5)*30-5;
+    pSpd.push({vx:(Math.random()-.5)*.008,vy:(Math.random()-.5)*.008,vz:(Math.random()-.5)*.004});
+  }
+  var pGeo=new THREE.BufferGeometry(); pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+  var pts=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xc49e48,size:.12,transparent:true,opacity:.6,sizeAttenuation:true}));
+  scene.add(pts);
+
+  // Particles (cyan)
+  var pPos2=new Float32Array(180*3);
+  for(var i=0;i<180;i++){pPos2[i*3]=(Math.random()-.5)*55;pPos2[i*3+1]=(Math.random()-.5)*38;pPos2[i*3+2]=(Math.random()-.5)*25-5;}
+  var pGeo2=new THREE.BufferGeometry(); pGeo2.setAttribute('position',new THREE.BufferAttribute(pPos2,3));
+  scene.add(new THREE.Points(pGeo2,new THREE.PointsMaterial({color:0x3ecfed,size:.09,transparent:true,opacity:.4,sizeAttenuation:true})));
+
+  // Floating data rings
+  var rings=[];
+  [[-5,5,-12,4,.012],[8,-4,-14,3,.009],[-10,0,-10,2.5,.015]].forEach(function(d){
+    var r=new THREE.Mesh(new THREE.TorusGeometry(d[3],.06,8,60),new THREE.MeshBasicMaterial({color:0xc49e48,transparent:true,opacity:.2}));
+    r.position.set(d[0],d[1],d[2]); scene.add(r); rings.push({m:r,s:d[4]});
+  });
+
+  var mX=0,mY=0;
+  document.addEventListener('mousemove',function(e){mX=(e.clientX/window.innerWidth-.5)*2;mY=(e.clientY/window.innerHeight-.5)*2;});
+
+  var t=0;
+  (function loop(){
+    requestAnimationFrame(loop); t+=.008;
+    tk.rotation.x+=.006; tk.rotation.y+=.009; tkW.rotation.copy(tk.rotation);
+    orbits.forEach(function(o){o.ph+=o.spd;o.mesh.position.x=Math.cos(o.ph)*o.r;o.mesh.position.z=Math.sin(o.ph)*o.r*.5;});
+    ico.rotation.y+=.007; ico.rotation.x+=.004; icoW.rotation.copy(ico.rotation);
+    octa.rotation.y-=.008; octa.rotation.z+=.005; octaW.rotation.copy(octa.rotation);
+    dod.rotation.x+=.006; dod.rotation.y+=.009;
+    rings.forEach(function(d){d.m.rotation.y+=d.s;d.m.rotation.x+=d.s*.6;});
+    var pos=pts.geometry.attributes.position.array;
+    for(var i=0;i<pN;i++){
+      pos[i*3]+=pSpd[i].vx; pos[i*3+1]+=pSpd[i].vy; pos[i*3+2]+=pSpd[i].vz;
+      if(Math.abs(pos[i*3])>30)pSpd[i].vx*=-1;
+      if(Math.abs(pos[i*3+1])>20)pSpd[i].vy*=-1;
+      if(Math.abs(pos[i*3+2])>15)pSpd[i].vz*=-1;
+    }
+    pts.geometry.attributes.position.needsUpdate=true;
+    gl.position.x=Math.sin(t*.7)*10; gl.position.y=Math.cos(t*.5)*8;
+    cl.position.x=Math.cos(t*.6)*-10; cl.position.y=Math.sin(t*.4)*-8;
+    camera.position.x+=(mX*2-camera.position.x)*.025;
+    camera.position.y+=(-mY*1.5-camera.position.y)*.025;
+    camera.lookAt(scene.position);
+    renderer.render(scene,camera);
+  })();
+})();
+
+
+/* ═══════════════════════════════════════
+   MINI 3D SCENES — One per service
+   01: Neural net   → spinning torus + nodes
+   02: Compass      → wireframe sphere + arrow
+   03: Brain/edu    → icosahedron + rings
+   04: Gear/build   → interlocked gears
+   05: Data flow    → helix + particles
+   06: Globe web    → sphere + orbit lines
+   ═══════════════════════════════════════ */
+(function initMiniScenes(){
+  if(typeof THREE === 'undefined') return;
+
+  var G = 0xc49e48, GL = 0xe6c46e, C = 0x3ecfed;
+
+  function makeRenderer(id){
+    var cv = document.getElementById(id);
+    if(!cv) return null;
+    var r = new THREE.WebGLRenderer({canvas:cv, antialias:true, alpha:true});
+    r.setSize(72,72); r.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    r.setClearColor(0x000000,0);
+    return r;
+  }
+  function makeScene(){
+    var s=new THREE.Scene();
+    s.add(new THREE.AmbientLight(0xffffff,.8));
+    var pl=new THREE.PointLight(G,3,20); pl.position.set(4,4,4); s.add(pl);
+    var pl2=new THREE.PointLight(C,2,20); pl2.position.set(-4,-3,3); s.add(pl2);
+    return s;
+  }
+  function makeCamera(){
+    var c=new THREE.PerspectiveCamera(55,1,.1,100);
+    c.position.set(0,0,4.5); return c;
+  }
+  var matG = new THREE.MeshStandardMaterial({color:G,metalness:.9,roughness:.15,emissive:0x2a1800,emissiveIntensity:.3});
+  var matC = new THREE.MeshStandardMaterial({color:C,metalness:.8,roughness:.2,emissive:0x002030,emissiveIntensity:.35});
+  var matGW = new THREE.MeshBasicMaterial({color:G,wireframe:true,transparent:true,opacity:.25});
+  var matCW = new THREE.MeshBasicMaterial({color:C,wireframe:true,transparent:true,opacity:.2});
+
+  // ── 01: NEURAL NET — Torus knot + orbiting dots ──
+  (function(){
+    var r=makeRenderer('sc1'); if(!r) return;
+    var s=makeScene(), cam=makeCamera();
+    var tk=new THREE.Mesh(new THREE.TorusKnotGeometry(.9,.18,80,10,2,3),matG);
+    s.add(tk);
+    var tkw=new THREE.Mesh(new THREE.TorusKnotGeometry(.93,.19,40,8,2,3),matGW);
+    s.add(tkw);
+    // Mini orbit dots
+    var dots=[],dphs=[0,2.1,4.2];
+    dphs.forEach(function(ph,i){
+      var d=new THREE.Mesh(new THREE.SphereGeometry(.08,8,8),new THREE.MeshBasicMaterial({color:i%2?C:GL,transparent:true,opacity:.9}));
+      s.add(d); dots.push({m:d,ph:ph,r:1.4+i*.15,spd:.025+i*.005});
+    });
+    // Particles
+    var pPos=new Float32Array(60*3);
+    for(var i=0;i<60;i++){pPos[i*3]=(Math.random()-.5)*4;pPos[i*3+1]=(Math.random()-.5)*4;pPos[i*3+2]=(Math.random()-.5)*3;}
+    var pg=new THREE.BufferGeometry(); pg.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+    s.add(new THREE.Points(pg,new THREE.PointsMaterial({color:G,size:.04,transparent:true,opacity:.55})));
+    (function loop(){
+      requestAnimationFrame(loop);
+      tk.rotation.x+=.012; tk.rotation.y+=.015; tkw.rotation.copy(tk.rotation);
+      dots.forEach(function(d){d.ph+=d.spd;d.m.position.set(Math.cos(d.ph)*d.r,Math.sin(d.ph)*d.r*.6,Math.sin(d.ph*.7)*.5);});
+      r.render(s,cam);
+    })();
+  })();
+
+  // ── 02: STRATEGIC COMPASS — Wireframe sphere + rotating ring ──
+  (function(){
+    var r=makeRenderer('sc2'); if(!r) return;
+    var s=makeScene(), cam=makeCamera();
+    var sphere=new THREE.Mesh(new THREE.SphereGeometry(1,16,16),matGW);
+    s.add(sphere);
+    var core=new THREE.Mesh(new THREE.SphereGeometry(.3,12,12),matG);
+    s.add(core);
+    // 3 rings at different angles
+    var rings=[];
+    [[0,0,0],[Math.PI/2,0,0],[0,0,Math.PI/2]].forEach(function(rot,i){
+      var ring=new THREE.Mesh(new THREE.TorusGeometry(1,.025,6,60),new THREE.MeshBasicMaterial({color:i===1?C:G,transparent:true,opacity:.7}));
+      ring.rotation.set(rot[0],rot[1],rot[2]); s.add(ring); rings.push(ring);
+    });
+    // Arrow indicator
+    var arrow=new THREE.Mesh(new THREE.ConeGeometry(.12,.4,6),matC);
+    arrow.position.set(0,1.2,0); s.add(arrow);
+    (function loop(){
+      requestAnimationFrame(loop);
+      sphere.rotation.y+=.008; core.rotation.y+=.02;
+      rings[0].rotation.y+=.012; rings[1].rotation.z+=.009; rings[2].rotation.x+=.010;
+      arrow.position.x=Math.sin(Date.now()*.001)*.3;
+      arrow.position.z=Math.cos(Date.now()*.001)*.3;
+      r.render(s,cam);
+    })();
+  })();
+
+  // ── 03: CORPORATE TRAINING — Icosahedron + expanding rings ──
+  (function(){
+    var r=makeRenderer('sc3'); if(!r) return;
+    var s=makeScene(), cam=makeCamera();
+    var ico=new THREE.Mesh(new THREE.IcosahedronGeometry(1,1),matC);
+    s.add(ico);
+    var icoW=new THREE.Mesh(new THREE.IcosahedronGeometry(1.05,1),matCW);
+    s.add(icoW);
+    // Pulsing rings
+    var pulseRings=[];
+    for(var i=0;i<3;i++){
+      var pr=new THREE.Mesh(new THREE.TorusGeometry(1+i*.35,.015,6,48),new THREE.MeshBasicMaterial({color:i%2?G:C,transparent:true,opacity:.5}));
+      pr.rotation.x=Math.PI/2+i*.4; s.add(pr);
+      pulseRings.push({m:pr,phase:i*2.1});
+    }
+    // Star dots
+    var sPos=new Float32Array(40*3);
+    for(var i=0;i<40;i++){var th=Math.random()*Math.PI*2,ph2=Math.random()*Math.PI,rr=1.6+Math.random()*.8;sPos[i*3]=rr*Math.sin(ph2)*Math.cos(th);sPos[i*3+1]=rr*Math.sin(ph2)*Math.sin(th);sPos[i*3+2]=rr*Math.cos(ph2);}
+    var sg=new THREE.BufferGeometry(); sg.setAttribute('position',new THREE.BufferAttribute(sPos,3));
+    s.add(new THREE.Points(sg,new THREE.PointsMaterial({color:GL,size:.06,transparent:true,opacity:.7})));
+    (function loop(){
+      requestAnimationFrame(loop);
+      ico.rotation.y+=.01; ico.rotation.x+=.006; icoW.rotation.copy(ico.rotation);
+      pulseRings.forEach(function(p){p.phase+=.018;p.m.scale.setScalar(.9+Math.sin(p.phase)*.12);p.m.material.opacity=.3+Math.sin(p.phase)*.25;});
+      r.render(s,cam);
+    })();
+  })();
+
+  // ── 04: PRODUCT DEV — Interlocked gears (torus + octahedron) ──
+  (function(){
+    var r=makeRenderer('sc4'); if(!r) return;
+    var s=makeScene(), cam=makeCamera();
+    // Main gear = torus with spikes (octahedron scaled)
+    var gear1=new THREE.Mesh(new THREE.TorusGeometry(.85,.22,8,12),matG);
+    s.add(gear1);
+    var gear2=new THREE.Mesh(new THREE.TorusGeometry(.55,.15,6,10),matC);
+    gear2.position.set(1.4,0,0); s.add(gear2);
+    // Core dot
+    var dot=new THREE.Mesh(new THREE.SphereGeometry(.2,12,12),matG);
+    s.add(dot);
+    var dot2=new THREE.Mesh(new THREE.SphereGeometry(.13,12,12),matC);
+    dot2.position.set(1.4,0,0); s.add(dot2);
+    // Progress line
+    var lGeo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-1.5,1.3,0),new THREE.Vector3(1.5,1.3,0)]);
+    var progress=new THREE.Line(lGeo,new THREE.LineBasicMaterial({color:G,transparent:true,opacity:.4}));
+    s.add(progress);
+    var progDot=new THREE.Mesh(new THREE.SphereGeometry(.1,8,8),new THREE.MeshBasicMaterial({color:GL}));
+    s.add(progDot);
+    (function loop(){
+      requestAnimationFrame(loop);
+      gear1.rotation.z+=.018; gear2.rotation.z-=.028;
+      dot.rotation.y+=.02; dot2.rotation.y+=.03;
+      var t=Date.now()*.0008;
+      progDot.position.set(-1.5+Math.abs(Math.sin(t))*3,1.3,.1);
+      r.render(s,cam);
+    })();
+  })();
+
+  // ── 05: MLOPS DATA — Helix / DNA spiral + flowing particles ──
+  (function(){
+    var r=makeRenderer('sc5'); if(!r) return;
+    var s=makeScene(), cam=makeCamera();
+    cam.position.set(0,0,5);
+    // DNA helix — two spirals
+    var helixPts1=[], helixPts2=[];
+    for(var i=0;i<=40;i++){
+      var t=i/40*Math.PI*4, h=i/40*3-1.5;
+      helixPts1.push(new THREE.Vector3(Math.cos(t)*.7,h,Math.sin(t)*.7));
+      helixPts2.push(new THREE.Vector3(Math.cos(t+Math.PI)*.7,h,Math.sin(t+Math.PI)*.7));
+    }
+    var h1Geo=new THREE.BufferGeometry().setFromPoints(helixPts1);
+    var h2Geo=new THREE.BufferGeometry().setFromPoints(helixPts2);
+    s.add(new THREE.Line(h1Geo,new THREE.LineBasicMaterial({color:G,transparent:true,opacity:.8})));
+    s.add(new THREE.Line(h2Geo,new THREE.LineBasicMaterial({color:C,transparent:true,opacity:.8})));
+    // Cross rungs
+    var rungs=[];
+    for(var i=0;i<=40;i+=4){
+      var t=i/40*Math.PI*4, h=i/40*3-1.5;
+      var rg=new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(Math.cos(t)*.7,h,Math.sin(t)*.7),
+        new THREE.Vector3(Math.cos(t+Math.PI)*.7,h,Math.sin(t+Math.PI)*.7)
+      ]);
+      var rl=new THREE.Line(rg,new THREE.LineBasicMaterial({color:GL,transparent:true,opacity:.5}));
+      s.add(rl); rungs.push(rl);
+    }
+    // Flowing particle along helix
+    var flowDot=new THREE.Mesh(new THREE.SphereGeometry(.1,8,8),new THREE.MeshBasicMaterial({color:GL}));
+    s.add(flowDot); var ft=0;
+    // Background particles
+    var bPos=new Float32Array(50*3);
+    for(var i=0;i<50;i++){bPos[i*3]=(Math.random()-.5)*3;bPos[i*3+1]=(Math.random()-.5)*4;bPos[i*3+2]=(Math.random()-.5)*2;}
+    var bg=new THREE.BufferGeometry(); bg.setAttribute('position',new THREE.BufferAttribute(bPos,3));
+    s.add(new THREE.Points(bg,new THREE.PointsMaterial({color:G,size:.05,transparent:true,opacity:.4})));
+    var helixGroup=new THREE.Group();
+    s.add(helixGroup);
+    (function loop(){
+      requestAnimationFrame(loop);
+      ft+=.018; if(ft>1)ft=0;
+      var tt=ft*Math.PI*4, hh=ft*3-1.5;
+      flowDot.position.set(Math.cos(tt)*.7,hh,Math.sin(tt)*.7);
+      s.children.forEach(function(c){if(c.isLine||c.isPoints)c.rotation.y+=.008;});
+      r.render(s,cam);
+    })();
+  })();
+
+  // ── 06: WEB PRESENCE — Globe + orbit lines + signal pulse ──
+  (function(){
+    var r=makeRenderer('sc6'); if(!r) return;
+    var s=makeScene(), cam=makeCamera();
+    // Globe
+    var globe=new THREE.Mesh(new THREE.SphereGeometry(1,24,24),new THREE.MeshStandardMaterial({color:0x0a1628,metalness:.3,roughness:.7,emissive:0x050c18,emissiveIntensity:.5}));
+    s.add(globe);
+    var globeW=new THREE.Mesh(new THREE.SphereGeometry(1.02,16,16),new THREE.MeshBasicMaterial({color:G,wireframe:true,transparent:true,opacity:.18}));
+    s.add(globeW);
+    // Latitude / longitude rings
+    [0,Math.PI/3,-Math.PI/3].forEach(function(tilt,i){
+      var ring=new THREE.Mesh(new THREE.TorusGeometry(1,.012,4,60),new THREE.MeshBasicMaterial({color:i===0?C:G,transparent:true,opacity:.5}));
+      ring.rotation.x=tilt; s.add(ring);
+    });
+    // Orbiting signal dot
+    var sigDot=new THREE.Mesh(new THREE.SphereGeometry(.1,8,8),new THREE.MeshBasicMaterial({color:GL}));
+    var sigRing=new THREE.Object3D(); sigRing.add(sigDot); sigDot.position.set(1.5,0,0); s.add(sigRing);
+    // Wifi-like arcs (torus segments)
+    var arc1=new THREE.Mesh(new THREE.TorusGeometry(1.4,.015,4,40,Math.PI),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:.55}));
+    arc1.rotation.z=Math.PI/2; s.add(arc1);
+    (function loop(){
+      requestAnimationFrame(loop);
+      globe.rotation.y+=.008; globeW.rotation.y+=.006;
+      sigRing.rotation.y+=.025; sigRing.rotation.z+=.008;
+      arc1.rotation.y+=.012;
+      r.render(s,cam);
+    })();
+  })();
+
+})();
+
+</script>
+</body>
+</html>
