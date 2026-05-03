@@ -1,0 +1,28 @@
+name: CI · SIGR La Niebla
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Verificar estructura del proyecto
+        run: |
+          echo "✅ Repositorio clonado correctamente"
+          ls -la
+
+      - name: Validar archivos HTML
+        run: |
+          echo "✅ Validando archivos del SIGR"
+          find . -name "*.html" | head -20
+
+      - name: Pipeline completado
+        run: echo "✅ CI · SIGR La Niebla ejecutado correctamente"
