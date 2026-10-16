@@ -589,7 +589,7 @@
         tiltY += dx * 0.55 * o.hover;
         tiltX -= dy * 0.45 * o.hover;
         o.u.uGain.value = o.gain * (1 + 0.3 * o.hover);
-        if (k > 0.6 && !o.hot) { o.hot = true; o.sweepT = t; if (this.audio) this.audio.shimmer(); } else if (k < 0.2) o.hot = false;
+        if (k > 0.6 && !o.hot) { o.hot = true; o.sweepT = t; } else if (k < 0.2) o.hot = false;
         o.mesh.rotateY(tiltY);
         o.mesh.rotateX(tiltX);
         // destello que recorre el vidrio cada tantos segundos

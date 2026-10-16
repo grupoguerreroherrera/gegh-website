@@ -1,4 +1,4 @@
-# GEGH — Un solo trazo (v7)
+# GEGH — Un solo trazo (v7.1)
 
 Sitio de **Grupo Empresarial Guerrero Herrera S.A.S.** · [grupoguerreroherrera.com](https://www.grupoguerreroherrera.com/) · Bucaramanga.
 
@@ -28,7 +28,7 @@ Cada objeto se materializa: al llegar a su capítulo, miles de partículas de lu
 
 En escritorio el scroll tiene inercia propia (la rueda mueve un objetivo y la página lo sigue con amortiguación); los textos de cada capítulo suben despacio y se despiden al final; al entrar en un capítulo hay una onda de choque sutil en la imagen; el puntero atrae a los objetos y los enciende.
 
-La música es generativa (Web Audio, sin archivos): un acorde por capítulo en re menor, viento ligado a la velocidad del scroll, campanas ocasionales. Se activa con "Entrar con sonido" o con el botón **Sonido** de la barra.
+La banda sonora es una pista propia (`assets/audio`, 2,5 MB, 128 kbps) que suena en bucle continuo: dos reproductores se alternan con un fundido cruzado de cuatro segundos antes del final, así nunca se oye el corte. Entra enfocándose junto con la cámara, se pausa al cambiar de pestaña y continúa al volver. Se activa con "Entrar con sonido" o con el botón **Sonido** de la barra. Quedan dos gestos de ruido (sin notas, para no chocar con la música): un soplo al cambiar de capítulo y un tic al pulsar.
 
 ## Archivos
 
@@ -36,7 +36,8 @@ La música es generativa (Web Audio, sin archivos): un acorde por capítulo en r
 index.html                 contenido, estilos, metadatos (SEO, Open Graph, JSON-LD)
 vercel.json                cabeceras de seguridad y caché (las aplica Vercel)
 assets/js/util.js          interpolación, easing, flags de dispositivo
-assets/js/audio.js         partitura generativa
+assets/js/audio.js         banda sonora (bucle con fundido cruzado) y gestos de ruido
+assets/audio/              pista del sitio (guarda aparte su licencia o recibo)
 assets/js/scene.js         escena 3D (Three.js r128): riel, trazo, piezas por capítulo, post-proceso
 assets/js/app.js           compuerta, scroll → riel, revelados, sonido, cursor, reloj, menú
 assets/js/three.r128.min.js
@@ -54,7 +55,7 @@ scripts/verificar.py       verificación previa a publicar (la corre GitHub Acti
 - **Textos**: `index.html`, por capítulos (`#hero`, `#manifiesto`, `#servicios`, `#software`, `#multimedia`, `#proceso`, `#colaboracion`, `#contacto`).
 - **WhatsApp**: busca `573025280632`; cada botón lleva un mensaje prellenado distinto.
 - **Colores y tipografías**: variables al inicio del `<style>` (`--ink`, `--bone`, `--violeta`, `--cian`, `--ambar`, `--font-*`). Las tipografías se sirven desde `assets/fonts` (sin Google Fonts): para cambiar una, añade su WOFF2 ahí y su `@font-face` junto a los demás.
-- **Música**: `audio.js`, arreglo `CHORDS` (un acorde por capítulo, notas MIDI).
+- **Música**: reemplaza el archivo en `assets/audio/` y actualiza `TRACK` al inicio de `audio.js` (ruta, cola de silencio final que se recorta del bucle, duración del fundido y nivel). Si cambias la pista con el mismo nombre, los visitantes recientes pueden oír la anterior hasta siete días (caché).
 - **Escena**: `scene.js`. Las estaciones están en `_buildPath` (puntos del riel); cada pieza en su `_build…`. En móvil las piezas se colocan arriba del texto; en escritorio, al lado contrario del texto.
 - **Intro**: `app.js`, bloque "Compuerta"; `scene.playIntro()` controla la duración (3,2 s).
 - **Regla de oro**: nada de `<script>` inline ni atributos `onclick` en el HTML (la CSP los bloquea); todo el JavaScript va en `assets/js`. `scripts/verificar.py` avisa si se rompe esta regla.

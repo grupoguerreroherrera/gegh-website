@@ -98,7 +98,7 @@ PATRONES = [
     (r'(?i)(?:password|contrase[ñn]a|secret|api[_-]?key)\s*[:=]\s*["\'][^"\']{6,}["\']', 'credencial escrita en el código'),
 ]
 OMITIR_DIR = {'.git', 'node_modules', '.vercel'}
-BINARIOS = ('.png', '.webp', '.jpg', '.jpeg', '.woff2', '.woff', '.ico', '.zip')
+BINARIOS = ('.png', '.webp', '.jpg', '.jpeg', '.woff2', '.woff', '.ico', '.zip', '.mp3', '.ogg', '.m4a')
 for carpeta, dirs, archivos in os.walk(RAIZ):
     dirs[:] = [d for d in dirs if d not in OMITIR_DIR]
     for nombre in archivos:
@@ -138,6 +138,12 @@ except FileNotFoundError:
 for rel in ('robots.txt', 'sitemap.xml', 'assets/favicon.svg', 'assets/og.png', 'assets/js/three.r128.min.js'):
     if not os.path.exists(os.path.join(RAIZ, rel)):
         err(f'falta {rel}')
+# la pista que audio.js reproduce debe existir
+m = re.search(r"src:\s*'(assets/audio/[^']+)'", leer('assets/js/audio.js'))
+if not m:
+    err('audio.js: no se encontró la ruta de la pista (TRACK.src)')
+elif not os.path.exists(os.path.join(RAIZ, m.group(1))):
+    err(f'audio.js referencia una pista que no existe: {m.group(1)}')
 
 # ---------- resultado ----------
 for a in avisos:
