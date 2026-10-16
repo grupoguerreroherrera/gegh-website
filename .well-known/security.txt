@@ -1,0 +1,7 @@
+# Grupo Empresarial Guerrero Herrera S.A.S. — política de divulgación responsable (RFC 9116)
+# Si encuentras una vulnerabilidad en www.grupoguerreroherrera.com, escríbenos antes de publicarla.
+Contact: mailto:direccioncomercial@grupoguerreroherrera.com
+Contact: https://wa.me/573025280632
+Expires: 2027-10-01T05:00:00.000Z
+Preferred-Languages: es, en, pt, de
+Canonical: https://www.grupoguerreroherrera.com/.well-known/security.txt
