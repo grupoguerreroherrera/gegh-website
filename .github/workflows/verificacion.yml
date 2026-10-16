@@ -10,8 +10,9 @@ permissions:
   contents: read
 
 jobs:
-  verificar:
-    name: Secretos, CSP y recursos
+  # La rama main exige que pase una comprobación llamada "build-and-test";
+  # este trabajo la cumple: verifica secretos, CSP y recursos antes de publicar.
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar el repositorio
@@ -22,5 +23,5 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Verificar
+      - name: Verificar secretos, CSP y recursos
         run: python3 scripts/verificar.py
