@@ -51,7 +51,7 @@
   }));
 
   /* ---------- Audio + escena ---------- */
-  const audio = new window.GEGHAudio();
+  const audio = new window.GEGHAudio(); // la pista empieza a descargarse ya
   let scene = null;
   try {
     if (!window.THREE) throw new Error('Three.js no cargó');
@@ -59,6 +59,7 @@
     scene.init();
     scene.attachAudio(audio);
     window.GEGH.scene = scene;
+    window.GEGH.audio = audio;
   } catch (err) {
     console.warn('GEGH: WebGL no disponible, modo estático.', err);
     scene = null;
@@ -85,6 +86,8 @@
       ]).catch(() => {})
     : Promise.resolve();
   const minWait = new Promise(r => setTimeout(r, revisit ? 500 : 1700));
+  // la pista empieza a descargarse con la compuerta; se espera un máximo de 3 s
+  const audioReady = Promise.race([audio.canPlay || Promise.resolve(), new Promise(r => setTimeout(r, 3000))]);
   const hardTimeout = new Promise(r => setTimeout(r, 5000));
 
   const t0 = performance.now();
@@ -107,7 +110,7 @@
     }
   }
   requestAnimationFrame(progLoop);
-  Promise.race([Promise.all([fontsReady, minWait]), hardTimeout]).then(() => {
+  Promise.race([Promise.all([fontsReady, minWait, audioReady]), hardTimeout]).then(() => {
     ready = true;
     fitHeroTitle();
   });
@@ -160,16 +163,9 @@
   soundBtn.addEventListener('click', () => setSoundUI(audio.toggle()));
   document.addEventListener('visibilitychange', () => audio.visibility(document.hidden));
 
-  let lastBlip = 0;
   document.addEventListener('mouseover', e => {
     const t = e.target.closest && e.target.closest('a, button, .card, .list li, .step');
-    if (!t) return;
-    const now = performance.now();
-    if (now - lastBlip > 90) {
-      lastBlip = now;
-      audio.blip(t.classList.contains('card') ? 990 : 1320);
-    }
-    if (cursorRing) cursorRing.classList.add('is-hover');
+    if (t && cursorRing) cursorRing.classList.add('is-hover');
   });
   document.addEventListener('mouseout', e => {
     const t = e.target.closest && e.target.closest('a, button, .card, .list li, .step');
@@ -438,7 +434,7 @@
 
   /* ---------- Contacto: ondulación desde Bucaramanga ---------- */
   $$('.contact-link').forEach(l => {
-    l.addEventListener('mouseenter', () => { if (scene) scene.ripple(); audio.shimmer(); });
+    l.addEventListener('mouseenter', () => { if (scene) scene.ripple(); });
     l.addEventListener('focus', () => { if (scene) scene.ripple(); });
   });
 
