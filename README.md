@@ -1,4 +1,4 @@
-# GEGH — Un solo trazo (v7.1)
+# GEGH — Un solo trazo (v7.2)
 
 Sitio de **Grupo Empresarial Guerrero Herrera S.A.S.** · [grupoguerreroherrera.com](https://www.grupoguerreroherrera.com/) · Bucaramanga.
 
@@ -43,12 +43,19 @@ assets/js/app.js           compuerta, scroll → riel, revelados, sonido, cursor
 assets/js/three.r128.min.js
 assets/fonts/              tipografías propias (WOFF2, licencia OFL en LICENCIAS-OFL.txt)
 assets/img/                objetos por capítulo
+assets/brand/               identidad: isotipo (la G acoge la H) y logo horizontal en SVG/PNG
 assets/favicon.svg · assets/og.png · robots.txt · sitemap.xml · google*.html
 .well-known/security.txt   contacto para reportes de seguridad (RFC 9116)
 SECURITY.md                política de seguridad (GitHub la muestra en la pestaña Security)
 scripts/verificar.py       verificación previa a publicar (la corre GitHub Actions)
 .github/workflows/         verificación automática en cada cambio
 ```
+
+## Marcas
+
+- **GEGH** es el paraguas: diseño, software y multimedia.
+- **Aulea Viva** ([auleaviva.com](https://auleaviva.com/)) es la marca de formación virtual del grupo. En este sitio el capítulo 05 la presenta y enlaza; los servicios de LMS, diseño instruccional y auditoría de aulas se venden bajo ella, no en paralelo.
+- La identidad (isotipo G-acoge-H, paleta marino #12253F / verde azulado #1C8C8A, Inter) vive en `assets/brand/`; el sitio la usa en la compuerta, la barra de navegación, el favicon y la imagen Open Graph, sobre su propio tema oscuro.
 
 ## Dónde tocar
 
@@ -57,7 +64,7 @@ scripts/verificar.py       verificación previa a publicar (la corre GitHub Acti
 - **Colores y tipografías**: variables al inicio del `<style>` (`--ink`, `--bone`, `--violeta`, `--cian`, `--ambar`, `--font-*`). Las tipografías se sirven desde `assets/fonts` (sin Google Fonts): para cambiar una, añade su WOFF2 ahí y su `@font-face` junto a los demás.
 - **Música**: reemplaza el archivo en `assets/audio/` y actualiza `TRACK` al inicio de `audio.js` (ruta, cola de silencio final que se recorta del bucle, duración del fundido y nivel). Si cambias la pista con el mismo nombre, los visitantes recientes pueden oír la anterior hasta siete días (caché).
 - **Escena**: `scene.js`. Las estaciones están en `_buildPath` (puntos del riel); cada pieza en su `_build…`. En móvil las piezas se colocan arriba del texto; en escritorio, al lado contrario del texto.
-- **Intro**: `app.js`, bloque "Compuerta"; `scene.playIntro()` controla la duración (3,2 s).
+- **Intro**: `app.js`, bloque "Compuerta"; `scene.playIntro()` controla la duración (3,2 s). El isotipo de la compuerta se dibuja con CSS (`.gate__mark .gs`, un trazo por tramo).
 - **Regla de oro**: nada de `<script>` inline ni atributos `onclick` en el HTML (la CSP los bloquea); todo el JavaScript va en `assets/js`. `scripts/verificar.py` avisa si se rompe esta regla.
 
 ## Seguridad
